@@ -1,0 +1,32 @@
+{
+  "name": "iclic",
+  "version": "1.0.0",
+  "description": "A CLI tool for checking system configuration after Installfest.",
+  "main": "/bin",
+  "scripts": {
+    "build": "npm run tsc && npm run exmod",
+    "exmod": "chmod u+x ./bin/index.js",
+    "tsc": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidStinson/iclic.git"
+  },
+  "author": "David Stinson <mail@davidstinson.dev>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DavidStinson/iclic/issues"
+  },
+  "bin": {
+    "clic": "./bin/index.js"
+  },
+  "homepage": "https://github.com/DavidStinson/iclic#readme",
+  "devDependencies": {
+    "@types/node": "^18.6.4",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "chalk": "^5.0.1"
+  }
+}
