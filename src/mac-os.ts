@@ -1,4 +1,5 @@
 import os from 'os'
+import fs from 'fs'
 import plist from 'plist'
 const log = console.log
 
@@ -19,9 +20,18 @@ function cpuType(): string {
 }
 
 function osVariant(): string {
-  return JSON.stringify(
-    plist.parse('/System/Library/CoreServices/SystemVersion.plist')
-  )
+  try {
+    const jsonString = JSON.stringify(plist.parse(
+      fs.readFileSync(
+        '/System/Library/CoreServices/SystemVersion.plist', "utf8"
+      )
+    ))
+    const obj = JSON.parse(jsonString)
+    return obj.ProductVersion
+  } catch (error) {
+    return "Unkown OS Variant"
+  }
+  
 }
 
 export {
