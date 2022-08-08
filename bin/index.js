@@ -6,20 +6,31 @@ import * as wslLinux from "./wsl-linux.js";
 const log = console.log;
 const cErr = chalk.bold.red;
 const data = {
-    os: "",
-    cpuType: ""
+    osName: "Unknown OS",
+    osVariant: "Unknown Variant",
+    cpuModel: "Unkown CPU"
 };
 const osType = os.type();
 switch (osType) {
-    case 'Darwin':
-        data.os = "macOS";
+    case 'Darwin': {
+        data.osName = "macOS";
         data.cpuType = macOS.cpuType();
         break;
-    case 'Linux':
-        data.os = wslLinux.checkForWSL();
+    }
+    case 'Linux': {
+        const isWSL = wslLinux.checkForWSL();
+        if (isWSL) {
+            data.osName = "WSL";
+        }
+        else {
+            data.osName = "Linux";
+        }
+        data.osVariant = await wslLinux.checkDistro();
         break;
-    default:
+    }
+    default: {
         log(cErr("This OS is not supported"));
         process.exit();
+    }
 }
-log(`Operating System: ${data.os}`);
+log(`Operating System: ${data.osName}, ${data.osVariant}`);

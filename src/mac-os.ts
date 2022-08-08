@@ -17,6 +17,11 @@ function cpuType(): string {
   }
 }
 
+function osVariant(): string {
+  return os.release()
+}
+
 export {
-  cpuType
+  cpuType,
+  osVariant
 }
