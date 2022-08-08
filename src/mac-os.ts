@@ -26,10 +26,13 @@ function osVariant(): string {
         '/System/Library/CoreServices/SystemVersion.plist', "utf8"
       )
     )
-    log(jsonobj)
-    return JSON.stringify(jsonobj)
+    return (
+      jsonobj.ProductUserVisibleVersion 
+        ? jsonobj.ProductUserVisibleVersion 
+        : "Unknown OS Variant"
+    )
   } catch (error) {
-    return "Unkown OS Variant"
+    return "Unknown OS Variant"
   }
   
 }

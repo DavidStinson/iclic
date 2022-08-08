@@ -19,12 +19,11 @@ function cpuType() {
 }
 function osVariant() {
     try {
-        const jsonString = JSON.stringify(plist.parse(fs.readFileSync('/System/Library/CoreServices/SystemVersion.plist', "utf8")));
-        const obj = JSON.parse(jsonString);
-        return obj.ProductVersion;
+        const jsonobj = plist.parse(fs.readFileSync('/System/Library/CoreServices/SystemVersion.plist', "utf8"));
+        return jsonobj.ProductUserVisibleVersion ? jsonobj.ProductUserVisibleVersion : "Unknown OS Variant";
     }
     catch (error) {
-        return "Unkown OS Variant";
+        return "Unknown OS Variant";
     }
 }
 export { cpuType, osVariant };
