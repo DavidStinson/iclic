@@ -21,13 +21,13 @@ function cpuType(): string {
 
 function osVariant(): string {
   try {
-    const jsonString = JSON.stringify(plist.parse(
+    const jsonobj = plist.parse(
       fs.readFileSync(
         '/System/Library/CoreServices/SystemVersion.plist', "utf8"
       )
-    ))
-    const obj = JSON.parse(jsonString)
-    return obj.ProductVersion
+    )
+    log(jsonobj)
+    return JSON.stringify(jsonobj)
   } catch (error) {
     return "Unkown OS Variant"
   }
