@@ -15,12 +15,13 @@ switch (osType) {
     case 'Darwin': {
         data.osName = "macOS";
         data.cpuType = macOS.cpuType();
+        data.osVariant = macOS.osVariant();
         break;
     }
     case 'Linux': {
         const isWSL = wslLinux.checkForWSL();
         if (isWSL) {
-            data.osName = "WSL";
+            data.osName = "WSL2";
         }
         else {
             data.osName = "Linux";

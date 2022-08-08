@@ -1,4 +1,5 @@
 import os from 'os';
+import plist from 'plist';
 const log = console.log;
 function cpuType() {
     const cpuType = os.cpus();
@@ -15,4 +16,7 @@ function cpuType() {
         return "Unknown";
     }
 }
-export { cpuType };
+function osVariant() {
+    return JSON.stringify(plist.parse('/System/Library/CoreServices/SystemVersion.plist'));
+}
+export { cpuType, osVariant };

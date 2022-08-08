@@ -1,4 +1,5 @@
 import os from 'os'
+import plist from 'plist'
 const log = console.log
 
 function cpuType(): string {
@@ -18,7 +19,9 @@ function cpuType(): string {
 }
 
 function osVariant(): string {
-  return os.release()
+  return JSON.stringify(
+    plist.parse('/System/Library/CoreServices/SystemVersion.plist')
+  )
 }
 
 export {
