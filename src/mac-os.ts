@@ -1,6 +1,7 @@
 import os from 'os'
 import fs from 'fs'
 import plist from 'plist'
+
 const log = console.log
 
 function cpuType(): string {
@@ -34,10 +35,23 @@ function osVariant(): string {
   } catch (error) {
     return "Unknown OS Variant"
   }
-  
+}
+
+function vsCodeInstalled(): boolean {
+  try {
+    if (fs.existsSync("/Applications/Visual Studio Code.app")) {
+      return true
+    } else {
+      return false
+    }
+  } catch (error) {
+    log(error)
+    return false
+  }
 }
 
 export {
   cpuType,
-  osVariant
+  osVariant,
+  vsCodeInstalled
 }

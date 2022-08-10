@@ -12,15 +12,23 @@ interface Data {
   cpuType?: string;
   cpuModel: string;
   ramInGB: number;
+  zshLoc: string;
+  shell: string;
+  isShellZSH: boolean;
+  isVSCodeInstalled?: boolean;
 }
 
 const log = console.log
 const cErr = chalk.bold.red
 const data: Data = {
-  osName: "Unknown OS",
-  osVariant: "Unknown Variant",
-  cpuModel: "Unknown CPU",
-  ramInGB: 0
+  osName: "Unknown",
+  osVariant: "Unknown",
+  cpuModel: "Unknown",
+  ramInGB: 0,
+  zshLoc: "Unknown",
+  shell: "Unknown",
+  isShellZSH: false,
+  isVSCodeInstalled: false,
 }
 
 const osType = os.type()
@@ -30,6 +38,7 @@ switch(osType) {
     data.osName = "macOS"
     data.cpuType = macOS.cpuType()
     data.osVariant = macOS.osVariant()
+    data.isVSCodeInstalled = macOS.vsCodeInstalled()
     break;
   }
   case 'Linux': {
@@ -50,9 +59,21 @@ switch(osType) {
 
 data.cpuModel = shared.cpuModel()
 data.ramInGB = shared.totalRAMInGB()
+async function runAsync() {
+  data.shell = shared.checkCurrentShell()
+  data.zshLoc = await shared.checkForZSH()
+  data.isShellZSH = shared.checkCurrentShellZSH(data.shell, data.zshLoc)
+  log(`Shell: ${data.shell}`)
+  log(`ZSH Location: ${data.zshLoc}`)
+  log(`Shell is ZSH: ${data.isShellZSH}`)
+}
+runAsync()
+
+
 
 log(`Operating System: ${data.osName} ${data.osVariant}`)
 if(data.osName === "macOS" && data.cpuType) log(`CPU Type: ${data.cpuType}`)
+if(data.osName === "macOS" && data.isVSCodeInstalled) log(`VS Code installed`)
 log(`CPU Model: ${data.cpuModel}`)
 log(`Total RAM: ${data.ramInGB}GB`)
 
