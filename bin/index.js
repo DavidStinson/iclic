@@ -18,6 +18,22 @@ const data = {
     isShellZSH: false,
     isVSCodeInstalled: false,
     codeAlias: "Unknown",
+    ghLoc: "Unknown",
+    npmLoc: "Unknown",
+    npmVer: "Unknown",
+    nodeLoc: "Unknown",
+    nodeVer: "Unknown",
+    nodemonLoc: "Unknown",
+    nodemonVer: "Unknown",
+    herokuLoc: "Unknown",
+    gitLoc: "Unknown",
+    gitVer: "Unknown",
+    gitEmail: "Unknown",
+    gitBranch: "Unknown",
+    gitMerge: "Unknown",
+    gitIgnore: "Unknown",
+    gitIgnoreGlobal: "Unknown",
+    zshrc: "Unknown",
 };
 const osType = os.type();
 switch (osType) {
@@ -58,7 +74,23 @@ async function runAsync() {
     log(`Shell is ZSH: ${data.isShellZSH}`);
     data.codeAlias = await shared.executeCommand("which code");
     log(`code alias: ${data.codeAlias}`);
-    log(` alias: ${data.codeAlias}`);
+    data.ghLoc = await shared.executeCommand("which gh");
+    data.npmLoc = await shared.executeCommand("which npm");
+    data.npmVer = await shared.executeCommand("npm --version");
+    data.nodeLoc = await shared.executeCommand("which node");
+    data.nodeVer = await shared.executeCommand("node --version");
+    data.nodemonLoc = await shared.executeCommand("which nodemon");
+    data.nodemonVer = await shared.executeCommand("nodemon --version");
+    data.herokuLoc = await shared.executeCommand("which heroku");
+    data.gitLoc = await shared.executeCommand("which git");
+    data.gitVer = await shared.executeCommand("git --version");
+    data.gitEmail = await shared.executeCommand("git config --global user.email");
+    data.gitBranch = await shared.executeCommand("git config --global init.defaultBranch");
+    data.gitMerge = await shared.executeCommand("git config --global pull.rebase");
+    data.gitIgnore = await shared.executeCommand("git config --global core.excludesfile");
+    data.gitIgnoreGlobal = await shared.executeCommand("cat ~/.gitignore_global");
+    data.zshrc = await shared.executeCommand("cat ~/.zshrc");
+    console.dir(data);
 }
 runAsync();
 log(`Operating System: ${data.osName} ${data.osVariant}`);
@@ -67,7 +99,7 @@ if (data.osName === "macOS" && data.cpuType)
 if (data.osName === "macOS" && data.isVSCodeInstalled)
     log(`VS Code installed`);
 if (data.osName === "macOS" && data.brewLoc)
-    log(`Homebrew location: ${data.brewLoc}`);
+    log(`Homebrew: ${data.brewLoc}`);
 log(`CPU Model: ${data.cpuModel}`);
 log(`Total RAM: ${data.ramInGB}GB`);
 log(`Username: ${data.username}`);
