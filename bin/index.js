@@ -4,6 +4,7 @@ import chalk from "chalk";
 import * as macOS from "./mac-os.js";
 import * as wslLinux from "./wsl-linux.js";
 import * as shared from "./shared.js";
+const osType = os.type();
 const log = console.log;
 const cErr = chalk.bold.red;
 const data = {
@@ -16,7 +17,6 @@ const data = {
     zshLoc: "Unknown",
     shell: "Unknown",
     isShellZSH: false,
-    isVSCodeInstalled: false,
     codeAlias: "Unknown",
     ghLoc: "Unknown",
     npmLoc: "Unknown",
@@ -35,72 +35,71 @@ const data = {
     gitIgnoreGlobal: "Unknown",
     zshrc: "Unknown",
 };
-const osType = os.type();
-switch (osType) {
-    case 'Darwin': {
-        data.osName = "macOS";
-        data.cpuType = macOS.cpuType();
-        data.osVariant = macOS.osVariant();
-        data.isVSCodeInstalled = macOS.vsCodeInstalled();
-        data.brewLoc = await shared.executeCommand("which brew");
-        break;
-    }
-    case 'Linux': {
-        const isWSL = wslLinux.checkForWSL();
-        if (isWSL) {
-            data.osName = "WSL2";
+const commandsForData = [
+    { dataKey: "zshLoc", command: "which zsh" },
+    { dataKey: "codeAlias", command: "which code" },
+    { dataKey: "ghLoc", command: "which gh" },
+    { dataKey: "npmLoc", command: "which npm" },
+    { dataKey: "npmVer", command: "npm --version" },
+    { dataKey: "nodeLoc", command: "which node" },
+    { dataKey: "nodeVer", command: "node --version" },
+    { dataKey: "nodemonLoc", command: "which nodemon" },
+    { dataKey: "nodemonVer", command: "nodemon --version" },
+    { dataKey: "herokuLoc", command: "which heroku" },
+    { dataKey: "gitLoc", command: "which git" },
+    { dataKey: "gitVer", command: "git --version" },
+    { dataKey: "gitEmail", command: "git config --global user.email" },
+    { dataKey: "gitBranch", command: "git config --global init.defaultBranch" },
+    { dataKey: "gitMerge", command: "git config --global pull.rebase" },
+    { dataKey: "gitIgnore", command: "git config --global core.excludesfile" },
+    { dataKey: "gitIgnoreGlobal", command: "cat ~/.gitignore_global" },
+    { dataKey: "zshrc", command: "cat ~/.zshrc" },
+];
+async function main() {
+    switch (osType) {
+        case 'Darwin': {
+            getMacOSData();
+            break;
         }
-        else {
-            data.osName = "Linux";
+        case 'Linux': {
+            getLinuxData();
+            break;
         }
-        data.osVariant = await wslLinux.checkDistro();
-        break;
+        default: {
+            log(cErr("This OS is not supported"));
+            process.exit();
+        }
     }
-    default: {
-        log(cErr("This OS is not supported"));
-        process.exit();
-    }
-}
-data.cpuModel = shared.cpuModel();
-data.ramInGB = shared.totalRAMInGB();
-data.homedir = shared.homedir();
-data.username = shared.username();
-async function runAsync() {
-    data.shell = shared.checkCurrentShell();
-    data.zshLoc = await shared.executeCommand("which zsh");
-    data.isShellZSH = shared.checkCurrentShellZSH(data.shell, data.zshLoc);
-    log(`Shell: ${data.shell}`);
-    log(`ZSH Location: ${data.zshLoc}`);
-    log(`Shell is ZSH: ${data.isShellZSH}`);
-    data.codeAlias = await shared.executeCommand("which code");
-    log(`code alias: ${data.codeAlias}`);
-    data.ghLoc = await shared.executeCommand("which gh");
-    data.npmLoc = await shared.executeCommand("which npm");
-    data.npmVer = await shared.executeCommand("npm --version");
-    data.nodeLoc = await shared.executeCommand("which node");
-    data.nodeVer = await shared.executeCommand("node --version");
-    data.nodemonLoc = await shared.executeCommand("which nodemon");
-    data.nodemonVer = await shared.executeCommand("nodemon --version");
-    data.herokuLoc = await shared.executeCommand("which heroku");
-    data.gitLoc = await shared.executeCommand("which git");
-    data.gitVer = await shared.executeCommand("git --version");
-    data.gitEmail = await shared.executeCommand("git config --global user.email");
-    data.gitBranch = await shared.executeCommand("git config --global init.defaultBranch");
-    data.gitMerge = await shared.executeCommand("git config --global pull.rebase");
-    data.gitIgnore = await shared.executeCommand("git config --global core.excludesfile");
-    data.gitIgnoreGlobal = await shared.executeCommand("cat ~/.gitignore_global");
-    data.zshrc = await shared.executeCommand("cat ~/.zshrc");
+    await getGenericData();
     console.dir(data);
 }
-runAsync();
-log(`Operating System: ${data.osName} ${data.osVariant}`);
-if (data.osName === "macOS" && data.cpuType)
-    log(`CPU Type: ${data.cpuType}`);
-if (data.osName === "macOS" && data.isVSCodeInstalled)
-    log(`VS Code installed`);
-if (data.osName === "macOS" && data.brewLoc)
-    log(`Homebrew: ${data.brewLoc}`);
-log(`CPU Model: ${data.cpuModel}`);
-log(`Total RAM: ${data.ramInGB}GB`);
-log(`Username: ${data.username}`);
-log(`Home Directory: ${data.homedir}`);
+main();
+async function getMacOSData() {
+    data.osName = "macOS";
+    data.cpuType = macOS.cpuType();
+    data.osVariant = macOS.osVariant();
+    data.isVSCodeInstalled = macOS.vsCodeInstalled();
+    data.brewLoc = await shared.executeCommand("which brew");
+}
+async function getLinuxData() {
+    const isWSL = wslLinux.checkForWSL();
+    if (isWSL) {
+        data.osName = "WSL2";
+    }
+    else {
+        data.osName = "Linux";
+    }
+    data.osVariant = await wslLinux.checkDistro();
+}
+async function getGenericData() {
+    data.cpuModel = shared.cpuModel();
+    data.ramInGB = shared.totalRAMInGB();
+    data.homedir = shared.homedir();
+    data.username = shared.username();
+    data.shell = shared.checkCurrentShell();
+    for await (const { dataKey, command } of commandsForData) {
+        data[dataKey] = await shared.executeCommand(command);
+    }
+    data.codeAlias = await shared.executeCommand("which code");
+    data.isShellZSH = shared.checkCurrentShellZSH(data.shell, data.zshLoc);
+}
