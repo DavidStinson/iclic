@@ -12,10 +12,14 @@ interface Data {
   cpuType?: string;
   cpuModel: string;
   ramInGB: number;
+  homedir: string;
+  username: string;
   zshLoc: string;
   shell: string;
   isShellZSH: boolean;
   isVSCodeInstalled?: boolean;
+  codeAlias: string;
+  brewLoc?: string;
 }
 
 const log = console.log
@@ -25,10 +29,13 @@ const data: Data = {
   osVariant: "Unknown",
   cpuModel: "Unknown",
   ramInGB: 0,
+  homedir: "Unknown",
+  username: "Unknown",
   zshLoc: "Unknown",
   shell: "Unknown",
   isShellZSH: false,
   isVSCodeInstalled: false,
+  codeAlias: "Unknown",
 }
 
 const osType = os.type()
@@ -39,6 +46,7 @@ switch(osType) {
     data.cpuType = macOS.cpuType()
     data.osVariant = macOS.osVariant()
     data.isVSCodeInstalled = macOS.vsCodeInstalled()
+    data.brewLoc = await shared.executeCommand("which brew")
     break;
   }
   case 'Linux': {
@@ -59,13 +67,17 @@ switch(osType) {
 
 data.cpuModel = shared.cpuModel()
 data.ramInGB = shared.totalRAMInGB()
+data.homedir = shared.homedir()
+data.username = shared.username()
 async function runAsync() {
   data.shell = shared.checkCurrentShell()
-  data.zshLoc = await shared.checkForZSH()
+  data.zshLoc = await shared.executeCommand("which zsh")
   data.isShellZSH = shared.checkCurrentShellZSH(data.shell, data.zshLoc)
   log(`Shell: ${data.shell}`)
   log(`ZSH Location: ${data.zshLoc}`)
   log(`Shell is ZSH: ${data.isShellZSH}`)
+  data.codeAlias = await shared.executeCommand("which code")
+  log(`code alias: ${data.codeAlias}`)
 }
 runAsync()
 
@@ -76,5 +88,7 @@ if(data.osName === "macOS" && data.cpuType) log(`CPU Type: ${data.cpuType}`)
 if(data.osName === "macOS" && data.isVSCodeInstalled) log(`VS Code installed`)
 log(`CPU Model: ${data.cpuModel}`)
 log(`Total RAM: ${data.ramInGB}GB`)
+log(`Username: ${data.username}`)
+log(`Home Directory: ${data.homedir}`)
 
 

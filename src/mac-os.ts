@@ -9,12 +9,10 @@ function cpuType(): string {
   if (cpuType[0].model.includes("Apple")){
     log("Apple Silicon Chip")
     return "Apple Silicon"
-  }
-  else if (cpuType[0].model.includes("Intel")) {
+  } else if (cpuType[0].model.includes("Intel")) {
     log("Intel Chip")
     return "Intel"
-  }
-  else {
+  } else {
     log("Unknown Chip")
     return "Unknown"
   }

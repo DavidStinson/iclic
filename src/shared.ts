@@ -25,6 +25,16 @@ function homedir(): string {
   return "Unknown"
 }
 
+function username() {
+  try {
+    const currentUsername = os.userInfo().username
+    if (currentUsername) return currentUsername
+    return "Unknown"
+  } catch (error) {
+    return "Unknown"
+  }
+}
+
 function checkCurrentShell(): string {
   try {
     const currentShell = os.userInfo().shell
@@ -35,12 +45,12 @@ function checkCurrentShell(): string {
   }
 }
 
-async function checkForZSH(): Promise<string> {
+async function executeCommand(command: string): Promise<string> {
   try {
-    const { stdout, stderr } = await execAsync("which zsh")
+    const { stdout, stderr } = await execAsync(command)
     if(stderr) throw new Error(stderr);
-    const whichZSH = stdout.trim()
-    if(whichZSH) return whichZSH
+    const stdoutTrim = stdout.trim()
+    if(stdoutTrim) return stdoutTrim
     return "Unknown"
   } catch (error) {
     log(cErr(error))
@@ -59,7 +69,8 @@ export {
   cpuModel,
   totalRAMInGB,
   homedir,
+  username,
   checkCurrentShell,
-  checkForZSH,
+  executeCommand,
   checkCurrentShellZSH
 }

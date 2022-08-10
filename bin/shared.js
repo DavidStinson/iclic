@@ -20,6 +20,17 @@ function homedir() {
         return osHomedir;
     return "Unknown";
 }
+function username() {
+    try {
+        const currentUsername = os.userInfo().username;
+        if (currentUsername)
+            return currentUsername;
+        return "Unknown";
+    }
+    catch (error) {
+        return "Unknown";
+    }
+}
 function checkCurrentShell() {
     try {
         const currentShell = os.userInfo().shell;
@@ -31,14 +42,14 @@ function checkCurrentShell() {
         return "Unknown";
     }
 }
-async function checkForZSH() {
+async function executeCommand(command) {
     try {
-        const { stdout, stderr } = await execAsync("which zsh");
+        const { stdout, stderr } = await execAsync(command);
         if (stderr)
             throw new Error(stderr);
-        const whichZSH = stdout.trim();
-        if (whichZSH)
-            return whichZSH;
+        const stdoutTrim = stdout.trim();
+        if (stdoutTrim)
+            return stdoutTrim;
         return "Unknown";
     }
     catch (error) {
@@ -50,4 +61,4 @@ function checkCurrentShellZSH(currentShell, zshLoc) {
     const currentShellIsZSH = ((zshLoc === currentShell) && zshLoc.toLowerCase().includes("zsh"));
     return currentShellIsZSH;
 }
-export { cpuModel, totalRAMInGB, homedir, checkCurrentShell, checkForZSH, checkCurrentShellZSH };
+export { cpuModel, totalRAMInGB, homedir, username, checkCurrentShell, executeCommand, checkCurrentShellZSH };
