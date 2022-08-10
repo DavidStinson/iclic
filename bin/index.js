@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 import os from "os";
 import chalk from "chalk";
-import * as macOS from "./mac-os.js";
-import * as wslLinux from "./wsl-linux.js";
-import * as shared from "./shared.js";
+import * as macOS from "./data-collection/mac-os.js";
+import * as wslLinux from "./data-collection/wsl-linux.js";
+import * as shared from "./data-collection/shared.js";
+import * as errorHandling from "./render.js";
 const osType = os.type();
 const log = console.log;
 const cErr = chalk.bold.red;
@@ -67,13 +68,12 @@ async function main() {
         }
         default: {
             log(cErr("This OS is not supported"));
-            process.exit();
+            return process.exit();
         }
     }
     await getGenericData();
-    console.dir(data);
+    await errorHandling.main(data);
 }
-main();
 async function getMacOSData() {
     data.osName = "macOS";
     data.cpuType = macOS.cpuType();
@@ -103,3 +103,4 @@ async function getGenericData() {
     data.codeAlias = await shared.executeCommand("which code");
     data.isShellZSH = shared.checkCurrentShellZSH(data.shell, data.zshLoc);
 }
+main();

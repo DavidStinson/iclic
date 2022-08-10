@@ -2,47 +2,10 @@
 
 import os from "os"
 import chalk from "chalk"
-import * as macOS from "./mac-os.js"
-import * as wslLinux from "./wsl-linux.js"
-import * as shared from "./shared.js"
-
-interface Data {
-  osName: string;
-  osVariant: string;
-  cpuType?: string;
-  cpuModel: string;
-  ramInGB: number;
-  homedir: string;
-  username: string;
-  zshLoc: string;
-  shell: string;
-  isShellZSH: boolean;
-  isVSCodeInstalled?: boolean;
-  codeAlias: string;
-  brewLoc?: string;
-  ghLoc: string;
-  npmLoc: string;
-  npmVer: string;
-  nodeLoc: string;
-  nodeVer: string;
-  nodemonLoc: string;
-  nodemonVer: string;
-  herokuLoc: string;
-  gitLoc: string;
-  gitVer: string;
-  gitEmail: string;
-  gitBranch: string;
-  gitMerge: string;
-  gitIgnore: string;
-  gitIgnoreGlobal: string;
-  zshrc: string;
-  [key: string]: string | number | boolean | undefined;
-}
-
-interface CommandsForData {
-  dataKey: keyof Data;
-  command: string;
-}
+import * as macOS from "./data-collection/mac-os.js"
+import * as wslLinux from "./data-collection/wsl-linux.js"
+import * as shared from "./data-collection/shared.js"
+import * as errorHandling from "./render.js"
 
 const osType = os.type()
 const log = console.log
@@ -114,7 +77,7 @@ async function main() {
     }
   }
   await getGenericData()
-  console.dir(data)
+  await errorHandling.main(data)
 }
 
 async function getMacOSData() {
