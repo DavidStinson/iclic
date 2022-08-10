@@ -58,6 +58,7 @@ async function runAsync() {
     log(`Shell is ZSH: ${data.isShellZSH}`);
     data.codeAlias = await shared.executeCommand("which code");
     log(`code alias: ${data.codeAlias}`);
+    log(` alias: ${data.codeAlias}`);
 }
 runAsync();
 log(`Operating System: ${data.osName} ${data.osVariant}`);
@@ -65,6 +66,8 @@ if (data.osName === "macOS" && data.cpuType)
     log(`CPU Type: ${data.cpuType}`);
 if (data.osName === "macOS" && data.isVSCodeInstalled)
     log(`VS Code installed`);
+if (data.osName === "macOS" && data.brewLoc)
+    log(`Homebrew location: ${data.brewLoc}`);
 log(`CPU Model: ${data.cpuModel}`);
 log(`Total RAM: ${data.ramInGB}GB`);
 log(`Username: ${data.username}`);
