@@ -6,15 +6,15 @@ const log = console.log
 function cpuType(): string {
   const cpuType = os.cpus()
   if (cpuType[0].model.includes("Apple")){
-    log("Apple Silicon Mac")
+    log("Apple Silicon Chip")
     return "Apple Silicon"
   }
   else if (cpuType[0].model.includes("Intel")) {
-    log("Intel Mac")
+    log("Intel Chip")
     return "Intel"
   }
   else {
-    log("Unknown Mac")
+    log("Unknown Chip")
     return "Unknown"
   }
 }
