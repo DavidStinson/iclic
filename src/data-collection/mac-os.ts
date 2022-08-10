@@ -4,7 +4,7 @@ import plist from 'plist'
 
 const log = console.log
 
-function cpuType(): string {
+function getCPUType(): string {
   const cpuType = os.cpus()
   if (cpuType[0].model.includes("Apple")){
     log("Apple Silicon Chip")
@@ -18,7 +18,7 @@ function cpuType(): string {
   }
 }
 
-function osVariant(): string {
+function getOSVariant(): string {
   try {
     const jsonobj = plist.parse(
       fs.readFileSync(
@@ -35,7 +35,7 @@ function osVariant(): string {
   }
 }
 
-function vsCodeInstalled(): boolean {
+function getVSCodeInstallation(): boolean {
   try {
     if (fs.existsSync("/Applications/Visual Studio Code.app")) {
       return true
@@ -48,8 +48,9 @@ function vsCodeInstalled(): boolean {
   }
 }
 
+
 export {
-  cpuType,
-  osVariant,
-  vsCodeInstalled
+  getCPUType,
+  getOSVariant,
+  getVSCodeInstallation,
 }

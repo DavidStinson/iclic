@@ -5,7 +5,7 @@ import chalk from "chalk"
 import * as macOS from "./data-collection/mac-os.js"
 import * as wslLinux from "./data-collection/wsl-linux.js"
 import * as shared from "./data-collection/shared.js"
-import * as errorHandling from "./render.js"
+import * as validate from "./validation.js"
 
 const osType = os.type()
 const log = console.log
@@ -77,38 +77,41 @@ async function main() {
     }
   }
   await getGenericData()
-  await errorHandling.main(data)
+  await validation()
 }
 
 async function getMacOSData() {
   data.osName = "macOS"
-  data.cpuType = macOS.cpuType()
-  data.osVariant = macOS.osVariant()
-  data.isVSCodeInstalled = macOS.vsCodeInstalled()
+  data.cpuType = macOS.getCPUType()
+  data.osVariant = macOS.getOSVariant()
+  data.isVSCodeInstalled = macOS.getVSCodeInstallation()
   data.brewLoc = await shared.executeCommand("which brew")
 }
 
 async function getLinuxData() {
-  const isWSL = wslLinux.checkForWSL()
+  const isWSL = wslLinux.getWSL()
   if (isWSL) {
     data.osName = "WSL2"
   } else {
     data.osName = "Linux"
   }
-  data.osVariant = await wslLinux.checkDistro()
+  data.osVariant = await wslLinux.getDistro()
 }
 
 async function getGenericData() {
-  data.cpuModel = shared.cpuModel()
-  data.ramInGB = shared.totalRAMInGB()
-  data.homedir = shared.homedir()
-  data.username = shared.username()
-  data.shell = shared.checkCurrentShell()
+  data.cpuModel = shared.getCPUModel()
+  data.ramInGB = shared.getTotalRAMInGB()
+  data.homedir = shared.getHomedir()
+  data.username = shared.getUsername()
+  data.shell = shared.getCurrentShell()
   for await (const { dataKey, command } of commandsForData) {
     data[dataKey] = await shared.executeCommand(command)
   }
   data.codeAlias = await shared.executeCommand("which code")
-  data.isShellZSH = shared.checkCurrentShellZSH(data.shell, data.zshLoc)
+}
+
+async function validation() {
+  data.isShellZSH = validate.checkCurrentShellZSH(data.shell, data.zshLoc)
 }
 
 main()

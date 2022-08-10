@@ -8,24 +8,24 @@ const execAsync = util.promisify(exec)
 const log = console.log
 const cErr = chalk.bold.red
 
-function cpuModel(): string {
+function getCPUModel(): string {
   const cpuType = os.cpus()
   return cpuType[0].model ? cpuType[0].model : "Unknown CPU"
 }
 
-function totalRAMInGB(): number {
+function getTotalRAMInGB(): number {
   const totalRAM = os.totalmem()
   // Get totalRAM in GB
   return totalRAM ? totalRAM / (1024 * 1024 * 1024) : 0
 }
 
-function homedir(): string {
+function getHomedir(): string {
   const osHomedir = os.homedir()
   if (osHomedir) return osHomedir
   return "Unknown"
 }
 
-function username() {
+function getUsername() {
   try {
     const currentUsername = os.userInfo().username
     if (currentUsername) return currentUsername
@@ -35,7 +35,7 @@ function username() {
   }
 }
 
-function checkCurrentShell(): string {
+function getCurrentShell(): string {
   try {
     const currentShell = os.userInfo().shell
     if (currentShell) return currentShell
@@ -58,19 +58,11 @@ async function executeCommand(command: string): Promise<string> {
   }
 }
 
-function checkCurrentShellZSH(currentShell: string, zshLoc: string): boolean {
-  const currentShellIsZSH = (
-    (zshLoc === currentShell) && zshLoc.toLowerCase().includes("zsh")
-  )
-  return currentShellIsZSH
-}
-
 export {
-  cpuModel,
-  totalRAMInGB,
-  homedir,
-  username,
-  checkCurrentShell,
+  getCPUModel,
+  getTotalRAMInGB,
+  getHomedir,
+  getUsername,
+  getCurrentShell,
   executeCommand,
-  checkCurrentShellZSH
 }

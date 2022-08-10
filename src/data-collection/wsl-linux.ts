@@ -5,11 +5,11 @@ interface ReleaseDetails {
   [key: string]: string
 }
 
-function checkForWSL(): boolean {
+function getWSL(): boolean {
   return isWsl ? true : false
 }
 
-async function checkDistro(): Promise<string> {
+async function getDistro(): Promise<string> {
   try {
     const data = await readFile('/etc/os-release', 'utf8')
     const lines = data.split('\n')
@@ -31,6 +31,6 @@ async function checkDistro(): Promise<string> {
 }
 
 export {
-  checkForWSL,
-  checkDistro
+  getWSL,
+  getDistro
 }
