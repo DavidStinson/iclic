@@ -26,13 +26,10 @@ async function checkWSLLinuxData(data: Data): Promise<Data> {
 }
 
 async function checkGenericData(data: Data): Promise<Data> {
-
+  data.isShellZSH = sharedValid.checkCurrentShellZSH(data.shell, data.zshLoc)
   return data
 }
 
-// async function validation() {
-//   data.isShellZSH = sharedValid.checkCurrentShellZSH(data.shell, data.zshLoc)
-// }
 
 export {
   validationManager

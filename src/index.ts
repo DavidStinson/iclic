@@ -4,19 +4,21 @@ import { dataManager } from "./data-collection/manager.js"
 import { validationManager } from "./validation/manager.js"
 
 const initialData: Data = {
-  osName: "Unknown", //done
-  osVersion: "Unknown", //done
-  isValidOSVersion: false, //done
-  cpuModel: "Unknown", //done
-  ramInGB: 0, //done
-  isEnoughRam: false,
-  homedir: "Unknown", //done
-  username: "Unknown", //done
-  zshLoc: "Unknown", //done
-  shell: "Unknown", //done
+  osName: "Unknown",
+  osVersion: "Unknown",
+  isValidOSVersion: false,
+  cpuModel: "Unknown",
+  ramInGB: 0,
+  isMinimumRAM: false,
+  isRecommendedRAM: false,
+  homedir: "Unknown",
+  username: "Unknown",
+  zshLoc: "Unknown",
+  shell: "Unknown",
   isShellZSH: false,
-  codeAlias: "Unknown", //done
-  ghLoc: "Unknown", //done
+  codeAlias: "Unknown",
+  isValidCodeAlias: false,
+  ghLoc: "Unknown",
   npmLoc: "Unknown",
   npmVer: "Unknown",
   isValidNPMVer: false,

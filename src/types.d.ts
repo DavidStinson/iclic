@@ -1,53 +1,55 @@
 declare interface Data {
-  osName: string;
-  osVariant?: string;
-  isValidOSVariant?: boolean;
-  osVersion: string;
-  isValidOSVersion: boolean;
-  cpuType?: string;
-  isValidCPUType?: boolean;
-  cpuModel: string;
+  osName: string; // * done
+  osVariant?: string; // * done
+  isValidOSVariant?: boolean; // * done
+  osVersion: string; // * done
+  isValidOSVersion: boolean; // * done
+  cpuType?: string; // * done
+  isValidCPUType?: boolean; // * done
+  cpuModel: string; // * done
   // https://askubuntu.com/q/103965
-  vtStatus?: string;
-  isVTEnabled?: boolean;
-  ramInGB: number;
-  isEnoughRam: boolean;
-  homedir: string;
-  username: string;
-  zshLoc: string;
-  shell: string;
-  isShellZSH: boolean;
+  vtStatus?: string; // ! BLOCKED: Installfest Work/Testing
+  isVTEnabled?: boolean; // ! BLOCKED: Installfest Work/Testing
+  ramInGB: number; // * done
+  isMinimumRAM: boolean; // TODO: IN PROGRESS
+  isRecommendedRAM: boolean; // TODO: IN PROGRESS
+  homedir: string; // * done
+  username: string; // * done
+  zshLoc: string; // * done
+  shell: string;  // * done
+  isShellZSH: boolean; // * done
   isVSCodeInstalled?: boolean;
-  codeAlias: string;
-  brewLoc?: string;
-  isValidBrewLoc?: boolean;
-  ghLoc: string;
-  npmLoc: string;
-  npmVer: string;
-  isValidNPMVer: boolean;
-  nodeLoc: string;
-  nodeVer: string;
-  isValidNodeVer: boolean;
-  nodemonLoc: string;
-  nodemonVer: string;
-  isValidNodemonVer: boolean;
-  herokuLoc: string;
-  gitLoc: string;
-  gitVer: string;
-  isValidGitVer: boolean;
-  gitEmail: string;
-  gitEmailMatchesPrompt: boolean;
-  gitDefBranch: string;
-  isValidGitBranch: boolean;
-  gitMergeBehavior: string;
-  isValidGitMergeBehavior: boolean;
-  gitIgnoreLoc: string;
-  isValidGitIgnoreLoc: boolean;
-  gitIgnoreExists: boolean;
-  gitIgnore: string;
-  gitIgnoreHasContent: boolean;
-  zshrc: string;
-  zshrcHasContent: boolean;
+  codeAlias: string; // * done
+  isValidCodeAlias: boolean;
+  brewLoc?: string; // * done
+  isValidBrewLoc?: boolean; // * done
+  ghLoc: string; // * done
+  npmLoc: string; // * done
+  npmVer: string; // * done
+  isValidNPMVer: boolean; // * done
+  nodeLoc: string; // * done
+  nodeVer: string; // * done
+  isValidNodeVer: boolean; // TODO: IN PROGRESS
+  nodemonLoc: string; // * done
+  nodemonVer: string; // * done
+  isValidNodemonVer: boolean; // TODO: IN PROGRESS
+  herokuLoc: string; // * done
+  gitLoc: string; // * done
+  gitVer: string; // * done
+  isValidGitVer: boolean; // TODO: IN PROGRESS
+  gitEmail: string; // * done
+  gitEmailMatchesPrompt: boolean; // ! BLOCKED: ADD CLI PROMPT
+  gitDefBranch: string; // * done
+  isValidGitBranch: boolean; // TODO: IN PROGRESS
+  gitMergeBehavior: string; // * done
+  isValidGitMergeBehavior: boolean; // TODO: IN PROGRESS
+  gitIgnoreLoc: string; // * done
+  isValidGitIgnoreLoc: boolean; // TODO: IN PROGRESS
+  gitIgnoreExists: boolean; // * done
+  gitIgnore: string; // * done
+  gitIgnoreHasContent: boolean; // TODO: IN PROGRESS
+  zshrc: string; // * done
+  zshrcHasContent: boolean; // TODO: IN PROGRESS
   [key: string]: string | number | boolean | undefined;
 }
 
