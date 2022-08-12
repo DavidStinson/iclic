@@ -7,6 +7,9 @@ declare interface Data {
   cpuType?: string;
   isValidCPUType?: boolean;
   cpuModel: string;
+  // https://askubuntu.com/q/103965
+  vtStatus?: string;
+  isVTEnabled?: boolean;
   ramInGB: number;
   isEnoughRam: boolean;
   homedir: string;
