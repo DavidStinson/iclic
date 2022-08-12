@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { dataManager } from "./data-collection/manager.js";
+import { validationManager } from "./validation/manager.js";
 const initialData = {
     osName: "Unknown",
     osVersion: "Unknown",
@@ -43,5 +44,7 @@ const initialData = {
 };
 async function main(data) {
     const collectedData = await dataManager(data);
+    const validatedData = await validationManager(collectedData);
+    console.dir(validatedData);
 }
 main(initialData);

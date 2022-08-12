@@ -36,7 +36,7 @@ async function dataManager(data: Data): Promise<Data> {
       break;
     }
     case 'Linux': {
-      data = await getLinuxData(data)
+      data = await getWSLLinuxData(data)
       break;
     }
     default: {
@@ -57,7 +57,7 @@ async function getMacOSData(data: Data): Promise<Data> {
   return data
 }
 
-async function getLinuxData(data: Data): Promise<Data> {
+async function getWSLLinuxData(data: Data): Promise<Data> {
   const isWSL = wslLinuxData.getWSL()
   if (isWSL) {
     data.osName = "WSL2"
