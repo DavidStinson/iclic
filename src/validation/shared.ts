@@ -1,4 +1,7 @@
 const validators = {
+  shell: "zsh",
+  minRAM: 8,
+  recRAM: 16,
   npmVer: "^8.12",
   nodeVer: "~16",
   nodemonVer: "^2.0.15",
@@ -6,12 +9,23 @@ const validators = {
 }
 
 function checkCurrentShellZSH(currentShell: string, zshLoc: string): boolean {
-  const currentShellIsZSH = (
-    (zshLoc === currentShell) && zshLoc.toLowerCase().includes("zsh")
-  )
+  const currentShellIsZSH = 
+    zshLoc === currentShell && 
+    currentShell.toLowerCase().includes(validators.shell)
+  
   return currentShellIsZSH
+}
+
+function checkMinRAM(systemRAM: number): boolean {
+  return systemRAM > validators.minRAM
+}
+
+function checkRecRAM(systemRAM: number): boolean {
+  return systemRAM > validators.recRAM
 }
 
 export {
   checkCurrentShellZSH,
+  checkMinRAM,
+  checkRecRAM,
 }

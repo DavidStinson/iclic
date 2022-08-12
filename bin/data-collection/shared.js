@@ -52,14 +52,15 @@ function getGitIgnoreExists(homedir) {
         return false;
     }
 }
-async function executeCommand(command) {
+async function getNodeVer() {
     try {
-        const { stdout, stderr } = await execAsync(command);
+        const { stdout, stderr } = await execAsync("node --version");
         if (stderr)
             throw new Error(stderr);
-        const stdoutTrim = stdout.trim();
-        if (stdoutTrim)
-            return stdoutTrim;
+        if (stdout) {
+            const stdoutTrim = stdout.trim();
+            return stdoutTrim[0] === "v" ? stdoutTrim.substring(1) : stdoutTrim;
+        }
         return "Unknown";
     }
     catch (error) {
@@ -67,4 +68,39 @@ async function executeCommand(command) {
         return "Unknown";
     }
 }
-export { getCPUModel, getTotalRAMInGB, getHomedir, getUsername, getCurrentShell, executeCommand, getGitIgnoreExists, };
+async function getGitVer() {
+    try {
+        const { stdout, stderr } = await execAsync("git --version");
+        if (stderr)
+            throw new Error(stderr);
+        if (stdout) {
+            const stdoutTrim = stdout.trim();
+            return stdoutTrim.startsWith("git version")
+                ? stdoutTrim.substring(12)
+                : stdoutTrim;
+        }
+        return "Unknown";
+    }
+    catch (error) {
+        log(cErr(error));
+        return "Unknown";
+    }
+}
+async function executeCommand(command) {
+    try {
+        const { stdout, stderr } = await execAsync(command);
+        if (stderr)
+            throw new Error(stderr);
+        if (stdout) {
+            const stdoutTrim = stdout.trim();
+            if (stdoutTrim)
+                return stdoutTrim;
+        }
+        return "Unknown";
+    }
+    catch (error) {
+        log(cErr(error));
+        return "Unknown";
+    }
+}
+export { getCPUModel, getTotalRAMInGB, getHomedir, getUsername, getCurrentShell, getGitIgnoreExists, getNodeVer, getGitVer, executeCommand, };

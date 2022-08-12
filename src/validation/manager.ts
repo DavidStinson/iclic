@@ -27,6 +27,8 @@ async function checkWSLLinuxData(data: Data): Promise<Data> {
 
 async function checkGenericData(data: Data): Promise<Data> {
   data.isShellZSH = sharedValid.checkCurrentShellZSH(data.shell, data.zshLoc)
+  data.isMinRAM = sharedValid.checkMinRAM(data.ramInGB)
+  data.isRecRAM = sharedValid.checkRecRAM(data.ramInGB)
   return data
 }
 

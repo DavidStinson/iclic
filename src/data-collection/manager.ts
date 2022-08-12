@@ -15,12 +15,10 @@ const commandsForData: CommandsForData[] = [
   {dataKey: "npmLoc", command: "which npm"},
   {dataKey: "npmVer", command: "npm --version"},
   {dataKey: "nodeLoc", command: "which node"},
-  {dataKey: "nodeVer", command: "node --version"},
   {dataKey: "nodemonLoc", command: "which nodemon"},
   {dataKey: "nodemonVer", command: "nodemon --version"},
   {dataKey: "herokuLoc", command: "which heroku"},
   {dataKey: "gitLoc", command: "which git"},
-  {dataKey: "gitVer", command: "git --version"},
   {dataKey: "gitEmail", command: "git config --global user.email"},
   {dataKey: "gitDefBranch", command: "git config --global init.defaultBranch"},
   {dataKey: "gitMergeBehavior", command: "git config --global pull.rebase"},
@@ -79,6 +77,8 @@ async function getGenericData(data: Data): Promise<Data> {
   data.username = sharedData.getUsername()
   data.shell = sharedData.getCurrentShell()
   data.gitIgnoreExists = sharedData.getGitIgnoreExists(data.homedir)
+  data.nodeVer = await sharedData.getNodeVer()
+  data.gitVer = await sharedData.getGitVer()
   for await (const { dataKey, command } of commandsForData) {
     data[dataKey] = await sharedData.executeCommand(command)
   }

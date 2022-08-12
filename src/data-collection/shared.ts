@@ -55,12 +55,46 @@ function getGitIgnoreExists(homedir: string): boolean {
   }
 }
 
+async function getNodeVer(): Promise<string> {
+  try {
+    const { stdout, stderr } = await execAsync("node --version")
+    if(stderr) throw new Error(stderr);
+    if (stdout) {
+      const stdoutTrim = stdout.trim()
+      return stdoutTrim[0] === "v" ? stdoutTrim.substring(1) : stdoutTrim
+    }
+    return "Unknown"
+  } catch (error) {
+    log(cErr(error))
+    return "Unknown"
+  }
+}
+
+async function getGitVer(): Promise<string> {
+  try {
+    const { stdout, stderr } = await execAsync("git --version")
+    if(stderr) throw new Error(stderr);
+    if (stdout) {
+      const stdoutTrim = stdout.trim()
+      return stdoutTrim.startsWith("git version")
+        ? stdoutTrim.substring(12)
+        : stdoutTrim
+    }
+    return "Unknown"
+  } catch (error) {
+    log(cErr(error))
+    return "Unknown"
+  }
+}
+
 async function executeCommand(command: string): Promise<string> {
   try {
     const { stdout, stderr } = await execAsync(command)
     if(stderr) throw new Error(stderr);
-    const stdoutTrim = stdout.trim()
-    if(stdoutTrim) return stdoutTrim
+    if(stdout) {
+      const stdoutTrim = stdout.trim()
+      if(stdoutTrim) return stdoutTrim
+    }
     return "Unknown"
   } catch (error) {
     log(cErr(error))
@@ -74,6 +108,8 @@ export {
   getHomedir,
   getUsername,
   getCurrentShell,
-  executeCommand,
   getGitIgnoreExists,
+  getNodeVer,
+  getGitVer,
+  executeCommand,
 }

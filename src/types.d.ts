@@ -11,8 +11,8 @@ declare interface Data {
   vtStatus?: string; // ! BLOCKED: Installfest Work/Testing
   isVTEnabled?: boolean; // ! BLOCKED: Installfest Work/Testing
   ramInGB: number; // * done
-  isMinimumRAM: boolean; // TODO: IN PROGRESS
-  isRecommendedRAM: boolean; // TODO: IN PROGRESS
+  isMinRAM: boolean; // * done
+  isRecRAM: boolean; // * done
   homedir: string; // * done
   username: string; // * done
   zshLoc: string; // * done

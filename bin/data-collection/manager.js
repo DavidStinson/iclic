@@ -13,12 +13,10 @@ const commandsForData = [
     { dataKey: "npmLoc", command: "which npm" },
     { dataKey: "npmVer", command: "npm --version" },
     { dataKey: "nodeLoc", command: "which node" },
-    { dataKey: "nodeVer", command: "node --version" },
     { dataKey: "nodemonLoc", command: "which nodemon" },
     { dataKey: "nodemonVer", command: "nodemon --version" },
     { dataKey: "herokuLoc", command: "which heroku" },
     { dataKey: "gitLoc", command: "which git" },
-    { dataKey: "gitVer", command: "git --version" },
     { dataKey: "gitEmail", command: "git config --global user.email" },
     { dataKey: "gitDefBranch", command: "git config --global init.defaultBranch" },
     { dataKey: "gitMergeBehavior", command: "git config --global pull.rebase" },
@@ -33,7 +31,7 @@ async function dataManager(data) {
             break;
         }
         case 'Linux': {
-            data = await getLinuxData(data);
+            data = await getWSLLinuxData(data);
             break;
         }
         default: {
@@ -52,7 +50,7 @@ async function getMacOSData(data) {
     data.brewLoc = await sharedData.executeCommand("which brew");
     return data;
 }
-async function getLinuxData(data) {
+async function getWSLLinuxData(data) {
     const isWSL = wslLinuxData.getWSL();
     if (isWSL) {
         data.osName = "WSL2";
@@ -73,6 +71,8 @@ async function getGenericData(data) {
     data.username = sharedData.getUsername();
     data.shell = sharedData.getCurrentShell();
     data.gitIgnoreExists = sharedData.getGitIgnoreExists(data.homedir);
+    data.nodeVer = await sharedData.getNodeVer();
+    data.gitVer = await sharedData.getGitVer();
     for await (const { dataKey, command } of commandsForData) {
         data[dataKey] = await sharedData.executeCommand(command);
     }
