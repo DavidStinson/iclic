@@ -1,4 +1,5 @@
 import os from "os"
+import fs from 'fs'
 import util from "util"
 import { exec } from "child_process"
 import chalk from "chalk"
@@ -45,6 +46,15 @@ function getCurrentShell(): string {
   }
 }
 
+function getGitIgnoreExists(homedir: string): boolean {
+  try {
+    return fs.existsSync(`${homedir}/.gitignore_global`) ? true : false
+  } catch (error) {
+    log(error)
+    return false
+  }
+}
+
 async function executeCommand(command: string): Promise<string> {
   try {
     const { stdout, stderr } = await execAsync(command)
@@ -65,4 +75,5 @@ export {
   getUsername,
   getCurrentShell,
   executeCommand,
+  getGitIgnoreExists,
 }

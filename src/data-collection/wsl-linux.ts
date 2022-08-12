@@ -18,19 +18,39 @@ async function getDistro(): Promise<string> {
       // Split the line into an array of words delimited by '='
       const words = line.split('=')
       releaseDetails[words[0].trim().toLowerCase()] = words[1]?.trim()
-    })
-    if (releaseDetails.pretty_name){
-      return releaseDetails.pretty_name.replace(/"/g, "")
+    })    
+    if (releaseDetails.name){
+      return releaseDetails.name.replace(/"/g, "")
     } else {
-      return "Linux - Unkown Distro"
+      return "Linux - Unknown Distro"
     }
   } catch (error) {
     return "Linux - Unknown Distro"
   }
-  
+}
+
+async function getOSVersion(): Promise<string> {
+  try {
+    const data = await readFile('/etc/os-release', 'utf8')
+    const lines = data.split('\n')
+    const releaseDetails: ReleaseDetails = {}
+    lines.forEach(line => {
+      // Split the line into an array of words delimited by '='
+      const words = line.split('=')
+      releaseDetails[words[0].trim().toLowerCase()] = words[1]?.trim()
+    })    
+    if (releaseDetails.version_id){
+      return releaseDetails.version_id.replace(/"/g, "")
+    } else {
+      return "Linux - Unknown Distro"
+    }
+  } catch (error) {
+    return "Linux - Unknown Distro"
+  }
 }
 
 export {
   getWSL,
-  getDistro
+  getDistro,
+  getOSVersion,
 }

@@ -7,18 +7,15 @@ const log = console.log
 function getCPUType(): string {
   const cpuType = os.cpus()
   if (cpuType[0].model.includes("Apple")){
-    log("Apple Silicon Chip")
     return "Apple Silicon"
   } else if (cpuType[0].model.includes("Intel")) {
-    log("Intel Chip")
     return "Intel"
   } else {
-    log("Unknown Chip")
     return "Unknown"
   }
 }
 
-function getOSVariant(): string {
+function getOSVersion(): string {
   try {
     const jsonobj = plist.parse(
       fs.readFileSync(
@@ -37,20 +34,15 @@ function getOSVariant(): string {
 
 function getVSCodeInstallation(): boolean {
   try {
-    if (fs.existsSync("/Applications/Visual Studio Code.app")) {
-      return true
-    } else {
-      return false
-    }
+    return fs.existsSync("/Applications/Visual Studio Code.app") ? true : false
   } catch (error) {
     log(error)
     return false
   }
 }
 
-
 export {
   getCPUType,
-  getOSVariant,
+  getOSVersion,
   getVSCodeInstallation,
 }

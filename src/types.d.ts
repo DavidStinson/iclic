@@ -1,9 +1,14 @@
 declare interface Data {
   osName: string;
-  osVariant: string;
+  osVariant?: string;
+  isValidOSVariant?: boolean;
+  osVersion: string;
+  isValidOSVersion: boolean;
   cpuType?: string;
+  isValidCPUType?: boolean;
   cpuModel: string;
   ramInGB: number;
+  isEnoughRam: boolean;
   homedir: string;
   username: string;
   zshLoc: string;
@@ -12,22 +17,35 @@ declare interface Data {
   isVSCodeInstalled?: boolean;
   codeAlias: string;
   brewLoc?: string;
+  isValidBrewLoc?: boolean;
   ghLoc: string;
   npmLoc: string;
   npmVer: string;
+  isValidNPMVer: boolean;
   nodeLoc: string;
   nodeVer: string;
+  isValidNodeVer: boolean;
   nodemonLoc: string;
   nodemonVer: string;
+  isValidNodemonVer: boolean;
   herokuLoc: string;
   gitLoc: string;
+  isValidGitLoc?: boolean;
   gitVer: string;
+  isValidGitVer: boolean;
   gitEmail: string;
-  gitBranch: string;
-  gitMerge: string;
+  gitEmailMatchesPrompt: boolean;
+  gitDefBranch: string;
+  isValidGitBranch: boolean;
+  gitMergeBehavior: string;
+  isValidGitMergeBehavior: boolean;
+  gitIgnoreLoc: string;
+  isValidGitIgnoreLoc: boolean;
+  gitIgnoreExists: boolean;
   gitIgnore: string;
-  gitIgnoreGlobal: string;
+  gitIgnoreHasContent: boolean;
   zshrc: string;
+  zshrcHasContent: boolean;
   [key: string]: string | number | boolean | undefined;
 }
 
@@ -48,3 +66,5 @@ declare interface PlistObject {
 declare module 'plist' {
   export function parse(xml: string)
 }
+
+declare module 'compare-versions/index.mjs'

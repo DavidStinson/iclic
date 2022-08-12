@@ -1,9 +1,9 @@
 import isWsl from "is-wsl";
 import { readFile } from 'fs/promises';
-function checkForWSL() {
+function getWSL() {
     return isWsl ? true : false;
 }
-async function checkDistro() {
+async function getDistro() {
     try {
         const data = await readFile('/etc/os-release', 'utf8');
         const lines = data.split('\n');
@@ -13,15 +13,36 @@ async function checkDistro() {
             const words = line.split('=');
             releaseDetails[words[0].trim().toLowerCase()] = words[1]?.trim();
         });
-        if (releaseDetails.pretty_name) {
-            return releaseDetails.pretty_name.replace(/"/g, "");
+        if (releaseDetails.name) {
+            return releaseDetails.name.replace(/"/g, "");
         }
         else {
-            return "Linux - Unkown Distro";
+            return "Linux - Unknown Distro";
         }
     }
     catch (error) {
         return "Linux - Unknown Distro";
     }
 }
-export { checkForWSL, checkDistro };
+async function getOSVersion() {
+    try {
+        const data = await readFile('/etc/os-release', 'utf8');
+        const lines = data.split('\n');
+        const releaseDetails = {};
+        lines.forEach(line => {
+            // Split the line into an array of words delimited by '='
+            const words = line.split('=');
+            releaseDetails[words[0].trim().toLowerCase()] = words[1]?.trim();
+        });
+        if (releaseDetails.version_id) {
+            return releaseDetails.version_id.replace(/"/g, "");
+        }
+        else {
+            return "Linux - Unknown Distro";
+        }
+    }
+    catch (error) {
+        return "Linux - Unknown Distro";
+    }
+}
+export { getWSL, getDistro, getOSVersion, };
