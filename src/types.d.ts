@@ -30,7 +30,6 @@ declare interface Data {
   isValidNodemonVer: boolean;
   herokuLoc: string;
   gitLoc: string;
-  isValidGitLoc?: boolean;
   gitVer: string;
   isValidGitVer: boolean;
   gitEmail: string;

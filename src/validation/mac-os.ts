@@ -3,18 +3,31 @@ const { satisfies } = compare
 
 const validators = {
   macOSVer: "~12",
-  cpuTypes: ["Apple Silicon", "Intel"]
+  cpuTypes: ["Apple Silicon", "Intel"],
+  appleSiliconBrewLoc: "/opt/homebrew/bin/brew",
+  intelBrewLoc: "/usr/local/bin/brew"
 }
 
-function osVersion(version: string):boolean {
+function osVersion(version: string): boolean {
   return satisfies(version, validators.macOSVer)
 }
 
-function cpuType(type = "Unknown") {
+function cpuType(type = "Unknown"): boolean {
   return validators.cpuTypes.includes(type)
+}
+
+function brewLoc(type = "Unknown", location = "Unknown"): boolean {
+  if (type === "Apple Silicon") {
+    return location === validators.appleSiliconBrewLoc ? true : false
+  } else if (type === "Intel") {
+    return location === validators.intelBrewLoc ? true : false
+  } else {
+    return false
+  }
 }
 
 export {
   osVersion,
   cpuType,
+  brewLoc,
 }
