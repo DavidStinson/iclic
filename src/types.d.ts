@@ -65,6 +65,7 @@ declare interface InstallValidation {
   isValidGitVer: boolean; // TODO: IN PROGRESS
 }
 
+// * THIS IS COMPLETE
 declare interface ConfigData {
   gitEmail: string; 
   gitDefBranch: string; 

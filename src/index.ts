@@ -1,78 +1,78 @@
 #!/usr/bin/env node
 
-import { dataManager } from "./data-collection/manager.js"
-import { validationManager } from "./validation/manager.js"
+import { dataManager } from './data-collection/manager.js'
+import { validationManager } from './validation/manager.js'
 
 const userData: UserData = {
-  preferredName: "Unknown", // ! BLOCKED: ADD CLI PROMPT
-  gitHubUsername: "Unknown", // ! BLOCKED: ADD CLI PROMPT
-  gitHubEmail: "Unknown", // ! BLOCKED: ADD CLI PROMPT
-  cohortID: "Unknown", // ! BLOCKED: ADD CLI PROMPT
+  preferredName: 'Unknown',
+  gitHubUsername: 'Unknown',
+  gitHubEmail: 'Unknown',
+  cohortID: 'Unknown',
 }
 
 const userValidation: UserValidation = {
-  isValidCohortId: false, // ! BLOCKED: ADD CLI PROMPT
-  hasPreviousSubmission: false, // ! BLOCKED: ADD CLI PROMPT 
+  isValidCohortId: false,
+  hasPreviousSubmission: false,
 }
 
 const machineData: MachineData = {
-  osName: "Unknown", // * done
-  osVersion: "Unknown", // * done
-  homedir: "Unkown", // * done
-  username: "Unknown", // * done
-  cpuModel: "Unknown", // * done
-  ramInGB: 0, // * done
+  osName: 'Unknown',
+  osVersion: 'Unknown',
+  homedir: 'Unkown',
+  username: 'Unknown',
+  cpuModel: 'Unknown',
+  ramInGB: 0,
 }
 
 const machineValidation: MachineValidation = {
-  isValidOSVersion: false, // * done
-  isMinRAM: false, // * done
-  isRecRAM: false, // * done
+  isValidOSVersion: false,
+  isMinRAM: false,
+  isRecRAM: false,
 }
 
 const installData: InstallData = {
-  zshLoc: "Unknown", // * done
-  shell: "Unknown",  // * done
-  codeAlias: "Unknown", // * done
-  ghLoc: "Unknown", // * done
-  npmLoc: "Unknown", // * done
-  npmVer: "Unknown", // * done
-  nodeLoc: "Unknown", // * done
-  nodeVer: "Unknown", // * done
-  nodemonLoc: "Unknown", // * done
-  nodemonVer: "Unknown", // * done
-  herokuLoc: "Unknown", // * done
-  gitLoc: "Unknown", // * done
-  gitVer: "Unknown", // * done
+  zshLoc: 'Unknown',
+  shell: 'Unknown',
+  codeAlias: 'Unknown',
+  ghLoc: 'Unknown',
+  npmLoc: 'Unknown',
+  npmVer: 'Unknown',
+  nodeLoc: 'Unknown',
+  nodeVer: 'Unknown',
+  nodemonLoc: 'Unknown',
+  nodemonVer: 'Unknown',
+  herokuLoc: 'Unknown',
+  gitLoc: 'Unknown',
+  gitVer: 'Unknown',
 }
 
 const installValidation: InstallValidation = {
-  isShellZSH: false, // * done
-  isValidCodeAlias: false, 
-  isValidNPMVer: false, // * done
-  isValidNodeVer: false, // TODO: IN PROGRESS
-  isValidNodemonVer: false, // TODO: IN PROGRESS
-  isValidGitVer: false, // TODO: IN PROGRESS
+  isShellZSH: false,
+  isValidCodeAlias: false,
+  isValidNPMVer: false,
+  isValidNodeVer: false,
+  isValidNodemonVer: false,
+  isValidGitVer: false,
 }
 
 const configData: ConfigData = {
-  gitEmail: "Unknown", // * done
-  gitDefBranch: "Unknown", // * done
-  gitMergeBehavior: "Unknown", // * done
-  gitIgnConLoc: "Unknown", // * done
-  gitIgnLoc: "Unknown", // * done
-  gitIgn: "Unknown", // * done
-  zshrc: "Unknown", // * done
+  gitEmail: 'Unknown',
+  gitDefBranch: 'Unknown',
+  gitMergeBehavior: 'Unknown',
+  gitIgnConLoc: 'Unknown',
+  gitIgnLoc: 'Unknown',
+  gitIgn: 'Unknown',
+  zshrc: 'Unknown',
 }
 
 const configValidation: ConfigValidation = {
-  gitEmailMatchesPrompt: false, // ! BLOCKED: ADD CLI PROMPT
-  isValidGitBranch: false, // TODO: IN PROGRESS
-  isValidGitMergeBehavior: false, // TODO: IN PROGRESS
-  isValidGitIgnConLoc: false, // TODO: IN PROGRESS
-  gitIgnExists: false, // TODO: IN PROGRESS
-  gitIgnHasContent: false, // TODO: IN PROGRESS
-  zshrcHasContent: false, // TODO: IN PROGRESS
+  gitEmailMatchesPrompt: false,
+  isValidGitBranch: false,
+  isValidGitMergeBehavior: false,
+  isValidGitIgnConLoc: false,
+  gitIgnExists: false,
+  gitIgnHasContent: false,
+  zshrcHasContent: false,
 }
 
 const initialData: Data = {

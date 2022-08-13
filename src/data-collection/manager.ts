@@ -4,10 +4,6 @@ import * as macOSData from './mac-os.js'
 import * as wslLinuxData from './wsl-linux.js'
 import * as sharedData from './shared.js'
 
-const osType = os.type()
-const log = console.log
-const cErr = chalk.bold.red
-
 const commandsForInstallData: CommandsForInstallData[] = [
   { dataKey: 'zshLoc', command: 'which zsh' },
   { dataKey: 'codeAlias', command: 'which code' },
@@ -23,10 +19,7 @@ const commandsForInstallData: CommandsForInstallData[] = [
 
 const commandsForConfigData: CommandsForConfigData[] = [
   { dataKey: 'gitEmail', command: 'git config --global user.email' },
-  {
-    dataKey: 'gitDefBranch',
-    command: 'git config --global init.defaultBranch',
-  },
+  { dataKey: 'gitDefBranch', command: 'git config --global init.defaultBranch'},
   { dataKey: 'gitMergeBehavior', command: 'git config --global pull.rebase' },
   { dataKey: 'gitIgnConLoc', command: 'git config --global core.excludesfile' },
   { dataKey: 'gitIgnLoc', command: 'git config --global core.excludesfile' },
@@ -35,7 +28,7 @@ const commandsForConfigData: CommandsForConfigData[] = [
 ]
 
 async function dataManager(data: Data): Promise<Data> {
-  switch (osType) {
+  switch (os.type()) {
     case 'Darwin': {
       data.machineData = getMacOSMachineData(data.machineData)
       data.installData = await getMacOSInstallData(data.installData)
@@ -46,7 +39,7 @@ async function dataManager(data: Data): Promise<Data> {
       break
     }
     default: {
-      log(cErr('This OS is not supported.'))
+      console.log(chalk.bold.red('This OS is not supported.'))
       return process.exit()
     }
   }
