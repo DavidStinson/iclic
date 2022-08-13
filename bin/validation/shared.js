@@ -48,4 +48,13 @@ function checkGitIgnConLoc(gitIgnConLoc, homedir) {
         ? true
         : false;
 }
-export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, checkVersions, checkGitBranch, checkGitMerge, checkGitIgnConLoc, };
+function checkGitIgnExists(gitIgnConLoc) {
+    return gitIgnConLoc !== "Unknown" ? true : false;
+}
+function checkGitIgnForContent(gitIgn) {
+    return gitIgn.length ? true : false;
+}
+function checkZshrcForContent(zshrc) {
+    return zshrc.length ? true : false;
+}
+export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, checkVersions, checkGitBranch, checkGitMerge, checkGitIgnConLoc, checkGitIgnExists, checkGitIgnForContent, checkZshrcForContent, };

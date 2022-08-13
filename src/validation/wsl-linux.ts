@@ -3,7 +3,7 @@ const { satisfies } = compare
 
 const validators = {
   distro: "ubuntu",
-  ubuntu: "~22",
+  osVersion: "^22",
 }
 
 function osVariant(distro = "Unknown"):boolean {
@@ -11,7 +11,11 @@ function osVariant(distro = "Unknown"):boolean {
 }
 
 function osVersion(version: string):boolean {
-  return satisfies(version, validators.ubuntu)
+  return satisfies(version, validators.osVersion)
+}
+
+function checkInvalidOSReason(osVersion: string) {
+  return compare(osVersion, validators.osVersion)
 }
 
 function vsCodeAlias(codeAlias: string): boolean {
@@ -21,5 +25,6 @@ function vsCodeAlias(codeAlias: string): boolean {
 export {
   osVariant,
   osVersion,
+  checkInvalidOSReason,
   vsCodeAlias,
 }

@@ -3,7 +3,7 @@ import compare from "compare-versions"
 const { satisfies } = compare
 
 const validators = {
-  macOSVer: "~12",
+  macOSVer: "^12",
   cpuTypes: ["Apple Silicon", "Intel"],
   appleSiliconBrewLoc: "/opt/homebrew/bin/brew",
   intelBrewLoc: "/usr/local/bin/brew",
@@ -13,15 +13,19 @@ const validators = {
   ],
 }
 
-function osVersion(version: string): boolean {
+function checkOSVersion(version: string): boolean {
   return satisfies(version, validators.macOSVer)
 }
 
-function cpuType(type = "Unknown"): boolean {
+function checkInvalidOSReason(osVersion: string) {
+  return compare(osVersion, validators.macOSVer)
+}
+
+function checkCPUType(type = "Unknown"): boolean {
   return validators.cpuTypes.includes(type)
 }
 
-function brewLoc(type = "Unknown", location = "Unknown"): boolean {
+function checkBrewLoc(type = "Unknown", location = "Unknown"): boolean {
   if (type === "Apple Silicon") {
     return location === validators.appleSiliconBrewLoc ? true : false
   } else if (type === "Intel") {
@@ -31,18 +35,19 @@ function brewLoc(type = "Unknown", location = "Unknown"): boolean {
   }
 }
 
-function vsCodeLoc(codeLoc = "Unknown"): boolean {
+function checkVSCodeLoc(codeLoc = "Unknown"): boolean {
   return codeLoc === "/Applications/Visual Studio Code.app" ? true : false
 }
 
-function vsCodeAlias(codeAlias: string): boolean {
+function checkVSCodeAlias(codeAlias: string): boolean {
   return validators.codeLocations.includes(codeAlias) ? true : false
 }
 
 export {
-  osVersion,
-  cpuType,
-  brewLoc,
-  vsCodeLoc,
-  vsCodeAlias,
+  checkOSVersion,
+  checkInvalidOSReason,
+  checkCPUType,
+  checkBrewLoc,
+  checkVSCodeLoc,
+  checkVSCodeAlias,
 }

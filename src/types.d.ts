@@ -28,6 +28,7 @@ declare interface MachineData {
 declare interface MachineValidation {
   isValidOSVariant?: boolean; // WSL/Linux only
   isValidOSVersion: boolean; 
+  isInvaidOSReason?: number; // TODO: Needs done
   isValidCPUType?: boolean; // macOS only
   isVTEnabled?: boolean; // ! BLOCKED: Installfest Work/Testing
   isMinRAM: boolean; 

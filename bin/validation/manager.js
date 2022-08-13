@@ -57,6 +57,9 @@ function checkGenConfigData(data) {
     cV.isValidGitBranch = sharedValid.checkGitBranch(cD.gitDefBranch);
     cV.isValidGitMergeBehavior = sharedValid.checkGitMerge(cD.gitMergeBehavior);
     cV.isValidGitIgnConLoc = sharedValid.checkGitIgnConLoc(cD.gitIgnConLoc, mD.homedir);
+    cV.gitIgnExists = sharedValid.checkGitIgnExists(cD.gitIgnConLoc);
+    cV.gitIgnHasContent = sharedValid.checkGitIgnForContent(cD.gitIgn);
+    cV.zshrcHasContent = sharedValid.checkZshrcForContent(cD.zshrc);
     return cV;
 }
 export { validationManager };

@@ -92,6 +92,7 @@ async function main(data: Data) {
   const collectedData = await dataManager(data)
   const validatedData = await validationManager(collectedData)
   console.dir(validatedData)
+  console.dir(validatedData.installValidation)
 }
 
 main(initialData)
