@@ -53,20 +53,13 @@ declare interface InstallData {
   gitVer: string;
 }
 
+// ** THIS IS COMPLETE!
 declare interface InstallValidation {
   isShellZSH: boolean; // * done
   isVSCodeInstalled?: boolean; // macOS only // * done
   isValidCodeAlias: boolean; // * done
   isValidBrewLoc?: boolean; // macOS only // * done
-  isValidNPMVer: boolean; // TODO: IN PROGRESS
-  npmInvalidReasonCode?: number; // TODO: IN PROGRESS
-  isValidNodeVer: boolean; // TODO: IN PROGRESS
-  nodeInvalidReasonCode?: number; // TODO: IN PROGRESS
-  isValidNodemonVer: boolean; // TODO: IN PROGRESS
-  nodemonInvalidReasonCode?: number; // TODO: IN PROGRESS
-  isValidGitVer: boolean; // TODO: IN PROGRESS
-  gitInvalidReasonCode?: number; // TODO: IN PROGRESS
-  [key: string]: boolean;
+  versions: InstallVersion[];
 }
 
 // * THIS IS COMPLETE
@@ -101,6 +94,13 @@ declare interface Data {
   configValidation: ConfigValidation;
 }
 
+declare interface InstallVersion {
+  name: keyof InstallData;
+  vName: keyof InstallValidators;
+  isValid: boolean;
+  reason?: number;
+}
+
 declare interface CommandsForInstallData {
   dataKey: keyof InstallData;
   command: string;
@@ -120,23 +120,11 @@ declare interface PlistObject {
   iOSSupportVersion: string;
 }
 
-declare interface SharedValidators {
-  shell: string;
-  minRAM: number;
-  recRAM: number;
-  versions: {
-    npmVer: string;
-    nodeVer: string;
-    nodemonVer: string;
-    gitVer: string;
-    [key: string]: string;
-  }
-}
-
-declare interface VersForSharedValidators {
-  verKey:  string;
-  ver: string;
-  iVKey: keyof InstallValidation;
+declare interface InstallValidators {
+  npmVer: string;
+  nodeVer: string;
+  nodemonVer: string;
+  gitVer: string;
 }
 
 declare module 'plist' {
