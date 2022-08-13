@@ -10,4 +10,7 @@ function osVariant(distro = "Unknown") {
 function osVersion(version) {
     return satisfies(version, validators.ubuntu);
 }
-export { osVariant, osVersion, };
+function vsCodeAlias(codeAlias) {
+    return codeAlias !== "Unknown" ? true : false;
+}
+export { osVariant, osVersion, vsCodeAlias, };

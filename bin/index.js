@@ -1,43 +1,43 @@
 #!/usr/bin/env node
-import { dataManager } from "./data-collection/manager.js";
-import { validationManager } from "./validation/manager.js";
+import { dataManager } from './data-collection/manager.js';
+import { validationManager } from './validation/manager.js';
 const userData = {
-    preferredName: "Unknown",
-    gitHubUsername: "Unknown",
-    gitHubEmail: "Unknown",
-    cohortID: "Unknown", // ! BLOCKED: ADD CLI PROMPT
+    preferredName: 'Unknown',
+    gitHubUsername: 'Unknown',
+    gitHubEmail: 'Unknown',
+    cohortID: 'Unknown',
 };
 const userValidation = {
     isValidCohortId: false,
-    hasPreviousSubmission: false, // ! BLOCKED: ADD CLI PROMPT 
+    hasPreviousSubmission: false,
 };
 const machineData = {
-    osName: "Unknown",
-    osVersion: "Unknown",
-    homedir: "Unkown",
-    username: "Unknown",
-    cpuModel: "Unknown",
-    ramInGB: 0, // * done
+    osName: 'Unknown',
+    osVersion: 'Unknown',
+    homedir: 'Unkown',
+    username: 'Unknown',
+    cpuModel: 'Unknown',
+    ramInGB: 0,
 };
 const machineValidation = {
     isValidOSVersion: false,
     isMinRAM: false,
-    isRecRAM: false, // * done
+    isRecRAM: false,
 };
 const installData = {
-    zshLoc: "Unknown",
-    shell: "Unknown",
-    codeAlias: "Unknown",
-    ghLoc: "Unknown",
-    npmLoc: "Unknown",
-    npmVer: "Unknown",
-    nodeLoc: "Unknown",
-    nodeVer: "Unknown",
-    nodemonLoc: "Unknown",
-    nodemonVer: "Unknown",
-    herokuLoc: "Unknown",
-    gitLoc: "Unknown",
-    gitVer: "Unknown", // * done
+    zshLoc: 'Unknown',
+    shell: 'Unknown',
+    codeAlias: 'Unknown',
+    ghLoc: 'Unknown',
+    npmLoc: 'Unknown',
+    npmVer: 'Unknown',
+    nodeLoc: 'Unknown',
+    nodeVer: 'Unknown',
+    nodemonLoc: 'Unknown',
+    nodemonVer: 'Unknown',
+    herokuLoc: 'Unknown',
+    gitLoc: 'Unknown',
+    gitVer: 'Unknown',
 };
 const installValidation = {
     isShellZSH: false,
@@ -45,16 +45,16 @@ const installValidation = {
     isValidNPMVer: false,
     isValidNodeVer: false,
     isValidNodemonVer: false,
-    isValidGitVer: false, // TODO: IN PROGRESS
+    isValidGitVer: false,
 };
 const configData = {
-    gitEmail: "Unknown",
-    gitDefBranch: "Unknown",
-    gitMergeBehavior: "Unknown",
-    gitIgnConLoc: "Unknown",
-    gitIgnLoc: "Unknown",
-    gitIgn: "Unknown",
-    zshrc: "Unknown", // * done
+    gitEmail: 'Unknown',
+    gitDefBranch: 'Unknown',
+    gitMergeBehavior: 'Unknown',
+    gitIgnConLoc: 'Unknown',
+    gitIgnLoc: 'Unknown',
+    gitIgn: 'Unknown',
+    zshrc: 'Unknown',
 };
 const configValidation = {
     gitEmailMatchesPrompt: false,
@@ -63,7 +63,7 @@ const configValidation = {
     isValidGitIgnConLoc: false,
     gitIgnExists: false,
     gitIgnHasContent: false,
-    zshrcHasContent: false, // TODO: IN PROGRESS
+    zshrcHasContent: false,
 };
 const initialData = {
     userData,

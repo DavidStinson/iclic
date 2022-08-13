@@ -1,4 +1,5 @@
 import compare from "compare-versions"
+
 const { satisfies } = compare
 
 const validators = {

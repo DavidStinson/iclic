@@ -18,4 +18,6 @@ function checkMinRAM(systemRAM) {
 function checkRecRAM(systemRAM) {
     return systemRAM > validators.recRAM;
 }
+function isValidNodeVer() {
+}
 export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, };

@@ -9,6 +9,7 @@ async function validationManager(data) {
     }
     else if (osName === "WSL2" || osName === "Linux") {
         data.machineValidation = checkWSLLinuxMachineData(data);
+        data.installValidation = checkWSLLinuxInstallData(data);
     }
     data.machineValidation = checkGenMachineData(data);
     data.installValidation = checkGenInstallData(data);
@@ -24,6 +25,7 @@ function checkMacOSInstallData(data) {
     const { installValidation: iV, machineData: mD, installData: iD } = data;
     iV.isValidBrewLoc = macOSValid.brewLoc(mD.cpuType, iD.brewLoc);
     iV.isVSCodeInstalled = macOSValid.vsCodeLoc(iD.vsCodeLoc);
+    iV.isValidCodeAlias = macOSValid.vsCodeAlias(iD.codeAlias);
     return iV;
 }
 function checkWSLLinuxMachineData(data) {
@@ -31,6 +33,11 @@ function checkWSLLinuxMachineData(data) {
     mV.isValidOSVariant = wslLinuxValid.osVariant(mD.osVariant);
     mV.isValidOSVersion = wslLinuxValid.osVersion(mD.osVersion);
     return mV;
+}
+function checkWSLLinuxInstallData(data) {
+    const { installValidation: iV, installData: iD } = data;
+    iV.isValidCodeAlias = wslLinuxValid.vsCodeAlias(iD.codeAlias);
+    return iV;
 }
 function checkGenMachineData(data) {
     const { machineValidation: mV, machineData: mD } = data;

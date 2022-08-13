@@ -50,19 +50,23 @@ declare interface InstallData {
   nodemonVer: string; 
   herokuLoc: string; 
   gitLoc: string; 
-  gitVer: string; 
-  [key: string]: string;
+  gitVer: string;
 }
 
 declare interface InstallValidation {
   isShellZSH: boolean; // * done
   isVSCodeInstalled?: boolean; // macOS only // * done
-  isValidCodeAlias: boolean; 
+  isValidCodeAlias: boolean; // * done
   isValidBrewLoc?: boolean; // macOS only // * done
-  isValidNPMVer: boolean; // * done
+  isValidNPMVer: boolean; // TODO: IN PROGRESS
+  npmInvalidReasonCode?: number; // TODO: IN PROGRESS
   isValidNodeVer: boolean; // TODO: IN PROGRESS
+  nodeInvalidReasonCode?: number; // TODO: IN PROGRESS
   isValidNodemonVer: boolean; // TODO: IN PROGRESS
+  nodemonInvalidReasonCode?: number; // TODO: IN PROGRESS
   isValidGitVer: boolean; // TODO: IN PROGRESS
+  gitInvalidReasonCode?: number; // TODO: IN PROGRESS
+  [key: string]: boolean;
 }
 
 // * THIS IS COMPLETE
@@ -114,6 +118,25 @@ declare interface PlistObject {
   ProductUserVisibleVersion: string;
   ProductVersion: string;
   iOSSupportVersion: string;
+}
+
+declare interface SharedValidators {
+  shell: string;
+  minRAM: number;
+  recRAM: number;
+  versions: {
+    npmVer: string;
+    nodeVer: string;
+    nodemonVer: string;
+    gitVer: string;
+    [key: string]: string;
+  }
+}
+
+declare interface VersForSharedValidators {
+  verKey:  string;
+  ver: string;
+  iVKey: keyof InstallValidation;
 }
 
 declare module 'plist' {

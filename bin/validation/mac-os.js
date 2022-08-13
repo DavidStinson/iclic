@@ -4,7 +4,11 @@ const validators = {
     macOSVer: "~12",
     cpuTypes: ["Apple Silicon", "Intel"],
     appleSiliconBrewLoc: "/opt/homebrew/bin/brew",
-    intelBrewLoc: "/usr/local/bin/brew"
+    intelBrewLoc: "/usr/local/bin/brew",
+    codeLocations: [
+        "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code",
+        "/usr/local/bin/code"
+    ],
 };
 function osVersion(version) {
     return satisfies(version, validators.macOSVer);
@@ -26,4 +30,7 @@ function brewLoc(type = "Unknown", location = "Unknown") {
 function vsCodeLoc(codeLoc = "Unknown") {
     return codeLoc === "/Applications/Visual Studio Code.app" ? true : false;
 }
-export { osVersion, cpuType, brewLoc, vsCodeLoc, };
+function vsCodeAlias(codeAlias) {
+    return validators.codeLocations.includes(codeAlias) ? true : false;
+}
+export { osVersion, cpuType, brewLoc, vsCodeLoc, vsCodeAlias, };
