@@ -9,6 +9,7 @@ async function validationManager(data: Data): Promise<Data> {
     data.installValidation = checkMacOSInstallData(data)
   } else if (osName === "WSL2" || osName === "Linux") {
     data.machineValidation = checkWSLLinuxMachineData(data)
+    data.installValidation = checkWSLLinuxInstallData(data)
   }
   data.machineValidation = checkGenMachineData(data)
   data.installValidation = checkGenInstallData(data)
@@ -26,6 +27,7 @@ function checkMacOSInstallData(data: Data): InstallValidation {
   const { installValidation: iV, machineData: mD, installData: iD } = data
   iV.isValidBrewLoc = macOSValid.brewLoc(mD.cpuType, iD.brewLoc)
   iV.isVSCodeInstalled = macOSValid.vsCodeLoc(iD.vsCodeLoc)
+  iV.isValidCodeAlias = macOSValid.vsCodeAlias(iD.codeAlias)
   return iV
 }
 
@@ -34,6 +36,12 @@ function checkWSLLinuxMachineData(data: Data): MachineValidation {
   mV.isValidOSVariant = wslLinuxValid.osVariant(mD.osVariant)
   mV.isValidOSVersion = wslLinuxValid.osVersion(mD.osVersion)
   return mV
+}
+
+function checkWSLLinuxInstallData(data: Data): InstallValidation {
+  const { installValidation: iV, installData: iD } = data
+  iV.isValidCodeAlias = wslLinuxValid.vsCodeAlias(iD.codeAlias)
+  return iV
 }
 
 function checkGenMachineData(data: Data): MachineValidation{

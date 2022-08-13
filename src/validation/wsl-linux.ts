@@ -14,8 +14,12 @@ function osVersion(version: string):boolean {
   return satisfies(version, validators.ubuntu)
 }
 
+function vsCodeAlias(codeAlias: string): boolean {
+  return codeAlias !== "Unknown" ? true : false
+}
 
 export {
   osVariant,
   osVersion,
+  vsCodeAlias,
 }
