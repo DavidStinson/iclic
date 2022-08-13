@@ -105,6 +105,8 @@ async function getGenConfigData(
   for await (const { dataKey, command } of commandsForConfigData) {
     cD[dataKey] = await sharedData.executeCommand(command)
   }
+  cD.gitIgn = sharedData.getGitIgn(homedir)
+  cD.zshrc = sharedData.getZshrc(homedir)
   return cD
 }
 

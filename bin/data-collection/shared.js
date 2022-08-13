@@ -43,6 +43,17 @@ function getCurrentShell() {
         return "Unknown";
     }
 }
+function getGitIgnLoc(homedir) {
+    try {
+        return fs.existsSync(`${homedir}/.gitignore_global`)
+            ? `${homedir}/.gitignore_global`
+            : "Unknown";
+    }
+    catch (error) {
+        log(error);
+        return "Unknown";
+    }
+}
 async function getNodeVer() {
     try {
         const { stdout, stderr } = await execAsync("node --version");
@@ -77,6 +88,28 @@ async function getGitVer() {
         return "Unknown";
     }
 }
+function getGitIgn(homedir) {
+    try {
+        const gitIgnText = fs.readFileSync(`${homedir}/.gitignore_global`, "utf8");
+        const cleanedGitIgn = gitIgnText.split("\n").map(text => (!text.startsWith("#") ? text : "")).filter(text => text !== "").join("\n");
+        return cleanedGitIgn;
+    }
+    catch (error) {
+        log(error);
+        return "Unknown";
+    }
+}
+function getZshrc(homedir) {
+    try {
+        const zshrcText = fs.readFileSync(`${homedir}/.zshrc`, "utf8");
+        const cleanedZshrcText = zshrcText.split("\n").map(text => (!text.startsWith("#") ? text : "")).filter(text => text !== "").join("\n");
+        return cleanedZshrcText;
+    }
+    catch (error) {
+        log(error);
+        return "Unknown";
+    }
+}
 async function executeCommand(command) {
     try {
         const { stdout, stderr } = await execAsync(command);
@@ -94,15 +127,4 @@ async function executeCommand(command) {
         return "Unknown";
     }
 }
-function getGitIgnLoc(homedir) {
-    try {
-        return fs.existsSync(`${homedir}/.gitignore_global`)
-            ? `${homedir}/.gitignore_global`
-            : "Unknown";
-    }
-    catch (error) {
-        log(error);
-        return "Unknown";
-    }
-}
-export { getCPUModel, getTotalRAMInGB, getHomedir, getUsername, getCurrentShell, getGitIgnLoc, getNodeVer, getGitVer, executeCommand, };
+export { getCPUModel, getTotalRAMInGB, getHomedir, getUsername, getCurrentShell, getGitIgnLoc, getNodeVer, getGitVer, getGitIgn, getZshrc, executeCommand, };

@@ -22,7 +22,14 @@ function checkMinRAM(systemRAM) {
 function checkRecRAM(systemRAM) {
     return systemRAM > machineValidators.recRAM;
 }
-function isValidVer(verKey, ver) {
-    return satisfies(ver, installValidators[verKey]);
+function validateVer(ver = "null", version) {
+    // This is hacky and bad, should go back to data and adjust later
+    if (ver === "null")
+        return { name: "npmVer", vName: "npmVer", isValid: false };
+    version.isValid = satisfies(ver, installValidators[version.vName]);
+    if (!version.isValid) {
+        version.reason = compare(ver, installValidators[version.vName]);
+    }
+    return version;
 }
-export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, isValidVer, };
+export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, validateVer, };

@@ -47,16 +47,8 @@ function checkGenMachineData(data) {
 }
 function checkGenInstallData(data) {
     const { installValidation: iV, installData: iD } = data;
-    const installedVers = [
-        { verKey: "npmVer", ver: iD.npmVer, iVKey: "isValidNPMVer" },
-        { verKey: "nodeVer", ver: iD.nodeVer, iVKey: "isValidNodeVer" },
-        { verKey: "nodemonVer", ver: iD.nodemonVer, iVKey: "isValidNodemonVer" },
-        { verKey: "gitVer", ver: iD.gitVer, iVKey: "isValidGitVer" },
-    ];
     iV.isShellZSH = sharedValid.checkCurrentShellZSH(iD.shell, iD.zshLoc);
-    for (const { verKey, ver, iVKey } of installedVers) {
-        iV[iVKey] = sharedValid.isValidVer(verKey, ver);
-    }
+    iV.versions = iV.versions.map(version => (sharedValid.validateVer(iD[version.name], version)));
     return iV;
 }
 export { validationManager };

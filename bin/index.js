@@ -30,22 +30,24 @@ const installData = {
     codeAlias: 'Unknown',
     ghLoc: 'Unknown',
     npmLoc: 'Unknown',
-    npmVer: 'Unknown',
+    npmVer: '-1',
     nodeLoc: 'Unknown',
-    nodeVer: 'Unknown',
+    nodeVer: '-1',
     nodemonLoc: 'Unknown',
-    nodemonVer: 'Unknown',
+    nodemonVer: '-1',
     herokuLoc: 'Unknown',
     gitLoc: 'Unknown',
-    gitVer: 'Unknown',
+    gitVer: '-1',
 };
 const installValidation = {
     isShellZSH: false,
     isValidCodeAlias: false,
-    isValidNPMVer: false,
-    isValidNodeVer: false,
-    isValidNodemonVer: false,
-    isValidGitVer: false,
+    versions: [
+        { name: "npmVer", vName: "npmVer", isValid: false },
+        { name: "nodeVer", vName: "nodeVer", isValid: false },
+        { name: "nodemonVer", vName: "nodemonVer", isValid: false },
+        { name: "gitVer", vName: "gitVer", isValid: false },
+    ]
 };
 const configData = {
     gitEmail: 'Unknown',

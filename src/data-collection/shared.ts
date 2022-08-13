@@ -46,6 +46,17 @@ function getCurrentShell(): string {
   }
 }
 
+function getGitIgnLoc(homedir: string): string {
+  try {
+    return fs.existsSync(`${homedir}/.gitignore_global`) 
+      ? `${homedir}/.gitignore_global`
+      : "Unknown"
+  } catch (error) {
+    log(error)
+    return "Unknown"
+  }
+}
+
 async function getNodeVer(): Promise<string> {
   try {
     const { stdout, stderr } = await execAsync("node --version")
@@ -78,6 +89,32 @@ async function getGitVer(): Promise<string> {
   }
 }
 
+function getGitIgn(homedir: string): string {
+  try {
+    const gitIgnText = fs.readFileSync(`${homedir}/.gitignore_global`, "utf8")
+    const cleanedGitIgn = gitIgnText.split("\n").map(text => (
+      !text.startsWith("#") ? text : ""
+    )).filter(text => text !== "").join("\n")
+    return cleanedGitIgn
+  } catch (error) {
+    log(error)
+    return "Unknown"
+  }
+}
+
+function getZshrc(homedir: string): string {
+  try {
+    const zshrcText = fs.readFileSync(`${homedir}/.zshrc`, "utf8")
+    const cleanedZshrcText = zshrcText.split("\n").map(text => (
+      !text.startsWith("#") ? text : ""
+    )).filter(text => text !== "").join("\n")
+    return cleanedZshrcText
+  } catch (error) {
+    log(error)
+    return "Unknown"
+  }
+}
+
 async function executeCommand(command: string): Promise<string> {
   try {
     const { stdout, stderr } = await execAsync(command)
@@ -93,17 +130,6 @@ async function executeCommand(command: string): Promise<string> {
   }
 }
 
-function getGitIgnLoc(homedir: string): string {
-  try {
-    return fs.existsSync(`${homedir}/.gitignore_global`) 
-      ? `${homedir}/.gitignore_global`
-      : "Unknown"
-  } catch (error) {
-    log(error)
-    return "Unknown"
-  }
-}
-
 export {
   getCPUModel,
   getTotalRAMInGB,
@@ -113,5 +139,7 @@ export {
   getGitIgnLoc,
   getNodeVer,
   getGitVer,
+  getGitIgn,
+  getZshrc,
   executeCommand,
 }
