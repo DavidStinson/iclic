@@ -1,48 +1,79 @@
 #!/usr/bin/env node
 import { dataManager } from "./data-collection/manager.js";
 import { validationManager } from "./validation/manager.js";
-const initialData = {
+const userData = {
+    preferredName: "Unknown",
+    gitHubUsername: "Unknown",
+    gitHubEmail: "Unknown",
+    cohortID: "Unknown", // ! BLOCKED: ADD CLI PROMPT
+};
+const userValidation = {
+    isValidCohortId: false,
+    hasPreviousSubmission: false, // ! BLOCKED: ADD CLI PROMPT 
+};
+const machineData = {
     osName: "Unknown",
     osVersion: "Unknown",
-    isValidOSVersion: false,
-    cpuModel: "Unknown",
-    ramInGB: 0,
-    isMinRAM: false,
-    isRecRAM: false,
-    homedir: "Unknown",
+    homedir: "Unkown",
     username: "Unknown",
+    cpuModel: "Unknown",
+    ramInGB: 0, // * done
+};
+const machineValidation = {
+    isValidOSVersion: false,
+    isMinRAM: false,
+    isRecRAM: false, // * done
+};
+const installData = {
     zshLoc: "Unknown",
     shell: "Unknown",
-    isShellZSH: false,
     codeAlias: "Unknown",
-    isValidCodeAlias: false,
     ghLoc: "Unknown",
     npmLoc: "Unknown",
     npmVer: "Unknown",
-    isValidNPMVer: false,
     nodeLoc: "Unknown",
     nodeVer: "Unknown",
-    isValidNodeVer: false,
     nodemonLoc: "Unknown",
     nodemonVer: "Unknown",
-    isValidNodemonVer: false,
     herokuLoc: "Unknown",
     gitLoc: "Unknown",
-    gitVer: "Unknown",
-    isValidGitVer: false,
+    gitVer: "Unknown", // * done
+};
+const installValidation = {
+    isShellZSH: false,
+    isValidCodeAlias: false,
+    isValidNPMVer: false,
+    isValidNodeVer: false,
+    isValidNodemonVer: false,
+    isValidGitVer: false, // TODO: IN PROGRESS
+};
+const configData = {
     gitEmail: "Unknown",
-    gitEmailMatchesPrompt: false,
     gitDefBranch: "Unknown",
-    isValidGitBranch: false,
     gitMergeBehavior: "Unknown",
+    gitIgnConLoc: "Unknown",
+    gitIgnLoc: "Unknown",
+    gitIgn: "Unknown",
+    zshrc: "Unknown", // * done
+};
+const configValidation = {
+    gitEmailMatchesPrompt: false,
+    isValidGitBranch: false,
     isValidGitMergeBehavior: false,
-    gitIgnoreLoc: "Unknown",
-    isValidGitIgnoreLoc: false,
-    gitIgnoreExists: false,
-    gitIgnore: "Unknown",
-    gitIgnoreHasContent: false,
-    zshrc: "Unknown",
-    zshrcHasContent: false,
+    isValidGitIgnConLoc: false,
+    gitIgnExists: false,
+    gitIgnHasContent: false,
+    zshrcHasContent: false, // TODO: IN PROGRESS
+};
+const initialData = {
+    userData,
+    userValidation,
+    machineData,
+    machineValidation,
+    installData,
+    installValidation,
+    configData,
+    configValidation,
 };
 async function main(data) {
     const collectedData = await dataManager(data);

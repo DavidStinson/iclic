@@ -23,4 +23,7 @@ function brewLoc(type = "Unknown", location = "Unknown") {
         return false;
     }
 }
-export { osVersion, cpuType, brewLoc, };
+function vsCodeLoc(codeLoc = "Unknown") {
+    return codeLoc === "/Applications/Visual Studio Code.app" ? true : false;
+}
+export { osVersion, cpuType, brewLoc, vsCodeLoc, };

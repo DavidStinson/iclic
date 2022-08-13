@@ -43,15 +43,6 @@ function getCurrentShell() {
         return "Unknown";
     }
 }
-function getGitIgnoreExists(homedir) {
-    try {
-        return fs.existsSync(`${homedir}/.gitignore_global`) ? true : false;
-    }
-    catch (error) {
-        log(error);
-        return false;
-    }
-}
 async function getNodeVer() {
     try {
         const { stdout, stderr } = await execAsync("node --version");
@@ -103,4 +94,15 @@ async function executeCommand(command) {
         return "Unknown";
     }
 }
-export { getCPUModel, getTotalRAMInGB, getHomedir, getUsername, getCurrentShell, getGitIgnoreExists, getNodeVer, getGitVer, executeCommand, };
+function getGitIgnLoc(homedir) {
+    try {
+        return fs.existsSync(`${homedir}/.gitignore_global`)
+            ? `${homedir}/.gitignore_global`
+            : "Unknown";
+    }
+    catch (error) {
+        log(error);
+        return "Unknown";
+    }
+}
+export { getCPUModel, getTotalRAMInGB, getHomedir, getUsername, getCurrentShell, getGitIgnLoc, getNodeVer, getGitVer, executeCommand, };

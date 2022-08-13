@@ -1,81 +1,102 @@
-import os from "os";
-import chalk from "chalk";
-import * as macOSData from "./mac-os.js";
-import * as wslLinuxData from "./wsl-linux.js";
-import * as sharedData from "./shared.js";
+import os from 'os';
+import chalk from 'chalk';
+import * as macOSData from './mac-os.js';
+import * as wslLinuxData from './wsl-linux.js';
+import * as sharedData from './shared.js';
 const osType = os.type();
 const log = console.log;
 const cErr = chalk.bold.red;
-const commandsForData = [
-    { dataKey: "zshLoc", command: "which zsh" },
-    { dataKey: "codeAlias", command: "which code" },
-    { dataKey: "ghLoc", command: "which gh" },
-    { dataKey: "npmLoc", command: "which npm" },
-    { dataKey: "npmVer", command: "npm --version" },
-    { dataKey: "nodeLoc", command: "which node" },
-    { dataKey: "nodemonLoc", command: "which nodemon" },
-    { dataKey: "nodemonVer", command: "nodemon --version" },
-    { dataKey: "herokuLoc", command: "which heroku" },
-    { dataKey: "gitLoc", command: "which git" },
-    { dataKey: "gitEmail", command: "git config --global user.email" },
-    { dataKey: "gitDefBranch", command: "git config --global init.defaultBranch" },
-    { dataKey: "gitMergeBehavior", command: "git config --global pull.rebase" },
-    { dataKey: "gitIgnoreLoc", command: "git config --global core.excludesfile" },
-    { dataKey: "gitIgnore", command: "cat ~/.gitignore_global" },
-    { dataKey: "zshrc", command: "cat ~/.zshrc" },
+const commandsForInstallData = [
+    { dataKey: 'zshLoc', command: 'which zsh' },
+    { dataKey: 'codeAlias', command: 'which code' },
+    { dataKey: 'ghLoc', command: 'which gh' },
+    { dataKey: 'npmLoc', command: 'which npm' },
+    { dataKey: 'npmVer', command: 'npm --version' },
+    { dataKey: 'nodeLoc', command: 'which node' },
+    { dataKey: 'nodemonLoc', command: 'which nodemon' },
+    { dataKey: 'nodemonVer', command: 'nodemon --version' },
+    { dataKey: 'herokuLoc', command: 'which heroku' },
+    { dataKey: 'gitLoc', command: 'which git' },
+];
+const commandsForConfigData = [
+    { dataKey: 'gitEmail', command: 'git config --global user.email' },
+    {
+        dataKey: 'gitDefBranch',
+        command: 'git config --global init.defaultBranch',
+    },
+    { dataKey: 'gitMergeBehavior', command: 'git config --global pull.rebase' },
+    { dataKey: 'gitIgnConLoc', command: 'git config --global core.excludesfile' },
+    { dataKey: 'gitIgnLoc', command: 'git config --global core.excludesfile' },
+    { dataKey: 'gitIgn', command: 'cat ~/.gitignore_global' },
+    { dataKey: 'zshrc', command: 'cat ~/.zshrc' },
 ];
 async function dataManager(data) {
     switch (osType) {
         case 'Darwin': {
-            data = await getMacOSData(data);
+            data.machineData = getMacOSMachineData(data.machineData);
+            data.installData = await getMacOSInstallData(data.installData);
             break;
         }
         case 'Linux': {
-            data = await getWSLLinuxData(data);
+            data.machineData = await getWSLLinuxMachineData(data.machineData);
             break;
         }
         default: {
-            log(cErr("This OS is not supported"));
+            log(cErr('This OS is not supported.'));
             return process.exit();
         }
     }
-    data = await getGenericData(data);
+    data.machineData = getGenMachineData(data.machineData);
+    data.installData = await getGenInstallData(data.installData);
+    data.configData = await getGenConfigData(data.configData, data.machineData.homedir);
     return data;
 }
-async function getMacOSData(data) {
-    data.osName = "macOS";
-    data.cpuType = macOSData.getCPUType();
-    data.osVersion = macOSData.getOSVersion();
-    data.isVSCodeInstalled = macOSData.getVSCodeInstallation();
-    data.brewLoc = await sharedData.executeCommand("which brew");
-    return data;
+function getMacOSMachineData(mD) {
+    mD.osName = 'macOS';
+    mD.cpuType = macOSData.getCPUType();
+    mD.osVersion = macOSData.getOSVersion();
+    return mD;
 }
-async function getWSLLinuxData(data) {
+async function getMacOSInstallData(iD) {
+    iD.vsCodeLoc = macOSData.getVSCodeLoc();
+    iD.brewLoc = await sharedData.executeCommand('which brew');
+    return iD;
+}
+async function getWSLLinuxMachineData(mD) {
     const isWSL = wslLinuxData.getWSL();
     if (isWSL) {
-        data.osName = "WSL2";
+        mD.osName = 'WSL2';
     }
     else {
-        data.osName = "Linux";
+        mD.osName = 'Linux';
         // TKTK NEED TO DO THIS
-        // data.vtStatus = 
+        // data.vtStatus =
     }
-    data.osVariant = await wslLinuxData.getDistro();
-    data.osVersion = await wslLinuxData.getOSVersion();
-    return data;
+    mD.osVariant = await wslLinuxData.getDistro();
+    mD.osVersion = await wslLinuxData.getOSVersion();
+    return mD;
 }
-async function getGenericData(data) {
-    data.cpuModel = sharedData.getCPUModel();
-    data.ramInGB = sharedData.getTotalRAMInGB();
-    data.homedir = sharedData.getHomedir();
-    data.username = sharedData.getUsername();
-    data.shell = sharedData.getCurrentShell();
-    data.gitIgnoreExists = sharedData.getGitIgnoreExists(data.homedir);
-    data.nodeVer = await sharedData.getNodeVer();
-    data.gitVer = await sharedData.getGitVer();
-    for await (const { dataKey, command } of commandsForData) {
-        data[dataKey] = await sharedData.executeCommand(command);
+function getGenMachineData(mD) {
+    mD.homedir = sharedData.getHomedir();
+    mD.username = sharedData.getUsername();
+    mD.cpuModel = sharedData.getCPUModel();
+    mD.ramInGB = sharedData.getTotalRAMInGB();
+    return mD;
+}
+async function getGenInstallData(iD) {
+    iD.shell = sharedData.getCurrentShell();
+    iD.nodeVer = await sharedData.getNodeVer();
+    iD.gitVer = await sharedData.getGitVer();
+    for await (const { dataKey, command } of commandsForInstallData) {
+        iD[dataKey] = await sharedData.executeCommand(command);
     }
-    return data;
+    return iD;
+}
+async function getGenConfigData(cD, homedir) {
+    cD.gitIgnLoc = sharedData.getGitIgnLoc(homedir);
+    for await (const { dataKey, command } of commandsForConfigData) {
+        cD[dataKey] = await sharedData.executeCommand(command);
+    }
+    return cD;
 }
 export { dataManager };

@@ -25,13 +25,15 @@ function getOSVersion() {
         return "Unknown OS Variant";
     }
 }
-function getVSCodeInstallation() {
+function getVSCodeLoc() {
     try {
-        return fs.existsSync("/Applications/Visual Studio Code.app") ? true : false;
+        return fs.existsSync("/Applications/Visual Studio Code.app")
+            ? "/Applications/Visual Studio Code.app"
+            : "Unknown";
     }
     catch (error) {
         log(error);
-        return false;
+        return "Unknown";
     }
 }
-export { getCPUType, getOSVersion, getVSCodeInstallation, };
+export { getCPUType, getOSVersion, getVSCodeLoc, };

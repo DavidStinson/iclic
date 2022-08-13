@@ -1,60 +1,108 @@
-declare interface Data {
-  osName: string; // * done
-  osVariant?: string; // * done
-  isValidOSVariant?: boolean; // * done
-  osVersion: string; // * done
-  isValidOSVersion: boolean; // * done
-  cpuType?: string; // * done
-  isValidCPUType?: boolean; // * done
-  cpuModel: string; // * done
-  // https://askubuntu.com/q/103965
-  vtStatus?: string; // ! BLOCKED: Installfest Work/Testing
-  isVTEnabled?: boolean; // ! BLOCKED: Installfest Work/Testing
-  ramInGB: number; // * done
-  isMinRAM: boolean; // * done
-  isRecRAM: boolean; // * done
-  homedir: string; // * done
-  username: string; // * done
-  zshLoc: string; // * done
-  shell: string;  // * done
-  isShellZSH: boolean; // * done
-  isVSCodeInstalled?: boolean;
-  codeAlias: string; // * done
-  isValidCodeAlias: boolean;
-  brewLoc?: string; // * done
-  isValidBrewLoc?: boolean; // * done
-  ghLoc: string; // * done
-  npmLoc: string; // * done
-  npmVer: string; // * done
-  isValidNPMVer: boolean; // * done
-  nodeLoc: string; // * done
-  nodeVer: string; // * done
-  isValidNodeVer: boolean; // TODO: IN PROGRESS
-  nodemonLoc: string; // * done
-  nodemonVer: string; // * done
-  isValidNodemonVer: boolean; // TODO: IN PROGRESS
-  herokuLoc: string; // * done
-  gitLoc: string; // * done
-  gitVer: string; // * done
-  isValidGitVer: boolean; // TODO: IN PROGRESS
-  gitEmail: string; // * done
-  gitEmailMatchesPrompt: boolean; // ! BLOCKED: ADD CLI PROMPT
-  gitDefBranch: string; // * done
-  isValidGitBranch: boolean; // TODO: IN PROGRESS
-  gitMergeBehavior: string; // * done
-  isValidGitMergeBehavior: boolean; // TODO: IN PROGRESS
-  gitIgnoreLoc: string; // * done
-  isValidGitIgnoreLoc: boolean; // TODO: IN PROGRESS
-  gitIgnoreExists: boolean; // * done
-  gitIgnore: string; // * done
-  gitIgnoreHasContent: boolean; // TODO: IN PROGRESS
-  zshrc: string; // * done
-  zshrcHasContent: boolean; // TODO: IN PROGRESS
-  [key: string]: string | number | boolean | undefined;
+declare interface UserData {
+  preferredName: string; // ! BLOCKED: ADD CLI PROMPT
+  gitHubUsername: string; // ! BLOCKED: ADD CLI PROMPT
+  gitHubEmail: string; // ! BLOCKED: ADD CLI PROMPT
+  cohortID: string; // ! BLOCKED: ADD CLI PROMPT
 }
 
-declare interface CommandsForData {
-  dataKey: keyof Data;
+declare interface UserValidation {
+  isValidCohortId: boolean; // ! BLOCKED: ADD CLI PROMPT
+  hasPreviousSubmission: boolean; // ! BLOCKED: ADD CLI PROMPT 
+}
+
+// ! Done, minus blocker
+declare interface MachineData {
+  osName: string;
+  osVariant?: string; // WSL/Linux only
+  osVersion: string;
+  homedir: string;
+  username: string;
+  cpuType?: string; // macOS only
+  cpuModel: string;
+  // https://askubuntu.com/q/103965
+  vtStatus?: string; // ! BLOCKED: Installfest Work/Testing
+  ramInGB: number;
+}
+
+// ! Done, minus blocker
+declare interface MachineValidation {
+  isValidOSVariant?: boolean; // WSL/Linux only
+  isValidOSVersion: boolean; 
+  isValidCPUType?: boolean; // macOS only
+  isVTEnabled?: boolean; // ! BLOCKED: Installfest Work/Testing
+  isMinRAM: boolean; 
+  isRecRAM: boolean; 
+}
+
+// ** THIS IS COMPLETE!
+declare interface InstallData {
+  zshLoc: string; 
+  shell: string;  
+  vsCodeLoc?: string; // macOS only
+  codeAlias: string; 
+  brewLoc?: string; // macOS only
+  ghLoc: string; 
+  npmLoc: string; 
+  npmVer: string; 
+  nodeLoc: string; 
+  nodeVer: string; 
+  nodemonLoc: string; 
+  nodemonVer: string; 
+  herokuLoc: string; 
+  gitLoc: string; 
+  gitVer: string; 
+  [key: string]: string;
+}
+
+declare interface InstallValidation {
+  isShellZSH: boolean; // * done
+  isVSCodeInstalled?: boolean; // macOS only // * done
+  isValidCodeAlias: boolean; 
+  isValidBrewLoc?: boolean; // macOS only // * done
+  isValidNPMVer: boolean; // * done
+  isValidNodeVer: boolean; // TODO: IN PROGRESS
+  isValidNodemonVer: boolean; // TODO: IN PROGRESS
+  isValidGitVer: boolean; // TODO: IN PROGRESS
+}
+
+declare interface ConfigData {
+  gitEmail: string; 
+  gitDefBranch: string; 
+  gitMergeBehavior: string; 
+  gitIgnConLoc: string; 
+  gitIgnLoc: string; 
+  gitIgn: string; 
+  zshrc: string; 
+}
+
+declare interface ConfigValidation {
+  gitEmailMatchesPrompt: boolean; // ! BLOCKED: ADD CLI PROMPT
+  isValidGitBranch: boolean; // TODO: IN PROGRESS
+  isValidGitMergeBehavior: boolean; // TODO: IN PROGRESS
+  isValidGitIgnConLoc: boolean; // TODO: IN PROGRESS
+  gitIgnExists: boolean; // TODO: IN PROGRESS
+  gitIgnHasContent: boolean; // TODO: IN PROGRESS
+  zshrcHasContent: boolean; // TODO: IN PROGRESS
+}
+
+declare interface Data {
+  userData: UserData;
+  userValidation: UserValidation;
+  machineData: MachineData;
+  machineValidation: MachineValidation;
+  installData: InstallData;
+  installValidation: InstallValidation;
+  configData: ConfigData;
+  configValidation: ConfigValidation;
+}
+
+declare interface CommandsForInstallData {
+  dataKey: keyof InstallData;
+  command: string;
+}
+
+declare interface CommandsForConfigData {
+  dataKey: keyof ConfigData;
   command: string;
 }
 
