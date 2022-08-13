@@ -63,8 +63,8 @@ const configData: ConfigData = {
   gitMergeBehavior: 'Unknown',
   gitIgnConLoc: 'Unknown',
   gitIgnLoc: 'Unknown',
-  gitIgn: 'Unknown',
-  zshrc: 'Unknown',
+  gitIgn: '',
+  zshrc: '',
 }
 
 const configValidation: ConfigValidation = {

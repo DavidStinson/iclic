@@ -13,6 +13,7 @@ async function validationManager(data) {
     }
     data.machineValidation = checkGenMachineData(data);
     data.installValidation = checkGenInstallData(data);
+    data.configValidation = checkGenConfigData(data);
     return data;
 }
 function checkMacOSMachineData(data) {
@@ -48,7 +49,14 @@ function checkGenMachineData(data) {
 function checkGenInstallData(data) {
     const { installValidation: iV, installData: iD } = data;
     iV.isShellZSH = sharedValid.checkCurrentShellZSH(iD.shell, iD.zshLoc);
-    iV.versions = iV.versions.map(version => (sharedValid.validateVer(iD[version.name], version)));
+    iV.versions = iV.versions.map(version => (sharedValid.checkVersions(iD[version.name], version)));
     return iV;
+}
+function checkGenConfigData(data) {
+    const { configValidation: cV, configData: cD, machineData: mD } = data;
+    cV.isValidGitBranch = sharedValid.checkGitBranch(cD.gitDefBranch);
+    cV.isValidGitMergeBehavior = sharedValid.checkGitMerge(cD.gitMergeBehavior);
+    cV.isValidGitIgnConLoc = sharedValid.checkGitIgnConLoc(cD.gitIgnConLoc, mD.homedir);
+    return cV;
 }
 export { validationManager };

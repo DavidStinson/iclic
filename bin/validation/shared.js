@@ -11,6 +11,11 @@ const installValidators = {
     nodemonVer: "^2.0.15",
     gitVer: "^2.35.0",
 };
+const configValidators = {
+    gitBanch: "main",
+    gitMergeBehavior: "false",
+    gitIgnConLoc: "/.gitignore_global",
+};
 function checkCurrentShellZSH(currentShell, zshLoc) {
     const currentShellIsZSH = zshLoc === currentShell &&
         currentShell.toLowerCase().includes(machineValidators.shell);
@@ -22,7 +27,7 @@ function checkMinRAM(systemRAM) {
 function checkRecRAM(systemRAM) {
     return systemRAM > machineValidators.recRAM;
 }
-function validateVer(ver = "null", version) {
+function checkVersions(ver = "null", version) {
     // This is hacky and bad, should go back to data and adjust later
     if (ver === "null")
         return { name: "npmVer", vName: "npmVer", isValid: false };
@@ -32,4 +37,15 @@ function validateVer(ver = "null", version) {
     }
     return version;
 }
-export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, validateVer, };
+function checkGitBranch(gitDefaultBranch) {
+    return gitDefaultBranch === configValidators.gitBanch ? true : false;
+}
+function checkGitMerge(gitMergeBehavior) {
+    return gitMergeBehavior === configValidators.gitMergeBehavior ? true : false;
+}
+function checkGitIgnConLoc(gitIgnConLoc, homedir) {
+    return gitIgnConLoc === `${homedir}${configValidators.gitIgnConLoc}`
+        ? true
+        : false;
+}
+export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, checkVersions, checkGitBranch, checkGitMerge, checkGitIgnConLoc, };

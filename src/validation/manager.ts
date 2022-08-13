@@ -13,6 +13,7 @@ async function validationManager(data: Data): Promise<Data> {
   }
   data.machineValidation = checkGenMachineData(data)
   data.installValidation = checkGenInstallData(data)
+  data.configValidation = checkGenConfigData(data)
   return data
 }
 
@@ -55,9 +56,23 @@ function checkGenInstallData(data: Data): InstallValidation{
   const { installValidation: iV, installData: iD } = data
   iV.isShellZSH = sharedValid.checkCurrentShellZSH(iD.shell, iD.zshLoc)
   iV.versions = iV.versions.map(version => (
-    sharedValid.validateVer(iD[version.name], version)
+    sharedValid.checkVersions(iD[version.name], version)
   ))
   return iV
+}
+
+function checkGenConfigData(data: Data): ConfigValidation {
+  const { configValidation: cV, configData: cD, machineData: mD} = data
+  cV.isValidGitBranch = sharedValid.checkGitBranch(cD.gitDefBranch)
+  cV.isValidGitMergeBehavior = sharedValid.checkGitMerge(cD.gitMergeBehavior)
+  cV.isValidGitIgnConLoc = sharedValid.checkGitIgnConLoc(
+    cD.gitIgnConLoc, 
+    mD.homedir
+  )
+  cV.gitIgnExists = sharedValid.checkGitIgnExists(cD.gitIgnConLoc)
+  cV.gitIgnHasContent = sharedValid.checkGitIgnForContent(cD.gitIgn)
+  cV.zshrcHasContent = sharedValid.checkZshrcForContent(cD.zshrc)
+  return cV
 }
 
 export {

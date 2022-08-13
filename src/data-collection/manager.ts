@@ -23,8 +23,6 @@ const commandsForConfigData: CommandsForConfigData[] = [
   { dataKey: 'gitMergeBehavior', command: 'git config --global pull.rebase' },
   { dataKey: 'gitIgnConLoc', command: 'git config --global core.excludesfile' },
   { dataKey: 'gitIgnLoc', command: 'git config --global core.excludesfile' },
-  { dataKey: 'gitIgn', command: 'cat ~/.gitignore_global' },
-  { dataKey: 'zshrc', command: 'cat ~/.zshrc' },
 ]
 
 async function dataManager(data: Data): Promise<Data> {

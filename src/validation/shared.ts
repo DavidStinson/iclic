@@ -15,6 +15,12 @@ const installValidators: InstallValidators = {
   gitVer: "^2.35.0",
 }
 
+const configValidators = {
+  gitBanch: "main",
+  gitMergeBehavior: "false",
+  gitIgnConLoc: "/.gitignore_global",
+}
+
 function checkCurrentShellZSH(currentShell: string, zshLoc: string): boolean {
   const currentShellIsZSH = 
     zshLoc === currentShell && 
@@ -30,7 +36,7 @@ function checkRecRAM(systemRAM: number): boolean {
   return systemRAM > machineValidators.recRAM
 }
 
-function validateVer(ver = "null", version: InstallVersion): InstallVersion {
+function checkVersions(ver = "null", version: InstallVersion): InstallVersion {
   // This is hacky and bad, should go back to data and adjust later
   if (ver === "null") return {name: "npmVer", vName: "npmVer", isValid: false}
   version.isValid = satisfies(ver, installValidators[version.vName])
@@ -40,9 +46,41 @@ function validateVer(ver = "null", version: InstallVersion): InstallVersion {
   return version
 }
 
+function checkGitBranch(gitDefaultBranch: string): boolean {
+  return gitDefaultBranch === configValidators.gitBanch ? true : false
+}
+
+function checkGitMerge(gitMergeBehavior: string): boolean {
+  return gitMergeBehavior === configValidators.gitMergeBehavior ? true : false
+}
+
+function checkGitIgnConLoc(gitIgnConLoc: string, homedir: string): boolean {
+  return gitIgnConLoc === `${homedir}${configValidators.gitIgnConLoc}` 
+    ? true 
+    : false
+}
+
+function checkGitIgnExists(gitIgnConLoc: string): boolean {
+  return gitIgnConLoc !== "Unknown" ? true : false
+}
+
+function checkGitIgnForContent(gitIgn: string): boolean {
+  return gitIgn.length ? true : false
+}
+
+function checkZshrcForContent(zshrc: string): boolean {
+  return zshrc.length ? true : false
+}
+
 export {
   checkCurrentShellZSH,
   checkMinRAM,
   checkRecRAM,
-  validateVer,
+  checkVersions,
+  checkGitBranch,
+  checkGitMerge,
+  checkGitIgnConLoc,
+  checkGitIgnExists,
+  checkGitIgnForContent,
+  checkZshrcForContent,
 }

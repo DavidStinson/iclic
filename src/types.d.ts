@@ -55,10 +55,10 @@ declare interface InstallData {
 
 // ** THIS IS COMPLETE!
 declare interface InstallValidation {
-  isShellZSH: boolean; // * done
-  isVSCodeInstalled?: boolean; // macOS only // * done
-  isValidCodeAlias: boolean; // * done
-  isValidBrewLoc?: boolean; // macOS only // * done
+  isShellZSH: boolean;
+  isVSCodeInstalled?: boolean; // macOS only
+  isValidCodeAlias: boolean;
+  isValidBrewLoc?: boolean; // macOS only
   versions: InstallVersion[];
 }
 
@@ -73,14 +73,15 @@ declare interface ConfigData {
   zshrc: string; 
 }
 
+// ! Done, minus blocker
 declare interface ConfigValidation {
   gitEmailMatchesPrompt: boolean; // ! BLOCKED: ADD CLI PROMPT
-  isValidGitBranch: boolean; // TODO: IN PROGRESS
-  isValidGitMergeBehavior: boolean; // TODO: IN PROGRESS
-  isValidGitIgnConLoc: boolean; // TODO: IN PROGRESS
-  gitIgnExists: boolean; // TODO: IN PROGRESS
-  gitIgnHasContent: boolean; // TODO: IN PROGRESS
-  zshrcHasContent: boolean; // TODO: IN PROGRESS
+  isValidGitBranch: boolean;
+  isValidGitMergeBehavior: boolean;
+  isValidGitIgnConLoc: boolean;
+  gitIgnExists: boolean;
+  gitIgnHasContent: boolean;
+  zshrcHasContent: boolean;
 }
 
 declare interface Data {
