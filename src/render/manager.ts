@@ -7,6 +7,11 @@ function main(data: Data): void {
   return
 }
 
+function error(msg: string): void {
+  log(cErr(msg))
+}
+
 export {
-  main
+  main,
+  error
 }

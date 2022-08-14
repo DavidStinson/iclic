@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import * as macOSData from './mac-os.js';
 import * as wslLinuxData from './wsl-linux.js';
 import * as sharedData from './shared.js';
+import * as interactionData from './interaction.js';
 const commandsForInstallData = [
     { dataKey: 'zshLoc', command: 'which zsh' },
     { dataKey: 'codeAlias', command: 'which code' },
@@ -23,7 +24,11 @@ const commandsForConfigData = [
     { dataKey: 'gitIgnConLoc', command: 'git config --global core.excludesfile' },
     { dataKey: 'gitIgnLoc', command: 'git config --global core.excludesfile' },
 ];
-async function dataManager(data) {
+async function collectUserData(userData) {
+    const collectedUserData = await interactionData.getUserData(userData);
+    return collectedUserData;
+}
+async function collectInstallData(data) {
     switch (os.type()) {
         case 'Darwin': {
             data.machineData = getMacOSMachineData(data.machineData);
@@ -100,4 +105,4 @@ async function getWSLConfigData(cD) {
     cD.gitCredMan = await sharedData.executeCommand("git config --global credential.helper");
     return cD;
 }
-export { dataManager };
+export { collectUserData, collectInstallData, };

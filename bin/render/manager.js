@@ -4,4 +4,7 @@ const cErr = chalk.bold.red;
 function main(data) {
     return;
 }
-export { main };
+function error(msg) {
+    log(cErr(msg));
+}
+export { main, error };

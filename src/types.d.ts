@@ -2,7 +2,8 @@ declare interface UserData {
   preferredName: string; // ! BLOCKED: ADD CLI PROMPT
   gitHubUsername: string; // ! BLOCKED: ADD CLI PROMPT
   gitHubEmail: string; // ! BLOCKED: ADD CLI PROMPT
-  cohortID: string; // ! BLOCKED: ADD CLI PROMPT
+  cohortId: string; // ! BLOCKED: ADD CLI PROMPT
+  [key: string];
 }
 
 declare interface UserValidation {
@@ -131,6 +132,14 @@ declare interface InstallValidators {
   nodeVer: string;
   nodemonVer: string;
   gitVer: string;
+}
+
+declare interface Questions {
+  type: string;
+  name: keyof UserData;
+  message: string;
+  filter?(value: string): string;
+  validate?(value: string): true | string;
 }
 
 declare module 'plist' {

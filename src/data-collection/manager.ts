@@ -3,6 +3,7 @@ import chalk from 'chalk'
 import * as macOSData from './mac-os.js'
 import * as wslLinuxData from './wsl-linux.js'
 import * as sharedData from './shared.js'
+import * as interactionData from './interaction.js'
 
 const commandsForInstallData: CommandsForInstallData[] = [
   { dataKey: 'zshLoc', command: 'which zsh' },
@@ -26,7 +27,12 @@ const commandsForConfigData: CommandsForConfigData[] = [
   { dataKey: 'gitIgnLoc', command: 'git config --global core.excludesfile' },
 ]
 
-async function dataManager(data: Data): Promise<Data> {
+async function collectUserData(userData: UserData): Promise<UserData> {
+  const collectedUserData = await interactionData.getUserData(userData)
+  return collectedUserData
+}
+
+async function collectInstallData(data: Data): Promise<Data> {
   switch (os.type()) {
     case 'Darwin': {
       data.machineData = getMacOSMachineData(data.machineData)
@@ -118,4 +124,7 @@ async function getWSLConfigData(cD: ConfigData): Promise<ConfigData> {
   return cD
 }
 
-export { dataManager }
+export { 
+  collectUserData,
+  collectInstallData,
+}

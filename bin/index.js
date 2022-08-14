@@ -1,12 +1,13 @@
 #!/usr/bin/env node
-import { dataManager } from './data-collection/manager.js';
-import { validationManager } from './validation/manager.js';
 import { Command } from 'commander';
+import { collectInstallData, collectUserData } from './data-collection/manager.js';
+import { validationManager } from './validation/manager.js';
+import { validateCLIInput } from './validation/input.js';
 const userData = {
-    preferredName: 'Unknown',
-    gitHubUsername: 'Unknown',
-    gitHubEmail: 'Unknown',
-    cohortID: 'Unknown',
+    preferredName: '',
+    gitHubUsername: '',
+    gitHubEmail: '',
+    cohortId: '',
 };
 const userValidation = {
     isValidCohortId: false,
@@ -87,20 +88,30 @@ async function main() {
     cL.description('A command line application for validating an installfest.');
     cL.command("test", { isDefault: true })
         .description("Test your installfest configuration before submitting it. This is the default behavior of the application when run from the base iclic command.")
-        .action(async () => {
-        await base(initialData);
+        .action(async (options) => {
+        const collectedData = await getInstallState(initialData);
     });
     cL.command("submit")
         .description("Submit your installfest configuration. You'll be asked some basic information and then submit your installfest configuration to be reviewed. Don't worry, you can resubmit your configuration again if you make changes later.")
-        .action(async () => {
-        await base(initialData);
+        .option("-n, --preferredName <name>", "Your preferred name.")
+        .option("-u, --gitHubUsername <username>", "Your GitHub username.")
+        .option("-g, --gitHubEmail <email-address>", "The email address associated with your GitHub account.")
+        .option("-c, --cohortId <cohort-id>", "The cohort ID provided to you by your instructor.")
+        .action(async (cliOptions) => {
+        const validatedCLIOptions = validateCLIInput(cliOptions);
+        initialData.userData = { ...userData, ...validatedCLIOptions };
+        if (Object.values(initialData.userData).some(val => !val)) {
+            initialData.userData = await collectUserData(initialData.userData);
+        }
+        const collectedData = await getInstallState(initialData);
     });
     cL.parse();
 }
-async function base(data) {
-    const collectedData = await dataManager(data);
+async function getInstallState(data) {
+    const collectedData = await collectInstallData(data);
     const validatedData = await validationManager(collectedData);
     console.dir(validatedData);
     console.dir(validatedData.installValidation);
+    return data;
 }
 main();
