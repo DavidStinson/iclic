@@ -4,6 +4,7 @@ const { satisfies } = compare
 const validators = {
   distro: "ubuntu",
   osVersion: "^22",
+  gitCredMan: "/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager-core.exe",
 }
 
 function osVariant(distro = "Unknown"):boolean {
@@ -38,6 +39,10 @@ function checkVTEnabled(vtStatus = "Unknown"): boolean {
   return vtStatus === "Enabled" ? true : false
 }
 
+function checkGitCredMan(gitCredMan = "Unknown"): boolean {
+  return gitCredMan === validators.gitCredMan ? true : false
+}
+
 export {
   osVariant,
   osVersion,
@@ -45,4 +50,5 @@ export {
   vsCodeAlias,
   checkCPUChecker,
   checkVTEnabled,
+  checkGitCredMan
 }

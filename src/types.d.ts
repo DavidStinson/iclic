@@ -27,7 +27,7 @@ declare interface MachineData {
 declare interface MachineValidation {
   isValidOSVariant?: boolean; // WSL/Linux only
   isValidOSVersion: boolean; 
-  isInvaidOSReason?: number;
+  isInvaidOSReason?: number; // only invalid OS Version
   isValidCPUType?: boolean; // macOS only
   isCPUCheckerInstalled?: boolean; // Linux only
   isVTEnabled?: boolean; // Linux only
@@ -66,6 +66,7 @@ declare interface InstallValidation {
 // * THIS IS COMPLETE
 declare interface ConfigData {
   gitEmail: string; 
+  gitCredMan?: string; // WSL only
   gitDefBranch: string; 
   gitMergeBehavior: string;
   gitEditor: string;
@@ -78,6 +79,7 @@ declare interface ConfigData {
 // ! Done, minus blocker
 declare interface ConfigValidation {
   gitEmailMatchesPrompt: boolean; // ! BLOCKED: ADD CLI PROMPT
+  isValidGitCredMan?: boolean; // WSL only
   isValidGitBranch: boolean;
   isValidGitMergeBehavior: boolean;
   isValidGitEditor: boolean;

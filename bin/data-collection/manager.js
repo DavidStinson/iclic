@@ -42,6 +42,9 @@ async function dataManager(data) {
     data.machineData = getGenMachineData(data.machineData);
     data.installData = await getGenInstallData(data.installData);
     data.configData = await getGenConfigData(data.configData, data.machineData.homedir);
+    if (data.machineData.osName === "WSL2") {
+        data.configData = await getWSLConfigData(data.configData);
+    }
     return data;
 }
 function getMacOSMachineData(mD) {
@@ -91,6 +94,10 @@ async function getGenConfigData(cD, homedir) {
     }
     cD.gitIgn = sharedData.getGitIgn(homedir);
     cD.zshrc = sharedData.getZshrc(homedir);
+    return cD;
+}
+async function getWSLConfigData(cD) {
+    cD.gitCredMan = await sharedData.executeCommand("git config --global credential.helper");
     return cD;
 }
 export { dataManager };

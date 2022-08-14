@@ -48,6 +48,9 @@ async function dataManager(data: Data): Promise<Data> {
     data.configData,
     data.machineData.homedir
   )
+  if (data.machineData.osName === "WSL2") {
+    data.configData = await getWSLConfigData(data.configData)
+  }
   return data
 }
 
@@ -97,7 +100,7 @@ async function getGenInstallData(iD: InstallData): Promise<InstallData> {
 
 async function getGenConfigData(
   cD: ConfigData,
-  homedir: string
+  homedir: string,
 ): Promise<ConfigData> {
   cD.gitIgnLoc = sharedData.getGitIgnLoc(homedir)
   for await (const { dataKey, command } of commandsForConfigData) {
@@ -105,6 +108,13 @@ async function getGenConfigData(
   }
   cD.gitIgn = sharedData.getGitIgn(homedir)
   cD.zshrc = sharedData.getZshrc(homedir)
+  return cD
+}
+
+async function getWSLConfigData(cD: ConfigData): Promise<ConfigData> {
+  cD.gitCredMan = await sharedData.executeCommand(
+    "git config --global credential.helper"
+  )
   return cD
 }
 

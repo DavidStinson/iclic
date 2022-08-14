@@ -97,6 +97,7 @@ async function main() {
   cL.version('1.0.0', '-v, --version', 'Outputs the current version.')
   cL.name('iclic')
   cL.description('A command line application for validating an installfest.')
+
   cL.command("test", { isDefault: true })
     .description(
       "Test your installfest configuration before submitting it. This is the default behavior of the application when run from the base iclic command."
@@ -104,9 +105,15 @@ async function main() {
     .action(async () => {
       await base(initialData)
     })
-  
-  cL.parse()
+  cL.command("submit")
+    .description(
+      "Submit your installfest configuration. You'll be asked some basic information and then submit your installfest configuration to be reviewed. Don't worry, you can resubmit your configuration again if you make changes later."
+    )
+    .action(async () => {
+      await base(initialData)
+    })
 
+  cL.parse()
 }
 
 async function base(data: Data): Promise<void> {

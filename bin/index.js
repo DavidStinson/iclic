@@ -90,6 +90,11 @@ async function main() {
         .action(async () => {
         await base(initialData);
     });
+    cL.command("submit")
+        .description("Submit your installfest configuration. You'll be asked some basic information and then submit your installfest configuration to be reviewed. Don't worry, you can resubmit your configuration again if you make changes later.")
+        .action(async () => {
+        await base(initialData);
+    });
     cL.parse();
 }
 async function base(data) {

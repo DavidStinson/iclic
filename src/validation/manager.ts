@@ -14,6 +14,9 @@ async function validationManager(data: Data): Promise<Data> {
   if (osName === "Linux") {
     data.machineValidation = checkLinuxMachineData(data)
   }
+  if (osName === "WSL2") {
+    data.configValidation = checkWSLConfigData(data)
+  }
   data.machineValidation = checkGenMachineData(data)
   data.installValidation = checkGenInstallData(data)
   data.configValidation = checkGenConfigData(data)
@@ -48,6 +51,12 @@ function checkWSLLinuxMachineData(data: Data): MachineValidation {
   return mV
 }
 
+function checkWSLLinuxInstallData(data: Data): InstallValidation {
+  const { installValidation: iV, installData: iD } = data
+  iV.isValidCodeAlias = wslLinuxValid.vsCodeAlias(iD.codeAlias)
+  return iV
+}
+
 function checkLinuxMachineData(data: Data): MachineValidation {
   const { machineValidation: mV, machineData: mD } = data
   mV.isCPUCheckerInstalled = wslLinuxValid.checkCPUChecker(mD.vtStatus)
@@ -57,10 +66,10 @@ function checkLinuxMachineData(data: Data): MachineValidation {
   return mV
 }
 
-function checkWSLLinuxInstallData(data: Data): InstallValidation {
-  const { installValidation: iV, installData: iD } = data
-  iV.isValidCodeAlias = wslLinuxValid.vsCodeAlias(iD.codeAlias)
-  return iV
+function checkWSLConfigData(data: Data): ConfigValidation {
+  const { configValidation: cV, configData: cD} = data
+  cV.isValidGitCredMan = wslLinuxValid.checkGitCredMan(cD.gitCredMan)
+  return cV
 }
 
 function checkGenMachineData(data: Data): MachineValidation{
