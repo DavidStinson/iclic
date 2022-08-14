@@ -89,7 +89,16 @@ function checkGenInstallData(data: Data): InstallValidation{
 }
 
 function checkGenConfigData(data: Data): ConfigValidation {
-  const { configValidation: cV, configData: cD, machineData: mD} = data
+  const { 
+    configValidation: cV, 
+    configData: cD, 
+    machineData: mD,
+    userData: uD, 
+  } = data
+  cV.gitEmailMatchesPrompt = sharedValid.checkGitEmailMatch(
+    uD.gitHubEmail, 
+    cD.gitEmail
+  )
   cV.isValidGitBranch = sharedValid.checkGitBranch(cD.gitDefBranch)
   cV.isValidGitMergeBehavior = sharedValid.checkGitMerge(cD.gitMergeBehavior)
   cV.isValidGitEditor = sharedValid.checkGitEditor(cD.gitEditor)

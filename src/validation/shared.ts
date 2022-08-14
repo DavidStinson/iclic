@@ -53,6 +53,10 @@ function checkVersions(ver = "null", version: InstallVersion): InstallVersion {
   }
 }
 
+function checkGitEmailMatch(cliMail: string, configEmail: string): boolean {
+  return cliMail === configEmail ? true : false
+}
+
 function checkGitBranch(gitDefaultBranch: string): boolean {
   return gitDefaultBranch === configValidators.gitBanch ? true : false
 }
@@ -88,6 +92,7 @@ export {
   checkMinRAM,
   checkRecRAM,
   checkVersions,
+  checkGitEmailMatch,
   checkGitBranch,
   checkGitMerge,
   checkGitEditor,

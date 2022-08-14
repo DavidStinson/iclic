@@ -1,14 +1,16 @@
+// ** THIS IS COMPLETE!
 declare interface UserData {
-  preferredName: string; // ! BLOCKED: ADD CLI PROMPT
-  gitHubUsername: string; // ! BLOCKED: ADD CLI PROMPT
-  gitHubEmail: string; // ! BLOCKED: ADD CLI PROMPT
-  cohortId: string; // ! BLOCKED: ADD CLI PROMPT
+  preferredName: string;
+  gitHubUsername: string;
+  gitHubEmail: string;
+  cohortId: string;
   [key: string];
 }
 
+// ! BLOCKED: NEED TO BUILD A BACK END
 declare interface UserValidation {
-  isValidCohortId: boolean; // ! BLOCKED: ADD CLI PROMPT
-  hasPreviousSubmission: boolean; // ! BLOCKED: ADD CLI PROMPT 
+  isValidCohortId: boolean; // ! BLOCKED: NEED A BACK END
+  hasPreviousSubmission: boolean; // ! BLOCKED: NEED A BACK END 
 }
 
 // ** THIS IS COMPLETE!
@@ -77,9 +79,9 @@ declare interface ConfigData {
   zshrc: string; 
 }
 
-// ! Done, minus blocker
+// * THIS IS COMPLETE
 declare interface ConfigValidation {
-  gitEmailMatchesPrompt: boolean; // ! BLOCKED: ADD CLI PROMPT
+  gitEmailMatchesPrompt: boolean;
   isValidGitCredMan?: boolean; // WSL only
   isValidGitBranch: boolean;
   isValidGitMergeBehavior: boolean;

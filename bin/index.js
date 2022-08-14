@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
+import ora from "ora";
 import { collectInstallData, collectUserData } from './data-collection/manager.js';
 import { validationManager } from './validation/manager.js';
 import { validateCLIInput } from './validation/input.js';
@@ -103,7 +104,12 @@ async function main() {
         if (Object.values(initialData.userData).some(val => !val)) {
             initialData.userData = await collectUserData(initialData.userData);
         }
+        const dataSpinner = ora({
+            text: "Collecting System Configuration",
+            spinner: "triangle",
+        });
         const collectedData = await getInstallState(initialData);
+        dataSpinner.succeed("System Configuration Retrieved");
     });
     cL.parse();
 }
