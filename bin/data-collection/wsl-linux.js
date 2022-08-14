@@ -1,5 +1,8 @@
 import isWsl from "is-wsl";
 import { readFile } from 'fs/promises';
+import util from "util";
+import { exec } from "child_process";
+const execAsync = util.promisify(exec);
 function getWSL() {
     return isWsl ? true : false;
 }
@@ -38,11 +41,31 @@ async function getOSVersion() {
             return releaseDetails.version_id.replace(/"/g, "");
         }
         else {
-            return "Linux - Unknown Distro";
+            return "Unknown";
         }
     }
     catch (error) {
-        return "Linux - Unknown Distro";
+        return "Unknown";
     }
 }
-export { getWSL, getDistro, getOSVersion, };
+async function getVTStatus() {
+    try {
+        const { stdout, stderr } = await execAsync("kvm-ok");
+        if (stderr)
+            throw new Error(stderr);
+        if (stdout) {
+            return "Enabled";
+        }
+        return "Unknown";
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }
+    catch (error) {
+        if (error.code === 1 || error.code === 2) {
+            return "Disabled";
+        }
+        else {
+            return "Unknown";
+        }
+    }
+}
+export { getWSL, getDistro, getOSVersion, getVTStatus, };

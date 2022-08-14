@@ -5,7 +5,6 @@ import { exec } from "child_process"
 import chalk from "chalk"
 
 const execAsync = util.promisify(exec)
-
 const log = console.log
 const cErr = chalk.bold.red
 

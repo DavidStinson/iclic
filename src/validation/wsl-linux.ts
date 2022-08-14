@@ -11,15 +11,31 @@ function osVariant(distro = "Unknown"):boolean {
 }
 
 function osVersion(version: string):boolean {
-  return satisfies(version, validators.osVersion)
+  try {
+    return satisfies(version, validators.osVersion)
+  } catch (error) {
+    return false
+  }
 }
 
 function checkInvalidOSReason(osVersion: string) {
-  return compare(osVersion, validators.osVersion)
+  try {
+    return compare(osVersion, validators.osVersion)
+  } catch (error) {
+    return 2
+  }
 }
 
 function vsCodeAlias(codeAlias: string): boolean {
   return codeAlias !== "Unknown" ? true : false
+}
+
+function checkCPUChecker(vtStatus = "Unknown"): boolean {
+  return vtStatus !== "Unknown" ? true : false
+}
+
+function checkVTEnabled(vtStatus = "Unknown"): boolean {
+  return vtStatus === "Enabled" ? true : false
 }
 
 export {
@@ -27,4 +43,6 @@ export {
   osVersion,
   checkInvalidOSReason,
   vsCodeAlias,
+  checkCPUChecker,
+  checkVTEnabled,
 }

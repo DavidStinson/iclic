@@ -61,8 +61,7 @@ async function getWSLLinuxMachineData(mD) {
     }
     else {
         mD.osName = 'Linux';
-        // TKTK NEED TO DO THIS
-        // data.vtStatus =
+        mD.vtStatus = await wslLinuxData.getVTStatus();
     }
     mD.osVariant = await wslLinuxData.getDistro();
     mD.osVersion = await wslLinuxData.getOSVersion();

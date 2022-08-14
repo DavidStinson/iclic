@@ -28,14 +28,22 @@ function checkRecRAM(systemRAM) {
     return systemRAM > machineValidators.recRAM;
 }
 function checkVersions(ver = "null", version) {
-    // This is hacky and bad, should go back to data and adjust later
-    if (ver === "null")
-        return { name: "npmVer", vName: "npmVer", isValid: false };
-    version.isValid = satisfies(ver, installValidators[version.vName]);
-    if (!version.isValid) {
-        version.reason = compare(ver, installValidators[version.vName]);
+    try {
+        // This is hacky and bad, should go back to data and adjust later
+        if (ver === "null")
+            return { name: "npmVer", vName: "npmVer", isValid: false };
+        version.isValid = satisfies(ver, installValidators[version.vName]);
+        if (!version.isValid) {
+            version.invalidReason = compare(ver, installValidators[version.vName]);
+        }
+        return version;
     }
-    return version;
+    catch (error) {
+        console.dir(error);
+        version.isValid = false;
+        version.invalidReason = 2;
+        return version;
+    }
 }
 function checkGitBranch(gitDefaultBranch) {
     return gitDefaultBranch === configValidators.gitBanch ? true : false;

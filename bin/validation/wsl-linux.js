@@ -2,15 +2,34 @@ import compare from "compare-versions";
 const { satisfies } = compare;
 const validators = {
     distro: "ubuntu",
-    ubuntu: "~22",
+    osVersion: "^22",
 };
 function osVariant(distro = "Unknown") {
     return distro.toLowerCase() === validators.distro;
 }
 function osVersion(version) {
-    return satisfies(version, validators.ubuntu);
+    try {
+        return satisfies(version, validators.osVersion);
+    }
+    catch (error) {
+        return false;
+    }
+}
+function checkInvalidOSReason(osVersion) {
+    try {
+        return compare(osVersion, validators.osVersion);
+    }
+    catch (error) {
+        return 2;
+    }
 }
 function vsCodeAlias(codeAlias) {
     return codeAlias !== "Unknown" ? true : false;
 }
-export { osVariant, osVersion, vsCodeAlias, };
+function checkCPUChecker(vtStatus = "Unknown") {
+    return vtStatus !== "Unknown" ? true : false;
+}
+function checkVTEnabled(vtStatus = "Unknown") {
+    return vtStatus === "Enabled" ? true : false;
+}
+export { osVariant, osVersion, checkInvalidOSReason, vsCodeAlias, checkCPUChecker, checkVTEnabled, };

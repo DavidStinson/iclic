@@ -14,11 +14,19 @@ const validators = {
 }
 
 function checkOSVersion(version: string): boolean {
-  return satisfies(version, validators.macOSVer)
+  try {
+    return satisfies(version, validators.macOSVer)
+  } catch (error) {
+    return false
+  }
 }
 
 function checkInvalidOSReason(osVersion: string) {
-  return compare(osVersion, validators.macOSVer)
+  try {
+    return compare(osVersion, validators.macOSVer)
+  } catch (error) {
+    return 2
+  }
 }
 
 function checkCPUType(type = "Unknown"): boolean {

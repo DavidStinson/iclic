@@ -37,13 +37,19 @@ function checkRecRAM(systemRAM: number): boolean {
 }
 
 function checkVersions(ver = "null", version: InstallVersion): InstallVersion {
-  // This is hacky and bad, should go back to data and adjust later
-  if (ver === "null") return {name: "npmVer", vName: "npmVer", isValid: false}
-  version.isValid = satisfies(ver, installValidators[version.vName])
-  if (!version.isValid) {
-    version.reason = compare(ver, installValidators[version.vName])
+  try {
+    // This is hacky and bad, should go back to data and adjust later
+    if (ver === "null") return {name: "npmVer", vName: "npmVer", isValid: false}
+    version.isValid = satisfies(ver, installValidators[version.vName])
+    if (!version.isValid) {
+      version.invalidReason = compare(ver, installValidators[version.vName])
+    }
+    return version
+  } catch (error) {
+    version.isValid = false
+    version.invalidReason = 2
+    return version
   }
-  return version
 }
 
 function checkGitBranch(gitDefaultBranch: string): boolean {

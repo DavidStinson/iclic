@@ -69,8 +69,7 @@ async function getWSLLinuxMachineData(mD: MachineData): Promise<MachineData> {
     mD.osName = 'WSL2'
   } else {
     mD.osName = 'Linux'
-    // TKTK NEED TO DO THIS
-    // data.vtStatus =
+    mD.vtStatus = await wslLinuxData.getVTStatus()
   }
   mD.osVariant = await wslLinuxData.getDistro()
   mD.osVersion = await wslLinuxData.getOSVersion()

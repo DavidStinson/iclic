@@ -79,7 +79,6 @@ const initialData = {
 };
 async function main(data) {
     const collectedData = await dataManager(data);
-    collectedData.installData.nodeVer = "17.3.0";
     const validatedData = await validationManager(collectedData);
     console.dir(validatedData);
     console.dir(validatedData.installValidation);

@@ -11,6 +11,9 @@ async function validationManager(data: Data): Promise<Data> {
     data.machineValidation = checkWSLLinuxMachineData(data)
     data.installValidation = checkWSLLinuxInstallData(data)
   }
+  if (osName === "Linux") {
+    data.machineValidation = checkLinuxMachineData(data)
+  }
   data.machineValidation = checkGenMachineData(data)
   data.installValidation = checkGenInstallData(data)
   data.configValidation = checkGenConfigData(data)
@@ -42,6 +45,15 @@ function checkWSLLinuxMachineData(data: Data): MachineValidation {
     mV.isInvaidOSReason = wslLinuxValid.checkInvalidOSReason(mD.osVersion)
   }
   mV.isValidOSVersion = wslLinuxValid.osVersion(mD.osVersion)
+  return mV
+}
+
+function checkLinuxMachineData(data: Data): MachineValidation {
+  const { machineValidation: mV, machineData: mD } = data
+  mV.isCPUCheckerInstalled = wslLinuxValid.checkCPUChecker(mD.vtStatus)
+  if(mV.isCPUCheckerInstalled) {
+    mV.isVTEnabled = wslLinuxValid.checkVTEnabled(mD.vtStatus)
+  }
   return mV
 }
 

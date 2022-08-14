@@ -19,8 +19,7 @@ declare interface MachineData {
   username: string;
   cpuType?: string; // macOS only
   cpuModel: string;
-  // https://askubuntu.com/q/103965
-  vtStatus?: string; // ! BLOCKED: Installfest Work/Testing
+  vtStatus?: string;
   ramInGB: number;
 }
 
@@ -28,9 +27,10 @@ declare interface MachineData {
 declare interface MachineValidation {
   isValidOSVariant?: boolean; // WSL/Linux only
   isValidOSVersion: boolean; 
-  isInvaidOSReason?: number; // TODO: Needs done
+  isInvaidOSReason?: number;
   isValidCPUType?: boolean; // macOS only
-  isVTEnabled?: boolean; // ! BLOCKED: Installfest Work/Testing
+  isCPUCheckerInstalled?: boolean; // Linux only
+  isVTEnabled?: boolean; // ! BLOCKED: Installfest Work/Testing // Linux only
   isMinRAM: boolean; 
   isRecRAM: boolean; 
 }
@@ -67,7 +67,8 @@ declare interface InstallValidation {
 declare interface ConfigData {
   gitEmail: string; 
   gitDefBranch: string; 
-  gitMergeBehavior: string; 
+  gitMergeBehavior: string;
+  // TKTK ADD CODE CHECK HERE
   gitIgnConLoc: string; 
   gitIgnLoc: string; 
   gitIgn: string; 
@@ -100,7 +101,7 @@ declare interface InstallVersion {
   name: keyof InstallData;
   vName: keyof InstallValidators;
   isValid: boolean;
-  reason?: number;
+  invalidReason?: number;
 }
 
 declare interface CommandsForInstallData {

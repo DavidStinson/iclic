@@ -11,6 +11,9 @@ async function validationManager(data) {
         data.machineValidation = checkWSLLinuxMachineData(data);
         data.installValidation = checkWSLLinuxInstallData(data);
     }
+    if (osName === "Linux") {
+        data.machineValidation = checkLinuxMachineData(data);
+    }
     data.machineValidation = checkGenMachineData(data);
     data.installValidation = checkGenInstallData(data);
     data.configValidation = checkGenConfigData(data);
@@ -18,21 +21,35 @@ async function validationManager(data) {
 }
 function checkMacOSMachineData(data) {
     const { machineValidation: mV, machineData: mD } = data;
-    mV.isValidOSVersion = macOSValid.osVersion(mD.osVersion);
-    mV.isValidCPUType = macOSValid.cpuType(mD.cpuType);
+    mV.isValidOSVersion = macOSValid.checkOSVersion(mD.osVersion);
+    if (!mV.isValidOSVersion) {
+        mV.isInvaidOSReason = macOSValid.checkInvalidOSReason(mD.osVersion);
+    }
+    mV.isValidCPUType = macOSValid.checkCPUType(mD.cpuType);
     return mV;
 }
 function checkMacOSInstallData(data) {
     const { installValidation: iV, machineData: mD, installData: iD } = data;
-    iV.isValidBrewLoc = macOSValid.brewLoc(mD.cpuType, iD.brewLoc);
-    iV.isVSCodeInstalled = macOSValid.vsCodeLoc(iD.vsCodeLoc);
-    iV.isValidCodeAlias = macOSValid.vsCodeAlias(iD.codeAlias);
+    iV.isValidBrewLoc = macOSValid.checkBrewLoc(mD.cpuType, iD.brewLoc);
+    iV.isVSCodeInstalled = macOSValid.checkVSCodeLoc(iD.vsCodeLoc);
+    iV.isValidCodeAlias = macOSValid.checkVSCodeAlias(iD.codeAlias);
     return iV;
 }
 function checkWSLLinuxMachineData(data) {
     const { machineValidation: mV, machineData: mD } = data;
     mV.isValidOSVariant = wslLinuxValid.osVariant(mD.osVariant);
+    if (mV.isValidOSVersion) {
+        mV.isInvaidOSReason = wslLinuxValid.checkInvalidOSReason(mD.osVersion);
+    }
     mV.isValidOSVersion = wslLinuxValid.osVersion(mD.osVersion);
+    return mV;
+}
+function checkLinuxMachineData(data) {
+    const { machineValidation: mV, machineData: mD } = data;
+    mV.isCPUCheckerInstalled = wslLinuxValid.checkCPUChecker(mD.vtStatus);
+    if (mV.isCPUCheckerInstalled) {
+        mV.isVTEnabled = wslLinuxValid.checkVTEnabled(mD.vtStatus);
+    }
     return mV;
 }
 function checkWSLLinuxInstallData(data) {
