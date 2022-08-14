@@ -2,6 +2,7 @@
 
 import { dataManager } from './data-collection/manager.js'
 import { validationManager } from './validation/manager.js'
+import { Command } from 'commander'
 
 const userData: UserData = {
   preferredName: 'Unknown',
@@ -90,11 +91,29 @@ const initialData: Data = {
   configValidation,
 }
 
-async function main(data: Data) {
+async function main() {
+  const cL = new Command()
+
+  cL.version('1.0.0', '-v, --version', 'Outputs the current version.')
+  cL.name('iclic')
+  cL.description('A command line application for validating an installfest.')
+  cL.command("test", { isDefault: true })
+    .description(
+      "Test your installfest configuration before submitting it. This is the default behavior of the application when run from the base iclic command."
+    )
+    .action(async () => {
+      await base(initialData)
+    })
+  
+  cL.parse()
+
+}
+
+async function base(data: Data): Promise<void> {
   const collectedData = await dataManager(data)
   const validatedData = await validationManager(collectedData)
   console.dir(validatedData)
   console.dir(validatedData.installValidation)
 }
 
-main(initialData)
+main()
