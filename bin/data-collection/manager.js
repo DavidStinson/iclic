@@ -19,6 +19,7 @@ const commandsForConfigData = [
     { dataKey: 'gitEmail', command: 'git config --global user.email' },
     { dataKey: 'gitDefBranch', command: 'git config --global init.defaultBranch' },
     { dataKey: 'gitMergeBehavior', command: 'git config --global pull.rebase' },
+    { dataKey: 'gitEditor', command: 'git config --global core.editor' },
     { dataKey: 'gitIgnConLoc', command: 'git config --global core.excludesfile' },
     { dataKey: 'gitIgnLoc', command: 'git config --global core.excludesfile' },
 ];

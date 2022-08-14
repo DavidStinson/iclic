@@ -18,6 +18,7 @@ const installValidators: InstallValidators = {
 const configValidators = {
   gitBanch: "main",
   gitMergeBehavior: "false",
+  gitEditor: "code --wait",
   gitIgnConLoc: "/.gitignore_global",
 }
 
@@ -60,6 +61,10 @@ function checkGitMerge(gitMergeBehavior: string): boolean {
   return gitMergeBehavior === configValidators.gitMergeBehavior ? true : false
 }
 
+function checkGitEditor(gitEditor: string): boolean {
+  return gitEditor === configValidators.gitEditor ? true : false
+}
+
 function checkGitIgnConLoc(gitIgnConLoc: string, homedir: string): boolean {
   return gitIgnConLoc === `${homedir}${configValidators.gitIgnConLoc}` 
     ? true 
@@ -85,6 +90,7 @@ export {
   checkVersions,
   checkGitBranch,
   checkGitMerge,
+  checkGitEditor,
   checkGitIgnConLoc,
   checkGitIgnExists,
   checkGitIgnForContent,

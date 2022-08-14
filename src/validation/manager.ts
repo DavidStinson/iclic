@@ -83,6 +83,7 @@ function checkGenConfigData(data: Data): ConfigValidation {
   const { configValidation: cV, configData: cD, machineData: mD} = data
   cV.isValidGitBranch = sharedValid.checkGitBranch(cD.gitDefBranch)
   cV.isValidGitMergeBehavior = sharedValid.checkGitMerge(cD.gitMergeBehavior)
+  cV.isValidGitEditor = sharedValid.checkGitEditor(cD.gitEditor)
   cV.isValidGitIgnConLoc = sharedValid.checkGitIgnConLoc(
     cD.gitIgnConLoc, 
     mD.homedir

@@ -14,6 +14,7 @@ const installValidators = {
 const configValidators = {
     gitBanch: "main",
     gitMergeBehavior: "false",
+    gitEditor: "code --wait",
     gitIgnConLoc: "/.gitignore_global",
 };
 function checkCurrentShellZSH(currentShell, zshLoc) {
@@ -39,7 +40,6 @@ function checkVersions(ver = "null", version) {
         return version;
     }
     catch (error) {
-        console.dir(error);
         version.isValid = false;
         version.invalidReason = 2;
         return version;
@@ -50,6 +50,9 @@ function checkGitBranch(gitDefaultBranch) {
 }
 function checkGitMerge(gitMergeBehavior) {
     return gitMergeBehavior === configValidators.gitMergeBehavior ? true : false;
+}
+function checkGitEditor(gitEditor) {
+    return gitEditor === configValidators.gitEditor ? true : false;
 }
 function checkGitIgnConLoc(gitIgnConLoc, homedir) {
     return gitIgnConLoc === `${homedir}${configValidators.gitIgnConLoc}`
@@ -65,4 +68,4 @@ function checkGitIgnForContent(gitIgn) {
 function checkZshrcForContent(zshrc) {
     return zshrc.length ? true : false;
 }
-export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, checkVersions, checkGitBranch, checkGitMerge, checkGitIgnConLoc, checkGitIgnExists, checkGitIgnForContent, checkZshrcForContent, };
+export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, checkVersions, checkGitBranch, checkGitMerge, checkGitEditor, checkGitIgnConLoc, checkGitIgnExists, checkGitIgnForContent, checkZshrcForContent, };

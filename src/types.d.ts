@@ -10,7 +10,7 @@ declare interface UserValidation {
   hasPreviousSubmission: boolean; // ! BLOCKED: ADD CLI PROMPT 
 }
 
-// ! Done, minus blocker
+// ** THIS IS COMPLETE!
 declare interface MachineData {
   osName: string;
   osVariant?: string; // WSL/Linux only
@@ -23,14 +23,14 @@ declare interface MachineData {
   ramInGB: number;
 }
 
-// ! Done, minus blocker
+// ** THIS IS COMPLETE!
 declare interface MachineValidation {
   isValidOSVariant?: boolean; // WSL/Linux only
   isValidOSVersion: boolean; 
   isInvaidOSReason?: number;
   isValidCPUType?: boolean; // macOS only
   isCPUCheckerInstalled?: boolean; // Linux only
-  isVTEnabled?: boolean; // ! BLOCKED: Installfest Work/Testing // Linux only
+  isVTEnabled?: boolean; // Linux only
   isMinRAM: boolean; 
   isRecRAM: boolean; 
 }
@@ -68,7 +68,7 @@ declare interface ConfigData {
   gitEmail: string; 
   gitDefBranch: string; 
   gitMergeBehavior: string;
-  // TKTK ADD CODE CHECK HERE
+  gitEditor: string;
   gitIgnConLoc: string; 
   gitIgnLoc: string; 
   gitIgn: string; 
@@ -80,6 +80,7 @@ declare interface ConfigValidation {
   gitEmailMatchesPrompt: boolean; // ! BLOCKED: ADD CLI PROMPT
   isValidGitBranch: boolean;
   isValidGitMergeBehavior: boolean;
+  isValidGitEditor: boolean;
   isValidGitIgnConLoc: boolean;
   gitIgnExists: boolean;
   gitIgnHasContent: boolean;
