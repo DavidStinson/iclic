@@ -59,6 +59,8 @@ const installData: InstallData = {
 const installValidation: InstallValidation = {
   isShellZSH: false,
   isValidCodeAlias: false,
+  isValidGHLoc: false,
+  isValidHerokuLoc: false,
   versions: [
     { name: "npmVer", vName: "npmVer", isValid: false },
     { name: "nodeVer", vName: "nodeVer", isValid: false },
@@ -69,6 +71,7 @@ const installValidation: InstallValidation = {
 
 const configData: ConfigData = {
   gitEmail: 'Unknown',
+  ghLoginStatus: 'Unknown',
   gitDefBranch: 'Unknown',
   gitMergeBehavior: 'Unknown',
   gitEditor: 'Unknown',
@@ -79,6 +82,7 @@ const configData: ConfigData = {
 }
 
 const configValidation: ConfigValidation = {
+  isLoggedIntoGH: false,
   isValidGitBranch: false,
   isValidGitMergeBehavior: false,
   isValidGitEditor: false,

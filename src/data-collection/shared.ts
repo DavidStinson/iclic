@@ -41,6 +41,21 @@ function getCurrentShell(): string {
   }
 }
 
+async function getGHLoginStatus() {
+  try {
+    const { stderr } = await execAsync("gh auth status -h github.com")
+    if(stderr) throw new Error(stderr);
+    return "not authenticated"
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    // GH CLI writes all output to stderr
+    // https://github.com/cli/cli/blob/trunk/pkg/cmd/auth/status/status.go
+    // No error code means the user is logged in. Sure lol.
+    if (error.code) return "not authenticated"
+    return "authenticated"
+  }
+}
+
 function getGitIgnLoc(homedir: string): string {
   try {
     return fs.existsSync(`${homedir}/.gitignore_global`) 
@@ -125,6 +140,7 @@ export {
   getHomedir,
   getUsername,
   getCurrentShell,
+  getGHLoginStatus,
   getGitIgnLoc,
   getNodeVer,
   getGitVer,

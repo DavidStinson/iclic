@@ -6,17 +6,18 @@ function manager(data, messages) {
         messages = renderBrewLoc(data, messages);
     }
     messages = renderVSCodeAlias(data, messages);
+    messages = renderGHExists(data, messages);
     return messages;
 }
 function renderZSH(data, messages) {
     const { machineData: mD, installData: iD, installValidation: iV } = data;
     if (iV.isShellZSH) {
         messages.successes.push({
-            msg: `Your shell is zsh, located at ${iD.shell}.`
+            msg: `The current shell is zsh, located at ${iD.shell}.`
         });
     }
     else {
-        const message = { msg: `Your current shell is ${iD.shell}, and must be changed to zsh. Follow the URL below for a potential fix.` };
+        const message = { msg: `The current shell is ${iD.shell}, and must be changed to zsh. Follow the URL below for a potential fix.` };
         if (mD.osName === "macOS") {
             message.url = "https://www.notion.so/seirpublic/ZSH-ea65a37a77cd486b88a007ce7b9f3ed6";
         }
@@ -64,7 +65,7 @@ function renderVSCodeAlias(data, messages) {
     const { installData: iD, installValidation: iV } = data;
     if (iV.isValidCodeAlias) {
         messages.successes.push({
-            msg: `The code command is currently ${iD.codeAlias}, and is configured correctly.`
+            msg: `The code command is ${iD.codeAlias}, and is configured correctly.`
         });
     }
     else {
@@ -72,6 +73,25 @@ function renderVSCodeAlias(data, messages) {
             msg: `The code command is currently ${iD.codeAlias}, and not configured properly. Follow the URL below for a potential fix.`,
             url: "https://www.notion.so/seirpublic/code-Command-63eb01fd35744b3189c742bc77e36da3"
         });
+    }
+    return messages;
+}
+function renderGHExists(data, messages) {
+    const { machineData: mD, installData: iD, installValidation: iV } = data;
+    if (iV.isValidGHLoc) {
+        messages.successes.push({
+            msg: `The GitHub CLI is installed and located at ${iD.ghLoc}.`
+        });
+    }
+    else {
+        const message = { msg: `The GitHub CLI is not installed. Follow the URL below for a potential fix.` };
+        if (mD.osName === "macOS") {
+            message.url = "https://www.notion.so/seirpublic/GitHub-CLI-3bc798877af946228ca9f9f7ba17b4d7";
+        }
+        else if (mD.osName === "WSL2" || mD.osName === "Linux") {
+            message.url = "https://www.notion.so/seirpublic/GitHub-CLI-6c236fb2532f4f169b50cdaf42e3bf35";
+        }
+        messages.errors.push(message);
     }
     return messages;
 }

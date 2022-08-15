@@ -66,9 +66,6 @@ declare interface InstallValidation {
   isValidCodeAlias: boolean; // * all
   isValidBrewLoc?: boolean; // macOS only // * all
   isValidGHLoc: boolean;
-  isValidNPMLoc: boolean;
-  isValidNodeLoc: boolean;
-  isValidNodemonLoc: boolean;
   isValidHerokuLoc: boolean;
   versions: InstallVersion[];
 }
@@ -77,6 +74,7 @@ declare interface InstallValidation {
 declare interface ConfigData {
   gitEmail: string; 
   gitCredMan?: string; // WSL only
+  ghLoginStatus: string;
   gitDefBranch: string; 
   gitMergeBehavior: string;
   gitEditor: string;
@@ -88,6 +86,7 @@ declare interface ConfigData {
 
 // * THIS IS COMPLETE
 declare interface ConfigValidation {
+  isLoggedIntoGH: boolean;
   gitEmailMatchesPrompt?: boolean; // Submit only
   isValidGitCredMan?: boolean; // WSL only
   isValidGitBranch: boolean;

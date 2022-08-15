@@ -74,11 +74,16 @@ function checkGenMachineData(data) {
 function checkGenInstallData(data) {
     const { installValidation: iV, installData: iD } = data;
     iV.isShellZSH = sharedValid.checkCurrentShellZSH(iD.shell, iD.zshLoc);
+    iV.isValidGHLoc = sharedValid.checkLoc(iD, "ghLoc");
+    iV.isValidHerokuLoc = sharedValid.checkLoc(iD, "herokuLoc");
     iV.versions = iV.versions.map(version => (sharedValid.checkVersions(iD[version.name], version)));
     return iV;
 }
 function checkGenConfigData(data) {
-    const { configValidation: cV, configData: cD, machineData: mD, userData: uD, } = data;
+    const { configValidation: cV, configData: cD, machineData: mD, userData: uD, installData: iD, } = data;
+    if (iD.ghLoc !== "Unknown") {
+        cV.isLoggedIntoGH = sharedValid.checkGHAuth(cD.ghLoginStatus);
+    }
     if (uD.gitHubEmail) {
         cV.gitEmailMatchesPrompt = sharedValid.checkGitEmailMatch(uD.gitHubEmail, cD.gitEmail);
     }

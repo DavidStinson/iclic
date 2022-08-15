@@ -38,10 +38,10 @@ function checkRecRAM(systemRAM: number): boolean {
 }
 
 function checkLoc(
-  iDKey: keyof InstallData, 
-  iVKey: keyof InstallValidation
+  installData: InstallData,
+  iDKey: keyof InstallData
 ): boolean {
-  return true
+  return installData[iDKey] !== "Unknown" ? true : false
 }
 
 function checkVersions(ver = "null", version: InstallVersion): InstallVersion {
@@ -58,6 +58,10 @@ function checkVersions(ver = "null", version: InstallVersion): InstallVersion {
     version.invalidReason = 2
     return version
   }
+}
+
+function checkGHAuth(ghAuthStatus: string): boolean {
+  return ghAuthStatus === "authenticated" ? true : false
 }
 
 function checkGitEmailMatch(cliMail: string, configEmail: string): boolean {
@@ -98,7 +102,9 @@ export {
   checkCurrentShellZSH,
   checkMinRAM,
   checkRecRAM,
+  checkLoc,
   checkVersions,
+  checkGHAuth,
   checkGitEmailMatch,
   checkGitBranch,
   checkGitMerge,

@@ -56,6 +56,7 @@ async function getUserData(userData) {
     try {
         const answers = await inquirer.prompt(questions);
         userData = { ...userData, ...answers };
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }
     catch (error) {
         if (error.isTtyError) {

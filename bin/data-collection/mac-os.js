@@ -1,7 +1,6 @@
 import os from 'os';
 import fs from 'fs';
 import plist from 'plist';
-const log = console.log;
 function getCPUType() {
     const cpuType = os.cpus();
     if (cpuType[0].model.includes("Apple")) {
@@ -32,7 +31,6 @@ function getVSCodeLoc() {
             : "Unknown";
     }
     catch (error) {
-        log(error);
         return "Unknown";
     }
 }

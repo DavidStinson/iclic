@@ -23,7 +23,7 @@ function manager(data: Data, messages: Messages): Messages {
 function renderOS(data: Data, messages: Messages): Messages {
   const { machineData: mD} = data
   messages.info.push({
-    msg: `Your Operating System is: ${mD.osName}`
+    msg: `Your Operating System is ${mD.osName}.`
   })
   return messages
 }
@@ -63,7 +63,7 @@ function renderValidLinuxVariant(data: Data, messages: Messages): Messages {
 function renderLinuxCPUModel(data: Data, messages: Messages): Messages {
   const { machineData: mD} = data
   messages.info.push({
-    msg: `Your processor model is: ${mD.cpuModel}`
+    msg: `Your processor model is ${mD.cpuModel}.`
   })
   return messages
 }
@@ -127,7 +127,7 @@ function renderRAM(data: Data, messages: Messages): Messages {
 function renderHomedirUsername(data: Data, messages: Messages): Messages {
   const { machineData: mD} = data
   messages.info.push({
-    msg: `Your username is ${mD.username} and your home directory is located at ${mD.homedir}`
+    msg: `Your username is ${mD.username} and your home directory is located at ${mD.homedir}.`
   })
   return messages
 }

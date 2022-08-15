@@ -82,6 +82,8 @@ function checkGenMachineData(data: Data): MachineValidation{
 function checkGenInstallData(data: Data): InstallValidation{
   const { installValidation: iV, installData: iD } = data
   iV.isShellZSH = sharedValid.checkCurrentShellZSH(iD.shell, iD.zshLoc)
+  iV.isValidGHLoc = sharedValid.checkLoc(iD, "ghLoc")
+  iV.isValidHerokuLoc = sharedValid.checkLoc(iD, "herokuLoc")
   iV.versions = iV.versions.map(version => (
     sharedValid.checkVersions(iD[version.name], version)
   ))
@@ -93,8 +95,12 @@ function checkGenConfigData(data: Data): ConfigValidation {
     configValidation: cV, 
     configData: cD, 
     machineData: mD,
-    userData: uD, 
+    userData: uD,
+    installData: iD,
   } = data
+  if(iD.ghLoc !== "Unknown") {
+    cV.isLoggedIntoGH = sharedValid.checkGHAuth(cD.ghLoginStatus)
+  }
   if(uD.gitHubEmail) {
     cV.gitEmailMatchesPrompt = sharedValid.checkGitEmailMatch(
       uD.gitHubEmail, 

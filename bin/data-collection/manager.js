@@ -46,7 +46,7 @@ async function collectInstallData(data) {
     }
     data.machineData = getGenMachineData(data.machineData);
     data.installData = await getGenInstallData(data.installData);
-    data.configData = await getGenConfigData(data.configData, data.machineData.homedir);
+    data.configData = await getGenConfigData(data.installData, data.configData, data.machineData.homedir);
     if (data.machineData.osName === "WSL2") {
         data.configData = await getWSLConfigData(data.configData);
     }
@@ -92,7 +92,10 @@ async function getGenInstallData(iD) {
     }
     return iD;
 }
-async function getGenConfigData(cD, homedir) {
+async function getGenConfigData(iD, cD, homedir) {
+    if (iD.ghLoc !== "Unknown") {
+        cD.ghLoginStatus = await sharedData.getGHLoginStatus();
+    }
     cD.gitIgnLoc = sharedData.getGitIgnLoc(homedir);
     for await (const { dataKey, command } of commandsForConfigData) {
         cD[dataKey] = await sharedData.executeCommand(command);

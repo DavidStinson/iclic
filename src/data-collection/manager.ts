@@ -51,6 +51,7 @@ async function collectInstallData(data: Data): Promise<Data> {
   data.machineData = getGenMachineData(data.machineData)
   data.installData = await getGenInstallData(data.installData)
   data.configData = await getGenConfigData(
+    data.installData,
     data.configData,
     data.machineData.homedir
   )
@@ -105,9 +106,13 @@ async function getGenInstallData(iD: InstallData): Promise<InstallData> {
 }
 
 async function getGenConfigData(
+  iD: InstallData,
   cD: ConfigData,
   homedir: string,
 ): Promise<ConfigData> {
+  if (iD.ghLoc !== "Unknown") {
+    cD.ghLoginStatus = await sharedData.getGHLoginStatus()
+  }
   cD.gitIgnLoc = sharedData.getGitIgnLoc(homedir)
   for await (const { dataKey, command } of commandsForConfigData) {
     cD[dataKey] = await sharedData.executeCommand(command)

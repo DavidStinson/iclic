@@ -28,6 +28,9 @@ function checkMinRAM(systemRAM) {
 function checkRecRAM(systemRAM) {
     return systemRAM > machineValidators.recRAM;
 }
+function checkLoc(installData, iDKey) {
+    return installData[iDKey] !== "Unknown" ? true : false;
+}
 function checkVersions(ver = "null", version) {
     try {
         // This is hacky and bad, should go back to data and adjust later
@@ -44,6 +47,9 @@ function checkVersions(ver = "null", version) {
         version.invalidReason = 2;
         return version;
     }
+}
+function checkGHAuth(ghAuthStatus) {
+    return ghAuthStatus === "authenticated" ? true : false;
 }
 function checkGitEmailMatch(cliMail, configEmail) {
     return cliMail === configEmail ? true : false;
@@ -71,4 +77,4 @@ function checkGitIgnForContent(gitIgn) {
 function checkZshrcForContent(zshrc) {
     return zshrc.length ? true : false;
 }
-export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, checkVersions, checkGitEmailMatch, checkGitBranch, checkGitMerge, checkGitEditor, checkGitIgnConLoc, checkGitIgnExists, checkGitIgnForContent, checkZshrcForContent, };
+export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, checkLoc, checkVersions, checkGHAuth, checkGitEmailMatch, checkGitBranch, checkGitMerge, checkGitEditor, checkGitIgnConLoc, checkGitIgnExists, checkGitIgnForContent, checkZshrcForContent, };

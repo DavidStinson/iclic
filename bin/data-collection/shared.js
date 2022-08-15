@@ -2,10 +2,7 @@ import os from "os";
 import fs from 'fs';
 import util from "util";
 import { exec } from "child_process";
-import chalk from "chalk";
 const execAsync = util.promisify(exec);
-const log = console.log;
-const cErr = chalk.bold.red;
 function getCPUModel() {
     const cpuType = os.cpus();
     return cpuType[0].model ? cpuType[0].model : "Unknown CPU";
@@ -35,12 +32,27 @@ function getUsername() {
 function getCurrentShell() {
     try {
         const currentShell = os.userInfo().shell;
-        if (currentShell)
-            return currentShell;
-        return "Unknown";
+        return currentShell ? currentShell : "Unknown";
     }
     catch (error) {
         return "Unknown";
+    }
+}
+async function getGHLoginStatus() {
+    try {
+        const { stdout, stderr } = await execAsync("gh auth status -h github.com");
+        if (stderr)
+            throw new Error(stderr);
+        return "not authenticated";
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }
+    catch (error) {
+        // GH CLI writes all output to stderr
+        // https://github.com/cli/cli/blob/trunk/pkg/cmd/auth/status/status.go
+        // No error code means the user is logged in. Sure lol.
+        if (error.code)
+            return "not authenticated";
+        return "authenticated";
     }
 }
 function getGitIgnLoc(homedir) {
@@ -50,7 +62,6 @@ function getGitIgnLoc(homedir) {
             : "Unknown";
     }
     catch (error) {
-        log(error);
         return "Unknown";
     }
 }
@@ -66,7 +77,6 @@ async function getNodeVer() {
         return "Unknown";
     }
     catch (error) {
-        log(cErr(error));
         return "Unknown";
     }
 }
@@ -84,7 +94,6 @@ async function getGitVer() {
         return "Unknown";
     }
     catch (error) {
-        log(cErr(error));
         return "Unknown";
     }
 }
@@ -95,7 +104,6 @@ function getGitIgn(homedir) {
         return cleanedGitIgn;
     }
     catch (error) {
-        log(error);
         return "Unknown";
     }
 }
@@ -106,7 +114,6 @@ function getZshrc(homedir) {
         return cleanedZshrcText;
     }
     catch (error) {
-        log(error);
         return "Unknown";
     }
 }
@@ -123,8 +130,7 @@ async function executeCommand(command) {
         return "Unknown";
     }
     catch (error) {
-        log(cErr(error));
         return "Unknown";
     }
 }
-export { getCPUModel, getTotalRAMInGB, getHomedir, getUsername, getCurrentShell, getGitIgnLoc, getNodeVer, getGitVer, getGitIgn, getZshrc, executeCommand, };
+export { getCPUModel, getTotalRAMInGB, getHomedir, getUsername, getCurrentShell, getGHLoginStatus, getGitIgnLoc, getNodeVer, getGitVer, getGitIgn, getZshrc, executeCommand, };
