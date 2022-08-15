@@ -110,7 +110,7 @@ async function main() {
     .description(
       "Test your installfest configuration before submitting it. This is the default behavior of the application when run from the base iclic command."
     )
-    .action(async (options) => {
+    .action(async () => {
       const dataSpinner = ora({
         text: "Collecting System Configuration", 
         spinner: "triangle",

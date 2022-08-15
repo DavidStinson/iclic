@@ -1,6 +1,7 @@
 import chalk from "chalk"
 
 import * as machineRender from "./machine.js"
+import * as installRender from "./install.js"
 
 const log = console.log
 const cInfo = chalk.cyan
@@ -22,7 +23,8 @@ async function renderData(data: Data): Promise<void> {
     // TKTK ADD cohort name here?
   }
   const machineMessages = machineRender.manager(data, messages)
-  await displayMessages(machineMessages)
+  const installMessages = installRender.manager(data, machineMessages)
+  await displayMessages(installMessages)
 }
 
 async function displayMessages(messages: Messages) {

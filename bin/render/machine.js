@@ -135,7 +135,7 @@ function renderHomedirUsername(data, messages) {
     return messages;
 }
 function renderVTStatus(data, messages) {
-    const { machineData: mD, machineValidation: mV } = data;
+    const { machineValidation: mV } = data;
     if (mV.isCPUCheckerInstalled) {
         if (mV.isVTEnabled) {
             messages.successes.push({

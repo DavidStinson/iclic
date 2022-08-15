@@ -1,4 +1,4 @@
-// ** THIS IS COMPLETE!
+// ** THIS IS COMPLETE! THIS IS RENDERING!
 declare interface UserData {
   preferredName: string;
   gitHubUsername: string;
@@ -15,25 +15,25 @@ declare interface UserValidation {
   cohortName: string; // ! BLOCKED: NEED A BACK END
 }
 
-// ** THIS IS COMPLETE!
+// ** THIS IS COMPLETE! THIS IS RENDERING!
 declare interface MachineData {
-  osName: string; // * all
-  osVariant?: string; // WSL/Linux only // * all
-  osVersion: string; // * all
-  homedir: string; // * all
-  username: string; // * all
-  cpuType?: string; // macOS only // * macOS
-  cpuModel: string; // * all
+  osName: string;
+  osVariant?: string; // WSL/Linux only
+  osVersion: string;
+  homedir: string;
+  username: string;
+  cpuType?: string; // macOS only
+  cpuModel: string; 
   vtStatus?: string; // Linux only //
   ramInGB: number;
 }
 
-// ** THIS IS COMPLETE!
+// ** THIS IS COMPLETE! THIS IS RENDERING!
 declare interface MachineValidation {
-  isValidOSVariant?: boolean; // WSL/Linux only // * all
-  isValidOSVersion: boolean; // * all
-  isInvaidOSReason?: number; // only invalid OS Version // * all
-  isValidCPUType?: boolean; // macOS only // * all
+  isValidOSVariant?: boolean; // WSL/Linux only
+  isValidOSVersion: boolean;
+  isInvaidOSReason?: number; // only invalid OS Version
+  isValidCPUType?: boolean; // macOS only
   isCPUCheckerInstalled?: boolean; // Linux only
   isVTEnabled?: boolean; // Linux only
   isMinRAM: boolean; 
@@ -42,11 +42,11 @@ declare interface MachineValidation {
 
 // ** THIS IS COMPLETE!
 declare interface InstallData {
-  zshLoc: string; 
-  shell: string;  
-  vsCodeLoc?: string; // macOS only
-  codeAlias: string; 
-  brewLoc?: string; // macOS only
+  zshLoc: string; // * all
+  shell: string;  // * all
+  vsCodeLoc?: string; // macOS only // * all
+  codeAlias: string; // *all
+  brewLoc?: string; // macOS only 
   ghLoc: string; 
   npmLoc: string; 
   npmVer: string; 
@@ -61,10 +61,10 @@ declare interface InstallData {
 
 // ** THIS IS COMPLETE!
 declare interface InstallValidation {
-  isShellZSH: boolean;
-  isVSCodeInstalled?: boolean; // macOS only
-  isValidCodeAlias: boolean;
-  isValidBrewLoc?: boolean; // macOS only
+  isShellZSH: boolean; // * all
+  isVSCodeInstalled?: boolean; // macOS only // * all
+  isValidCodeAlias: boolean; // * all
+  isValidBrewLoc?: boolean; // macOS only // * all
   versions: InstallVersion[];
 }
 

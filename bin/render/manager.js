@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import * as machineRender from "./machine.js";
+import * as installRender from "./install.js";
 const log = console.log;
 const cInfo = chalk.cyan;
 const cSuccess = chalk.green;
@@ -18,7 +19,8 @@ async function renderData(data) {
         // TKTK ADD cohort name here?
     }
     const machineMessages = machineRender.manager(data, messages);
-    await displayMessages(machineMessages);
+    const installMessages = installRender.manager(data, machineMessages);
+    await displayMessages(installMessages);
 }
 async function displayMessages(messages) {
     for (const msg of messages.info) {
@@ -39,7 +41,7 @@ async function displayMessages(messages) {
     }
 }
 async function infoMessage(message) {
-    log(cInfo("i"), message.msg);
+    log(cInfo("ℹ"), message.msg);
     if (message.url)
         log(cLink(message.url));
 }

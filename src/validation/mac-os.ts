@@ -33,6 +33,14 @@ function checkCPUType(type = "Unknown"): boolean {
   return validators.cpuTypes.includes(type)
 }
 
+function checkVSCodeLoc(codeLoc = "Unknown"): boolean {
+  return codeLoc === "/Applications/Visual Studio Code.app" ? true : false
+}
+
+function checkVSCodeAlias(codeAlias: string): boolean {
+  return validators.codeLocations.includes(codeAlias) ? true : false
+}
+
 function checkBrewLoc(type = "Unknown", location = "Unknown"): boolean {
   if (type === "Apple Silicon") {
     return location === validators.appleSiliconBrewLoc ? true : false
@@ -43,19 +51,11 @@ function checkBrewLoc(type = "Unknown", location = "Unknown"): boolean {
   }
 }
 
-function checkVSCodeLoc(codeLoc = "Unknown"): boolean {
-  return codeLoc === "/Applications/Visual Studio Code.app" ? true : false
-}
-
-function checkVSCodeAlias(codeAlias: string): boolean {
-  return validators.codeLocations.includes(codeAlias) ? true : false
-}
-
 export {
   checkOSVersion,
   checkInvalidOSReason,
   checkCPUType,
-  checkBrewLoc,
-  checkVSCodeLoc,
   checkVSCodeAlias,
+  checkVSCodeLoc,
+  checkBrewLoc,
 }
