@@ -59,6 +59,7 @@ async function getUserData(userData: UserData): Promise<UserData> {
   try {
     const answers = await inquirer.prompt(questions)
     userData = {...userData, ...answers}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     if (error.isTtyError) {
       console.log("Prompt couldn't be rendered, use command options instead!")

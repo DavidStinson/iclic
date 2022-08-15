@@ -39,7 +39,7 @@ function renderValidLinuxVariant(data, messages) {
     const { machineData: mD, machineValidation: mV } = data;
     if (mV.isValidOSVersion) {
         messages.info.push({
-            msg: `You are using ${mD.osName} ${mD.osVariant} ${mD.osVersion}.`
+            msg: `Your device is running ${mD.osName} ${mD.osVariant} ${mD.osVersion}.`
         });
     }
     else {
@@ -72,7 +72,7 @@ function renderMacOSVersion(data, messages) {
     const { machineData: mD, machineValidation: mV } = data;
     if (mV.isValidOSVersion) {
         messages.info.push({
-            msg: `You are using macOS ${mD.osVersion}.`
+            msg: `Your Mac is running macOS ${mD.osVersion}.`
         });
     }
     else {

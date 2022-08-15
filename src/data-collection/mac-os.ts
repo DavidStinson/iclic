@@ -2,8 +2,6 @@ import os from 'os'
 import fs from 'fs'
 import plist from 'plist'
 
-const log = console.log
-
 function getCPUType(): string {
   const cpuType = os.cpus()
   if (cpuType[0].model.includes("Apple")){
@@ -38,7 +36,6 @@ function getVSCodeLoc(): string {
       ? "/Applications/Visual Studio Code.app"
       : "Unknown"
   } catch (error) {
-    log(error)
     return "Unknown"
   }
 }

@@ -2,11 +2,8 @@ import os from "os"
 import fs from 'fs'
 import util from "util"
 import { exec } from "child_process"
-import chalk from "chalk"
 
 const execAsync = util.promisify(exec)
-const log = console.log
-const cErr = chalk.bold.red
 
 function getCPUModel(): string {
   const cpuType = os.cpus()
@@ -38,8 +35,7 @@ function getUsername() {
 function getCurrentShell(): string {
   try {
     const currentShell = os.userInfo().shell
-    if (currentShell) return currentShell
-    return "Unknown"
+    return currentShell ? currentShell : "Unknown"
   } catch (error) {
     return "Unknown"
   }
@@ -51,7 +47,6 @@ function getGitIgnLoc(homedir: string): string {
       ? `${homedir}/.gitignore_global`
       : "Unknown"
   } catch (error) {
-    log(error)
     return "Unknown"
   }
 }
@@ -66,7 +61,6 @@ async function getNodeVer(): Promise<string> {
     }
     return "Unknown"
   } catch (error) {
-    log(cErr(error))
     return "Unknown"
   }
 }
@@ -83,7 +77,6 @@ async function getGitVer(): Promise<string> {
     }
     return "Unknown"
   } catch (error) {
-    log(cErr(error))
     return "Unknown"
   }
 }
@@ -96,7 +89,6 @@ function getGitIgn(homedir: string): string {
     )).filter(text => text !== "").join("\n")
     return cleanedGitIgn
   } catch (error) {
-    log(error)
     return "Unknown"
   }
 }
@@ -109,7 +101,6 @@ function getZshrc(homedir: string): string {
     )).filter(text => text !== "").join("\n")
     return cleanedZshrcText
   } catch (error) {
-    log(error)
     return "Unknown"
   }
 }
@@ -124,7 +115,6 @@ async function executeCommand(command: string): Promise<string> {
     }
     return "Unknown"
   } catch (error) {
-    log(cErr(error))
     return "Unknown"
   }
 }

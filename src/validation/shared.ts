@@ -37,6 +37,13 @@ function checkRecRAM(systemRAM: number): boolean {
   return systemRAM > machineValidators.recRAM
 }
 
+function checkLoc(
+  iDKey: keyof InstallData, 
+  iVKey: keyof InstallValidation
+): boolean {
+  return true
+}
+
 function checkVersions(ver = "null", version: InstallVersion): InstallVersion {
   try {
     // This is hacky and bad, should go back to data and adjust later

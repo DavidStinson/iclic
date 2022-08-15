@@ -46,7 +46,7 @@ declare interface InstallData {
   shell: string;  // * all
   vsCodeLoc?: string; // macOS only // * all
   codeAlias: string; // *all
-  brewLoc?: string; // macOS only 
+  brewLoc?: string; // macOS only // * all
   ghLoc: string; 
   npmLoc: string; 
   npmVer: string; 
@@ -65,6 +65,11 @@ declare interface InstallValidation {
   isVSCodeInstalled?: boolean; // macOS only // * all
   isValidCodeAlias: boolean; // * all
   isValidBrewLoc?: boolean; // macOS only // * all
+  isValidGHLoc: boolean;
+  isValidNPMLoc: boolean;
+  isValidNodeLoc: boolean;
+  isValidNodemonLoc: boolean;
+  isValidHerokuLoc: boolean;
   versions: InstallVersion[];
 }
 
