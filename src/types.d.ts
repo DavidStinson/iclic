@@ -9,29 +9,31 @@ declare interface UserData {
 
 // ! BLOCKED: NEED TO BUILD A BACK END
 declare interface UserValidation {
+  isUser: boolean;
   isValidCohortId: boolean; // ! BLOCKED: NEED A BACK END
-  hasPreviousSubmission: boolean; // ! BLOCKED: NEED A BACK END 
+  hasPreviousSubmission: boolean; // ! BLOCKED: NEED A BACK END
+  cohortName: string; // ! BLOCKED: NEED A BACK END
 }
 
 // ** THIS IS COMPLETE!
 declare interface MachineData {
-  osName: string;
-  osVariant?: string; // WSL/Linux only
-  osVersion: string;
-  homedir: string;
-  username: string;
-  cpuType?: string; // macOS only
-  cpuModel: string;
-  vtStatus?: string;
+  osName: string; // * all
+  osVariant?: string; // WSL/Linux only // * all
+  osVersion: string; // * all
+  homedir: string; // * all
+  username: string; // * all
+  cpuType?: string; // macOS only // * macOS
+  cpuModel: string; // * all
+  vtStatus?: string; // Linux only //
   ramInGB: number;
 }
 
 // ** THIS IS COMPLETE!
 declare interface MachineValidation {
-  isValidOSVariant?: boolean; // WSL/Linux only
-  isValidOSVersion: boolean; 
-  isInvaidOSReason?: number; // only invalid OS Version
-  isValidCPUType?: boolean; // macOS only
+  isValidOSVariant?: boolean; // WSL/Linux only // * all
+  isValidOSVersion: boolean; // * all
+  isInvaidOSReason?: number; // only invalid OS Version // * all
+  isValidCPUType?: boolean; // macOS only // * all
   isCPUCheckerInstalled?: boolean; // Linux only
   isVTEnabled?: boolean; // Linux only
   isMinRAM: boolean; 
@@ -81,7 +83,7 @@ declare interface ConfigData {
 
 // * THIS IS COMPLETE
 declare interface ConfigValidation {
-  gitEmailMatchesPrompt: boolean;
+  gitEmailMatchesPrompt?: boolean; // Submit only
   isValidGitCredMan?: boolean; // WSL only
   isValidGitBranch: boolean;
   isValidGitMergeBehavior: boolean;
@@ -142,6 +144,18 @@ declare interface Questions {
   message: string;
   filter?(value: string): string;
   validate?(value: string): true | string;
+}
+
+declare interface Messages {
+  info: Message[];
+  successes: Message[];
+  warns: Message[];
+  errors: Message[];
+}
+
+declare interface Message {
+  msg: string;
+  url?: string;
 }
 
 declare module 'plist' {

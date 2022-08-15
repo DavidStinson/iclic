@@ -3,12 +3,13 @@
 import { Command } from 'commander'
 import ora from "ora"
 
+import { validateCLIInput } from './validation/input.js'
 import { 
   collectInstallData, 
   collectUserData 
 } from './data-collection/manager.js'
 import { validationManager } from './validation/manager.js'
-import { validateCLIInput } from './validation/input.js'
+import { renderData } from './render/manager.js'
 
 const userData: UserData = {
   preferredName: '',
@@ -18,8 +19,10 @@ const userData: UserData = {
 }
 
 const userValidation: UserValidation = {
+  isUser: false,
   isValidCohortId: false,
   hasPreviousSubmission: false,
+  cohortName: "",
 }
 
 const machineData: MachineData = {
@@ -76,7 +79,6 @@ const configData: ConfigData = {
 }
 
 const configValidation: ConfigValidation = {
-  gitEmailMatchesPrompt: false,
   isValidGitBranch: false,
   isValidGitMergeBehavior: false,
   isValidGitEditor: false,
@@ -109,7 +111,13 @@ async function main() {
       "Test your installfest configuration before submitting it. This is the default behavior of the application when run from the base iclic command."
     )
     .action(async (options) => {
+      const dataSpinner = ora({
+        text: "Collecting System Configuration", 
+        spinner: "triangle",
+      })
       const collectedData = await getInstallState(initialData)
+      dataSpinner.succeed("System Configuration Retrieved")
+      await renderData(collectedData)
     })
   cL.command("submit")
     .description(
@@ -131,12 +139,14 @@ async function main() {
       if (Object.values(initialData.userData).some(val => !val)) {
         initialData.userData = await collectUserData(initialData.userData)
       }
+      initialData.userValidation.isUser = true
       const dataSpinner = ora({
         text: "Collecting System Configuration", 
         spinner: "triangle",
       })
       const collectedData = await getInstallState(initialData)
       dataSpinner.succeed("System Configuration Retrieved")
+      await renderData(collectedData)
     })
   cL.parse()
 }
@@ -144,9 +154,7 @@ async function main() {
 async function getInstallState(data: Data): Promise<Data> {
   const collectedData = await collectInstallData(data)
   const validatedData = await validationManager(collectedData)
-  console.dir(validatedData)
-  console.dir(validatedData.installValidation)
-  return data
+  return validatedData
 }
 
 main()

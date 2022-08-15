@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import ora from "ora";
+import { validateCLIInput } from './validation/input.js';
 import { collectInstallData, collectUserData } from './data-collection/manager.js';
 import { validationManager } from './validation/manager.js';
-import { validateCLIInput } from './validation/input.js';
+import { renderData } from './render/manager.js';
 const userData = {
     preferredName: '',
     gitHubUsername: '',
@@ -11,8 +12,10 @@ const userData = {
     cohortId: '',
 };
 const userValidation = {
+    isUser: false,
     isValidCohortId: false,
     hasPreviousSubmission: false,
+    cohortName: "",
 };
 const machineData = {
     osName: 'Unknown',
@@ -63,7 +66,6 @@ const configData = {
     zshrc: '',
 };
 const configValidation = {
-    gitEmailMatchesPrompt: false,
     isValidGitBranch: false,
     isValidGitMergeBehavior: false,
     isValidGitEditor: false,
@@ -90,7 +92,13 @@ async function main() {
     cL.command("test", { isDefault: true })
         .description("Test your installfest configuration before submitting it. This is the default behavior of the application when run from the base iclic command.")
         .action(async (options) => {
+        const dataSpinner = ora({
+            text: "Collecting System Configuration",
+            spinner: "triangle",
+        });
         const collectedData = await getInstallState(initialData);
+        dataSpinner.succeed("System Configuration Retrieved");
+        await renderData(collectedData);
     });
     cL.command("submit")
         .description("Submit your installfest configuration. You'll be asked some basic information and then submit your installfest configuration to be reviewed. Don't worry, you can resubmit your configuration again if you make changes later.")
@@ -104,20 +112,20 @@ async function main() {
         if (Object.values(initialData.userData).some(val => !val)) {
             initialData.userData = await collectUserData(initialData.userData);
         }
+        initialData.userValidation.isUser = true;
         const dataSpinner = ora({
             text: "Collecting System Configuration",
             spinner: "triangle",
         });
         const collectedData = await getInstallState(initialData);
         dataSpinner.succeed("System Configuration Retrieved");
+        await renderData(collectedData);
     });
     cL.parse();
 }
 async function getInstallState(data) {
     const collectedData = await collectInstallData(data);
     const validatedData = await validationManager(collectedData);
-    console.dir(validatedData);
-    console.dir(validatedData.installValidation);
-    return data;
+    return validatedData;
 }
 main();

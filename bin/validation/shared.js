@@ -45,6 +45,9 @@ function checkVersions(ver = "null", version) {
         return version;
     }
 }
+function checkGitEmailMatch(cliMail, configEmail) {
+    return cliMail === configEmail ? true : false;
+}
 function checkGitBranch(gitDefaultBranch) {
     return gitDefaultBranch === configValidators.gitBanch ? true : false;
 }
@@ -68,4 +71,4 @@ function checkGitIgnForContent(gitIgn) {
 function checkZshrcForContent(zshrc) {
     return zshrc.length ? true : false;
 }
-export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, checkVersions, checkGitBranch, checkGitMerge, checkGitEditor, checkGitIgnConLoc, checkGitIgnExists, checkGitIgnForContent, checkZshrcForContent, };
+export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, checkVersions, checkGitEmailMatch, checkGitBranch, checkGitMerge, checkGitEditor, checkGitIgnConLoc, checkGitIgnExists, checkGitIgnForContent, checkZshrcForContent, };

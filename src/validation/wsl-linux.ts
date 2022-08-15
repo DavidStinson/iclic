@@ -7,7 +7,7 @@ const validators = {
   gitCredMan: "/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager-core.exe",
 }
 
-function osVariant(distro = "Unknown"):boolean {
+function osVariant(distro = "Linux - Unknown Distro"):boolean {
   return distro.toLowerCase() === validators.distro
 }
 

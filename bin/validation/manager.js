@@ -78,7 +78,10 @@ function checkGenInstallData(data) {
     return iV;
 }
 function checkGenConfigData(data) {
-    const { configValidation: cV, configData: cD, machineData: mD } = data;
+    const { configValidation: cV, configData: cD, machineData: mD, userData: uD, } = data;
+    if (uD.gitHubEmail) {
+        cV.gitEmailMatchesPrompt = sharedValid.checkGitEmailMatch(uD.gitHubEmail, cD.gitEmail);
+    }
     cV.isValidGitBranch = sharedValid.checkGitBranch(cD.gitDefBranch);
     cV.isValidGitMergeBehavior = sharedValid.checkGitMerge(cD.gitMergeBehavior);
     cV.isValidGitEditor = sharedValid.checkGitEditor(cD.gitEditor);
