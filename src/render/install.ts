@@ -1,11 +1,15 @@
 let isMacOS = false
 let isWSLLin = false
 let isMacOSValidBrew = false
+let isASMac = false
 
 function manager(data: Data, messages: Messages): Messages {
   const { machineData: mD, installValidation: iV } = data
   isMacOS = mD.osName === 'macOS'
   isWSLLin = mD.osName === 'WSL2' || mD.osName === 'Linux'
+  isASMac = mD.cpuType === 'Apple Silicon'
+  const nodeVer = iV.versions.find(version => (version.name = 'nodeVer'))
+  const isNodeVerValid = nodeVer?.isValid ? true : false
   if (iV.isValidBrewLoc !== undefined) {
     isMacOSValidBrew = mD.osName === 'macOS' && iV.isValidBrewLoc
   }
@@ -20,6 +24,9 @@ function manager(data: Data, messages: Messages): Messages {
   }
   messages = renderNVMExists(data, messages)
   messages = renderInstallLocAndVer(data, messages)
+  if ((isMacOSValidBrew || (isASMac && isNodeVerValid) ) || isWSLLin) {
+    messages = renderHerokuExists(data, messages)
+  } 
   return messages
 }
 
@@ -227,4 +234,33 @@ function renderGitStatus(
   return messages
 }
 
-export { manager }
+function renderHerokuExists(data: Data, messages: Messages): Messages {
+  const { installData: iD, installValidation: iV } = data
+  if (iV.isValidHerokuLoc) {
+    messages.successes.push({
+      msg: `The Heroku CLI is installed and located at ${iD.herokuLoc}.`,
+    })
+  } else {
+    const message: Message = {
+      msg: `The Heroku CLI is not installed. Follow the URL below for a potential fix.`,
+    }
+    if (isMacOS) {
+      if (isASMac) {
+        message.url =
+        'https://seirpublic.notion.site/Heroku-Apple-Silicon-a61b6a46ca844bcba1d4e7a99b925f0c'
+      } else {
+        message.url =
+        'https://seirpublic.notion.site/Heroku-Intel-c6b72d0452d04892b4d524c8295f3308'
+      }
+    } else if (isWSLLin) {
+      message.url =
+        'https://seirpublic.notion.site/Heroku-631388d36cb8412bb39dff907c7daaa6'
+    }
+    messages.errors.push(message)
+  }
+  return messages
+}
+
+export {
+  manager
+}

@@ -40,32 +40,32 @@ declare interface MachineValidation {
   isRecRAM: boolean; 
 }
 
-// ** THIS IS COMPLETE!
+// ** THIS IS COMPLETE! THIS IS RENDERING!
 declare interface InstallData {
-  zshLoc: string; // * all
-  shell: string;  // * all
-  vsCodeLoc?: string; // macOS only // * all
-  codeAlias: string; // *all
-  brewLoc?: string; // macOS only // * all
-  ghLoc: string; // * all
-  nvmInstallStatus: string; // WSL/Linux only
-  nodeLoc: string; 
-  nodeVer: string; 
-  nodemonLoc: string; 
-  nodemonVer: string; 
-  herokuLoc: string; 
-  gitLoc: string; 
+  zshLoc: string;
+  shell: string;
+  vsCodeLoc?: string; // macOS only
+  codeAlias: string;
+  brewLoc?: string; // macOS only
+  ghLoc: string;
+  nvmInstallStatus: string;
+  nodeLoc: string;
+  nodeVer: string;
+  nodemonLoc: string;
+  nodemonVer: string;
+  gitLoc: string;
   gitVer: string;
+  herokuLoc: string;
 }
 
-// ** THIS IS COMPLETE!
+// ** THIS IS COMPLETE! THIS IS RENDERING!
 declare interface InstallValidation {
-  isShellZSH: boolean; // * all
-  isVSCodeInstalled?: boolean; // macOS only // * all
-  isValidCodeAlias: boolean; // * all
-  isValidBrewLoc?: boolean; // macOS only // * all
-  isValidGHLoc: boolean; // * all
-  isNVMInstalled: boolean; // WSL/Linux only
+  isShellZSH: boolean;
+  isVSCodeInstalled?: boolean; // macOS only
+  isValidCodeAlias: boolean;
+  isValidBrewLoc?: boolean; // macOS only
+  isValidGHLoc: boolean;
+  isNVMInstalled: boolean;
   versions: InstallVersion[];
   isValidHerokuLoc: boolean;
 }
