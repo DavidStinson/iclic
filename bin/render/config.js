@@ -16,6 +16,9 @@ function manager(data, messages) {
     }
     if (isGitVerValid) {
         messages = renderGitBranch(data, messages);
+        messages = renderGitMerge(data, messages);
+        messages = renderGitEditor(data, messages);
+        messages = renderGitIgnConLoc(data, messages);
     }
     return messages;
 }
@@ -81,7 +84,7 @@ function renderGitCredMan(data, messages) {
 }
 function renderGitBranch(data, messages) {
     const { configData: cD, configValidation: cV } = data;
-    if (cV.isValidGitCredMan) {
+    if (cV.isValidGitBranch) {
         messages.successes.push({
             msg: `The Git default branch is correctly set to ${cD.gitDefBranch}.`,
         });
@@ -90,6 +93,51 @@ function renderGitBranch(data, messages) {
         messages.errors.push({
             msg: `The Git default branch is incorrectly set to ${cD.gitDefBranch}. Follow the URL below for a potential fix.`,
             url: 'https://seirpublic.notion.site/Git-Default-Branch-ea36f777b21a4948973f9a5a3ecc6834',
+        });
+    }
+    return messages;
+}
+function renderGitMerge(data, messages) {
+    const { configData: cD, configValidation: cV } = data;
+    if (cV.isValidGitMergeBehavior) {
+        messages.successes.push({
+            msg: `The Git default behavior of rebasing when making a pull is correctly set to ${cD.gitMergeBehavior}.`,
+        });
+    }
+    else {
+        messages.errors.push({
+            msg: `The Git default behavior of rebasing when making a pull is incorrectly set to ${cD.gitMergeBehavior}. Follow the URL below for a potential fix.`,
+            url: 'https://seirpublic.notion.site/Git-Merge-Behavior-233c141836e045f9a6969d39ecaa271b',
+        });
+    }
+    return messages;
+}
+function renderGitEditor(data, messages) {
+    const { configData: cD, configValidation: cV } = data;
+    if (cV.isValidGitEditor) {
+        messages.successes.push({
+            msg: `The Git default editor is correctly set to ${cD.gitEditor}.`,
+        });
+    }
+    else {
+        messages.errors.push({
+            msg: `The Git default editor is incorrectly set to ${cD.gitEditor}. Follow the URL below for a potential fix.`,
+            url: 'https://seirpublic.notion.site/Git-Editor-4d23ba4c2add4048b302ab50b7414953',
+        });
+    }
+    return messages;
+}
+function renderGitIgnConLoc(data, messages) {
+    const { configData: cD, configValidation: cV } = data;
+    if (cV.isValidGitIgnConLoc) {
+        messages.successes.push({
+            msg: `The Git Ignore Global file is correctly set to ${cD.gitIgnConLoc}.`,
+        });
+    }
+    else {
+        messages.errors.push({
+            msg: `The Git Ignore Global file is incorrectly set to ${cD.gitIgnConLoc}. Follow the URL below for a potential fix.`,
+            url: 'https://seirpublic.notion.site/Git-Ignore-Global-File-96825a99252c4070855ffa2de20c2682',
         });
     }
     return messages;

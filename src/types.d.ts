@@ -75,10 +75,10 @@ declare interface ConfigData {
   gitEmail: string; // * all
   gitCredMan?: string; // WSL only // * all
   ghLoginStatus: string; // * all
-  gitDefBranch: string; 
-  gitMergeBehavior: string;
-  gitEditor: string;
-  gitIgnConLoc: string; 
+  gitDefBranch: string; // * all
+  gitMergeBehavior: string; // * all
+  gitEditor: string; // * all
+  gitIgnConLoc: string; // * all
   gitIgnLoc: string; 
   gitIgn: string; 
   zshrc: string; 
@@ -90,10 +90,10 @@ declare interface ConfigValidation {
   isValidGitCredMan?: boolean; // WSL only // * all
   isLoggedIntoGH: boolean; // * all
   isValidGitEmail: boolean; // * all
-  isValidGitBranch: boolean;
-  isValidGitMergeBehavior: boolean;
-  isValidGitEditor: boolean;
-  isValidGitIgnConLoc: boolean;
+  isValidGitBranch: boolean; // * all
+  isValidGitMergeBehavior: boolean; // * all
+  isValidGitEditor: boolean; // * all
+  isValidGitIgnConLoc: boolean; // * all
   gitIgnExists: boolean;
   gitIgnHasContent: boolean;
   zshrcHasContent: boolean;
