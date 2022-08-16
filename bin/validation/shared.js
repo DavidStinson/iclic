@@ -53,6 +53,9 @@ function checkVersions(ver = "null", version) {
 function checkGHAuth(ghAuthStatus) {
     return ghAuthStatus === "authenticated" ? true : false;
 }
+function checkGitEmail(cliMail) {
+    return cliMail ? true : false;
+}
 function checkGitEmailMatch(cliMail, configEmail) {
     return cliMail === configEmail ? true : false;
 }
@@ -79,4 +82,4 @@ function checkGitIgnForContent(gitIgn) {
 function checkZshrcForContent(zshrc) {
     return zshrc.length ? true : false;
 }
-export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, checkLoc, checkNVM, checkVersions, checkGHAuth, checkGitEmailMatch, checkGitBranch, checkGitMerge, checkGitEditor, checkGitIgnConLoc, checkGitIgnExists, checkGitIgnForContent, checkZshrcForContent, };
+export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, checkLoc, checkNVM, checkVersions, checkGHAuth, checkGitEmailMatch, checkGitEmail, checkGitBranch, checkGitMerge, checkGitEditor, checkGitIgnConLoc, checkGitIgnExists, checkGitIgnForContent, checkZshrcForContent, };

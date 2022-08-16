@@ -72,9 +72,9 @@ declare interface InstallValidation {
 
 // * THIS IS COMPLETE
 declare interface ConfigData {
-  gitEmail: string; 
-  gitCredMan?: string; // WSL only
-  ghLoginStatus: string;
+  gitEmail: string; // * all
+  gitCredMan?: string; // WSL only // * all
+  ghLoginStatus: string; // * all
   gitDefBranch: string; 
   gitMergeBehavior: string;
   gitEditor: string;
@@ -86,9 +86,10 @@ declare interface ConfigData {
 
 // * THIS IS COMPLETE
 declare interface ConfigValidation {
-  isLoggedIntoGH: boolean;
-  gitEmailMatchesPrompt?: boolean; // Submit only
-  isValidGitCredMan?: boolean; // WSL only
+  gitEmailMatchesPrompt?: boolean; // Submit only // * all
+  isValidGitCredMan?: boolean; // WSL only // * all
+  isLoggedIntoGH: boolean; // * all
+  isValidGitEmail: boolean; // * all
   isValidGitBranch: boolean;
   isValidGitMergeBehavior: boolean;
   isValidGitEditor: boolean;

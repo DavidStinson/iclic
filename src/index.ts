@@ -82,6 +82,7 @@ const configData: ConfigData = {
 
 const configValidation: ConfigValidation = {
   isLoggedIntoGH: false,
+  isValidGitEmail: false,
   isValidGitBranch: false,
   isValidGitMergeBehavior: false,
   isValidGitEditor: false,

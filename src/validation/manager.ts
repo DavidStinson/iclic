@@ -109,6 +109,7 @@ function checkGenConfigData(data: Data): ConfigValidation {
       cD.gitEmail
     )
   }
+  cV.isValidGitEmail = sharedValid.checkGitEmail(cD.gitEmail)
   cV.isValidGitBranch = sharedValid.checkGitBranch(cD.gitDefBranch)
   cV.isValidGitMergeBehavior = sharedValid.checkGitMerge(cD.gitMergeBehavior)
   cV.isValidGitEditor = sharedValid.checkGitEditor(cD.gitEditor)

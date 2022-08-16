@@ -88,6 +88,7 @@ function checkGenConfigData(data) {
     if (uD.gitHubEmail) {
         cV.gitEmailMatchesPrompt = sharedValid.checkGitEmailMatch(uD.gitHubEmail, cD.gitEmail);
     }
+    cV.isValidGitEmail = sharedValid.checkGitEmail(cD.gitEmail);
     cV.isValidGitBranch = sharedValid.checkGitBranch(cD.gitDefBranch);
     cV.isValidGitMergeBehavior = sharedValid.checkGitMerge(cD.gitMergeBehavior);
     cV.isValidGitEditor = sharedValid.checkGitEditor(cD.gitEditor);
