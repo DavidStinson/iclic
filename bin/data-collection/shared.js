@@ -40,7 +40,7 @@ function getCurrentShell() {
 }
 async function getGHLoginStatus() {
     try {
-        const { stdout, stderr } = await execAsync("gh auth status -h github.com");
+        const { stderr } = await execAsync("gh auth status -h github.com");
         if (stderr)
             throw new Error(stderr);
         return "not authenticated";

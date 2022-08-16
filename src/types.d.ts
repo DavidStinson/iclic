@@ -47,9 +47,8 @@ declare interface InstallData {
   vsCodeLoc?: string; // macOS only // * all
   codeAlias: string; // *all
   brewLoc?: string; // macOS only // * all
-  ghLoc: string; 
-  npmLoc: string; 
-  npmVer: string; 
+  ghLoc: string; // * all
+  nvmInstallStatus?: string; // WSL/Linux only
   nodeLoc: string; 
   nodeVer: string; 
   nodemonLoc: string; 
@@ -65,9 +64,10 @@ declare interface InstallValidation {
   isVSCodeInstalled?: boolean; // macOS only // * all
   isValidCodeAlias: boolean; // * all
   isValidBrewLoc?: boolean; // macOS only // * all
-  isValidGHLoc: boolean;
-  isValidHerokuLoc: boolean;
+  isValidGHLoc: boolean; // * all
+  isNVMInstalled?: boolean; // WSL/Linux only
   versions: InstallVersion[];
+  isValidHerokuLoc: boolean;
 }
 
 // * THIS IS COMPLETE
@@ -136,7 +136,6 @@ declare interface PlistObject {
 }
 
 declare interface InstallValidators {
-  npmVer: string;
   nodeVer: string;
   nodemonVer: string;
   gitVer: string;

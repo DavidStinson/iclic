@@ -6,7 +6,6 @@ const machineValidators = {
     recRAM: 16,
 };
 const installValidators = {
-    npmVer: "^8.12",
     nodeVer: "^16",
     nodemonVer: "^2.0.15",
     gitVer: "^2.35.0",
@@ -35,7 +34,7 @@ function checkVersions(ver = "null", version) {
     try {
         // This is hacky and bad, should go back to data and adjust later
         if (ver === "null")
-            return { name: "npmVer", vName: "npmVer", isValid: false };
+            return { name: "gitVer", vName: "gitVer", isValid: false };
         version.isValid = satisfies(ver, installValidators[version.vName]);
         if (!version.isValid) {
             version.invalidReason = compare(ver, installValidators[version.vName]);

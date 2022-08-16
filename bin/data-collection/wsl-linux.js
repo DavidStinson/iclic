@@ -1,5 +1,6 @@
 import isWsl from "is-wsl";
-import { readFile } from 'fs/promises';
+import fs from "fs";
+import { readFile } from "fs/promises";
 import util from "util";
 import { exec } from "child_process";
 const execAsync = util.promisify(exec);
@@ -68,4 +69,15 @@ async function getVTStatus() {
         }
     }
 }
-export { getWSL, getDistro, getOSVersion, getVTStatus, };
+async function getNVMInstallStatus(homedir) {
+    try {
+        return fs.existsSync(`${homedir}/.nvm/.git`)
+            ? "installed"
+            : "not installed";
+    }
+    catch (error) {
+        console.dir(error);
+        return "not installed";
+    }
+}
+export { getWSL, getDistro, getOSVersion, getVTStatus, getNVMInstallStatus };

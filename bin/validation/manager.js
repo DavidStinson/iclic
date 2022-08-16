@@ -50,6 +50,7 @@ function checkWSLLinuxMachineData(data) {
 function checkWSLLinuxInstallData(data) {
     const { installValidation: iV, installData: iD } = data;
     iV.isValidCodeAlias = wslLinuxValid.vsCodeAlias(iD.codeAlias);
+    iV.isNVMInstalled = wslLinuxValid.nvmInstall(iD.nvmInstallStatus);
     return iV;
 }
 function checkLinuxMachineData(data) {

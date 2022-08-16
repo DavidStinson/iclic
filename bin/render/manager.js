@@ -59,7 +59,7 @@ async function warnMessage(message) {
 }
 async function errorMessage(message) {
     await timer();
-    log(cWarn(`✖ ${message.msg}`));
+    log(cErr(`✖ ${message.msg}`));
     if (message.url)
         log(cLink(message.url));
 }

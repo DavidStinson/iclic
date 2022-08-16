@@ -20,7 +20,7 @@ const userValidation = {
 const machineData = {
     osName: 'Unknown',
     osVersion: 'Unknown',
-    homedir: 'Unkown',
+    homedir: 'Unknown',
     username: 'Unknown',
     cpuModel: 'Unknown',
     ramInGB: 0,
@@ -35,8 +35,6 @@ const installData = {
     shell: 'Unknown',
     codeAlias: 'Unknown',
     ghLoc: 'Unknown',
-    npmLoc: 'Unknown',
-    npmVer: '-1',
     nodeLoc: 'Unknown',
     nodeVer: '-1',
     nodemonLoc: 'Unknown',
@@ -51,7 +49,6 @@ const installValidation = {
     isValidGHLoc: false,
     isValidHerokuLoc: false,
     versions: [
-        { name: "npmVer", vName: "npmVer", isValid: false },
         { name: "nodeVer", vName: "nodeVer", isValid: false },
         { name: "nodemonVer", vName: "nodemonVer", isValid: false },
         { name: "gitVer", vName: "gitVer", isValid: false },
@@ -100,6 +97,7 @@ async function main() {
             text: "Collecting System Configuration",
             spinner: "triangle",
         });
+        dataSpinner.start();
         const collectedData = await getInstallState(initialData);
         dataSpinner.succeed("System Configuration Retrieved");
         await renderData(collectedData);
@@ -121,6 +119,7 @@ async function main() {
             text: "Collecting System Configuration",
             spinner: "triangle",
         });
+        dataSpinner.start();
         const collectedData = await getInstallState(initialData);
         dataSpinner.succeed("System Configuration Retrieved");
         await renderData(collectedData);

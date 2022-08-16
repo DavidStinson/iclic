@@ -8,8 +8,6 @@ const commandsForInstallData = [
     { dataKey: 'zshLoc', command: 'which zsh' },
     { dataKey: 'codeAlias', command: 'which code' },
     { dataKey: 'ghLoc', command: 'which gh' },
-    { dataKey: 'npmLoc', command: 'which npm' },
-    { dataKey: 'npmVer', command: 'npm --version' },
     { dataKey: 'nodeLoc', command: 'which node' },
     { dataKey: 'nodemonLoc', command: 'which nodemon' },
     { dataKey: 'nodemonVer', command: 'nodemon --version' },
@@ -46,6 +44,10 @@ async function collectInstallData(data) {
     }
     data.machineData = getGenMachineData(data.machineData);
     data.installData = await getGenInstallData(data.installData);
+    if (data.machineData.osName === 'WSL2' ||
+        data.machineData.osName === 'Linux') {
+        data.installData = await getWSLLinuxInstallData(data);
+    }
     data.configData = await getGenConfigData(data.installData, data.configData, data.machineData.homedir);
     if (data.machineData.osName === "WSL2") {
         data.configData = await getWSLConfigData(data.configData);
@@ -75,6 +77,12 @@ async function getWSLLinuxMachineData(mD) {
     mD.osVariant = await wslLinuxData.getDistro();
     mD.osVersion = await wslLinuxData.getOSVersion();
     return mD;
+}
+async function getWSLLinuxInstallData(data) {
+    const { machineData: mD, installData: iD } = data;
+    iD.nvmInstallStatus = await wslLinuxData.getNVMInstallStatus(mD.homedir);
+    // iD.nvmVer = await wslLinuxData.getNVMLoc()
+    return iD;
 }
 function getGenMachineData(mD) {
     mD.homedir = sharedData.getHomedir();
