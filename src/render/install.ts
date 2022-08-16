@@ -18,9 +18,7 @@ function manager(data: Data, messages: Messages): Messages {
   if (isMacOSValidBrew || isWSLLin) {
     messages = renderGHExists(data, messages)
   }
-  if (isWSLLin) {
-    messages = renderNVMExists(data, messages)
-  }
+  messages = renderNVMExists(data, messages)
   messages = renderInstallLocAndVer(data, messages)
   return messages
 }
@@ -126,7 +124,7 @@ function renderNVMExists(data: Data, messages: Messages): Messages {
   } else {
     messages.errors.push({
       msg: `NVM is ${iD.nvmInstallStatus}. Follow the URL below for a potential fix.`,
-      url: 'https://www.notion.so/seirpublic/NVM-d87aa16c06ef4b6f9e159d9809f440e4',
+      url: 'https://seirpublic.notion.site/NVM-9e5bd97af5854298bfc0451ef0310299',
     })
   }
   return messages
@@ -140,17 +138,23 @@ function renderInstallLocAndVer(data: Data, messages: Messages): Messages {
   iV.versions.forEach(version => {
     switch (version.name) {
       case 'nodeVer': {
-        if (isMacOSValidBrew || (isWSLLin && isNVMValid))
+        if ((isMacOS && isNVMValid) || (isWSLLin && isNVMValid))
           messages = renderNodeStatus(data, messages, version)
         break
       }
       case 'nodemonVer': {
-        if ((isMacOSValidBrew || (isWSLLin && isNVMValid)) && isNodeVerValid) {
+        if (
+          ((isMacOS && isNVMValid) || (isWSLLin && isNVMValid)) &&
+          isNodeVerValid
+        ) {
           messages = renderNodemonStatus(data, messages, version)
         }
         break
       }
       case 'gitVer': {
+        if ((isMacOSValidBrew) || isWSLLin) {
+          // messages = render
+        }
         // data.machineData = await getWSLLinuxMachineData(data.machineData)
         break
       }
@@ -170,42 +174,14 @@ function renderNodeStatus(
       msg: `Node version ${iD.nodeVer} is installed and located at ${iD.nodeLoc}.`,
     })
   } else {
-    const message = nodeInvalid(ver)
-    if (message) messages.errors.push(message)
+    messages.errors.push({
+      msg: `Node is not installed or is the incorrect version. Follow the URL below for a potential fix.`,
+      url: "https://seirpublic.notion.site/Node-1-60f490ce07c248f79c6027ef6d3d5d2e"
+    })
   }
   return messages
 }
 
-function nodeInvalid(
-  ver: InstallVersion
-): Message | undefined {
-  if (ver.invalidReason === 2) {
-    const message: Message = {
-      msg: `Node is not installed. Follow the URL below for a potential fix.`,
-    }
-    if (isMacOS) {
-      message.url =
-        'https://seirpublic.notion.site/Node-f0f71c46f2ef49ad819442dc645b5192'
-    } else if (isWSLLin) {
-      message.url =
-        'https://seirpublic.notion.site/Node-a71d70e5e6c24516823a70629d0477a8'
-    }
-    return message
-  } else if (ver.invalidReason === -1 || ver.invalidReason === 1) {
-    const message: Message = {
-      msg: `Node is installed, but is the incorrect version. Follow the URL below for a potential fix.`,
-    }
-    if (isMacOS) {
-      message.url =
-        'https://seirpublic.notion.site/Node-Version-16-2df9c075928440d191ddd75aed96a9cb'
-    } else if (isWSLLin) {
-      message.url =
-        'https://seirpublic.notion.site/Node-Version-16-560e1cdef3784a3fb1fc7e1571470c29'
-    }
-    return message
-  }
-  return undefined
-}
 
 function renderNodemonStatus(
   data: Data,

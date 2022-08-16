@@ -35,6 +35,7 @@ const installData = {
     shell: 'Unknown',
     codeAlias: 'Unknown',
     ghLoc: 'Unknown',
+    nvmInstallStatus: 'Unknown',
     nodeLoc: 'Unknown',
     nodeVer: '-1',
     nodemonLoc: 'Unknown',
@@ -47,6 +48,7 @@ const installValidation = {
     isShellZSH: false,
     isValidCodeAlias: false,
     isValidGHLoc: false,
+    isNVMInstalled: false,
     isValidHerokuLoc: false,
     versions: [
         { name: "nodeVer", vName: "nodeVer", isValid: false },

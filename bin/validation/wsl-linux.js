@@ -27,9 +27,6 @@ function checkInvalidOSReason(osVersion) {
 function vsCodeAlias(codeAlias) {
     return codeAlias !== "Unknown" ? true : false;
 }
-function nvmInstall(nvmInstallStatus = "Unknown") {
-    return nvmInstallStatus === "installed" ? true : false;
-}
 function checkCPUChecker(vtStatus = "Unknown") {
     return vtStatus !== "Unknown" ? true : false;
 }
@@ -39,4 +36,4 @@ function checkVTEnabled(vtStatus = "Unknown") {
 function checkGitCredMan(gitCredMan = "Unknown") {
     return gitCredMan === validators.gitCredMan ? true : false;
 }
-export { osVariant, osVersion, checkInvalidOSReason, vsCodeAlias, nvmInstall, checkCPUChecker, checkVTEnabled, checkGitCredMan };
+export { osVariant, osVersion, checkInvalidOSReason, vsCodeAlias, checkCPUChecker, checkVTEnabled, checkGitCredMan };

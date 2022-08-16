@@ -31,10 +31,6 @@ function vsCodeAlias(codeAlias: string): boolean {
   return codeAlias !== "Unknown" ? true : false
 }
 
-function nvmInstall(nvmInstallStatus = "Unknown"): boolean {
-  return nvmInstallStatus === "installed" ? true : false
-}
-
 function checkCPUChecker(vtStatus = "Unknown"): boolean {
   return vtStatus !== "Unknown" ? true : false
 }
@@ -52,7 +48,6 @@ export {
   osVersion,
   checkInvalidOSReason,
   vsCodeAlias,
-  nvmInstall,
   checkCPUChecker,
   checkVTEnabled,
   checkGitCredMan

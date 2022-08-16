@@ -66,6 +66,17 @@ function getGitIgnLoc(homedir: string): string {
   }
 }
 
+async function getNVMInstallStatus(homedir: string): Promise<string> {
+  try {
+    return fs.existsSync(`${homedir}/.nvm/.git`) 
+      ? "installed"
+      : "not installed"
+  } catch (error) {
+    console.dir(error)
+    return "not installed"
+  }
+}
+
 async function getNodeVer(): Promise<string> {
   try {
     const { stdout, stderr } = await execAsync("node --version")
@@ -142,6 +153,7 @@ export {
   getCurrentShell,
   getGHLoginStatus,
   getGitIgnLoc,
+  getNVMInstallStatus,
   getNodeVer,
   getGitVer,
   getGitIgn,

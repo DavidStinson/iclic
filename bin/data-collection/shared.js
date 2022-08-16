@@ -65,6 +65,17 @@ function getGitIgnLoc(homedir) {
         return "Unknown";
     }
 }
+async function getNVMInstallStatus(homedir) {
+    try {
+        return fs.existsSync(`${homedir}/.nvm/.git`)
+            ? "installed"
+            : "not installed";
+    }
+    catch (error) {
+        console.dir(error);
+        return "not installed";
+    }
+}
 async function getNodeVer() {
     try {
         const { stdout, stderr } = await execAsync("node --version");
@@ -133,4 +144,4 @@ async function executeCommand(command) {
         return "Unknown";
     }
 }
-export { getCPUModel, getTotalRAMInGB, getHomedir, getUsername, getCurrentShell, getGHLoginStatus, getGitIgnLoc, getNodeVer, getGitVer, getGitIgn, getZshrc, executeCommand, };
+export { getCPUModel, getTotalRAMInGB, getHomedir, getUsername, getCurrentShell, getGHLoginStatus, getGitIgnLoc, getNVMInstallStatus, getNodeVer, getGitVer, getGitIgn, getZshrc, executeCommand, };

@@ -47,13 +47,7 @@ async function collectInstallData(data: Data): Promise<Data> {
     }
   }
   data.machineData = getGenMachineData(data.machineData)
-  data.installData = await getGenInstallData(data.installData)
-  if (
-    data.machineData.osName === 'WSL2' ||
-    data.machineData.osName === 'Linux'
-  ) {
-    data.installData = await getWSLLinuxInstallData(data)
-  }
+  data.installData = await getGenInstallData(data)
   data.configData = await getGenConfigData(
     data.installData,
     data.configData,
@@ -92,14 +86,6 @@ async function getWSLLinuxMachineData(mD: MachineData): Promise<MachineData> {
   return mD
 }
 
-async function getWSLLinuxInstallData(data: Data): Promise<InstallData> {
-  const { machineData: mD, installData: iD } = data
-  iD.nvmInstallStatus = await wslLinuxData.getNVMInstallStatus(mD.homedir)
-  
-  // iD.nvmVer = await wslLinuxData.getNVMLoc()
-  return iD
-}
-
 function getGenMachineData(mD: MachineData): MachineData {
   mD.homedir = sharedData.getHomedir()
   mD.username = sharedData.getUsername()
@@ -108,8 +94,10 @@ function getGenMachineData(mD: MachineData): MachineData {
   return mD
 }
 
-async function getGenInstallData(iD: InstallData): Promise<InstallData> {
+async function getGenInstallData(data: Data): Promise<InstallData> {
+  const { machineData: mD, installData: iD } = data
   iD.shell = sharedData.getCurrentShell()
+  iD.nvmInstallStatus = await sharedData.getNVMInstallStatus(mD.homedir)
   iD.nodeVer = await sharedData.getNodeVer()
   iD.gitVer = await sharedData.getGitVer()
   for await (const { dataKey, command } of commandsForInstallData) {

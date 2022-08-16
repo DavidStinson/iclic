@@ -43,11 +43,7 @@ async function collectInstallData(data) {
         }
     }
     data.machineData = getGenMachineData(data.machineData);
-    data.installData = await getGenInstallData(data.installData);
-    if (data.machineData.osName === 'WSL2' ||
-        data.machineData.osName === 'Linux') {
-        data.installData = await getWSLLinuxInstallData(data);
-    }
+    data.installData = await getGenInstallData(data);
     data.configData = await getGenConfigData(data.installData, data.configData, data.machineData.homedir);
     if (data.machineData.osName === "WSL2") {
         data.configData = await getWSLConfigData(data.configData);
@@ -78,12 +74,6 @@ async function getWSLLinuxMachineData(mD) {
     mD.osVersion = await wslLinuxData.getOSVersion();
     return mD;
 }
-async function getWSLLinuxInstallData(data) {
-    const { machineData: mD, installData: iD } = data;
-    iD.nvmInstallStatus = await wslLinuxData.getNVMInstallStatus(mD.homedir);
-    // iD.nvmVer = await wslLinuxData.getNVMLoc()
-    return iD;
-}
 function getGenMachineData(mD) {
     mD.homedir = sharedData.getHomedir();
     mD.username = sharedData.getUsername();
@@ -91,8 +81,10 @@ function getGenMachineData(mD) {
     mD.ramInGB = sharedData.getTotalRAMInGB();
     return mD;
 }
-async function getGenInstallData(iD) {
+async function getGenInstallData(data) {
+    const { machineData: mD, installData: iD } = data;
     iD.shell = sharedData.getCurrentShell();
+    iD.nvmInstallStatus = await sharedData.getNVMInstallStatus(mD.homedir);
     iD.nodeVer = await sharedData.getNodeVer();
     iD.gitVer = await sharedData.getGitVer();
     for await (const { dataKey, command } of commandsForInstallData) {

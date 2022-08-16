@@ -43,6 +43,10 @@ function checkLoc(
   return installData[iDKey] !== "Unknown" ? true : false
 }
 
+function checkNVM(nvmInstallStatus = "Unknown"): boolean {
+  return nvmInstallStatus === "installed" ? true : false
+}
+
 function checkVersions(ver = "null", version: InstallVersion): InstallVersion {
   try {
     // This is hacky and bad, should go back to data and adjust later
@@ -102,6 +106,7 @@ export {
   checkMinRAM,
   checkRecRAM,
   checkLoc,
+  checkNVM,
   checkVersions,
   checkGHAuth,
   checkGitEmailMatch,

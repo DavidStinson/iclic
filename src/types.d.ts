@@ -48,7 +48,7 @@ declare interface InstallData {
   codeAlias: string; // *all
   brewLoc?: string; // macOS only // * all
   ghLoc: string; // * all
-  nvmInstallStatus?: string; // WSL/Linux only
+  nvmInstallStatus: string; // WSL/Linux only
   nodeLoc: string; 
   nodeVer: string; 
   nodemonLoc: string; 
@@ -65,7 +65,7 @@ declare interface InstallValidation {
   isValidCodeAlias: boolean; // * all
   isValidBrewLoc?: boolean; // macOS only // * all
   isValidGHLoc: boolean; // * all
-  isNVMInstalled?: boolean; // WSL/Linux only
+  isNVMInstalled: boolean; // WSL/Linux only
   versions: InstallVersion[];
   isValidHerokuLoc: boolean;
 }

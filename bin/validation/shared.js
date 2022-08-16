@@ -30,6 +30,9 @@ function checkRecRAM(systemRAM) {
 function checkLoc(installData, iDKey) {
     return installData[iDKey] !== "Unknown" ? true : false;
 }
+function checkNVM(nvmInstallStatus = "Unknown") {
+    return nvmInstallStatus === "installed" ? true : false;
+}
 function checkVersions(ver = "null", version) {
     try {
         // This is hacky and bad, should go back to data and adjust later
@@ -76,4 +79,4 @@ function checkGitIgnForContent(gitIgn) {
 function checkZshrcForContent(zshrc) {
     return zshrc.length ? true : false;
 }
-export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, checkLoc, checkVersions, checkGHAuth, checkGitEmailMatch, checkGitBranch, checkGitMerge, checkGitEditor, checkGitIgnConLoc, checkGitIgnExists, checkGitIgnForContent, checkZshrcForContent, };
+export { checkCurrentShellZSH, checkMinRAM, checkRecRAM, checkLoc, checkNVM, checkVersions, checkGHAuth, checkGitEmailMatch, checkGitBranch, checkGitMerge, checkGitEditor, checkGitIgnConLoc, checkGitIgnExists, checkGitIgnForContent, checkZshrcForContent, };
