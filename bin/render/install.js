@@ -152,9 +152,8 @@ function renderInstallLocAndVer(data, messages) {
             }
             case 'gitVer': {
                 if ((isMacOSValidBrew) || isWSLLin) {
-                    // messages = render
+                    messages = renderGitStatus(data, messages, version);
                 }
-                // data.machineData = await getWSLLinuxMachineData(data.machineData)
                 break;
             }
         }
@@ -188,6 +187,29 @@ function renderNodemonStatus(data, messages, ver) {
             msg: `Nodemon is not installed, or is the incorrect version. Follow the URL below for a potential fix.`,
             url: "https://seirpublic.notion.site/Nodemon-c8dd9ec1999949d6ab9ed9fd571f81f5"
         });
+    }
+    return messages;
+}
+function renderGitStatus(data, messages, ver) {
+    const { installData: iD } = data;
+    if (ver.isValid) {
+        messages.successes.push({
+            msg: `Git version ${iD.gitVer} is installed and located at ${iD.gitLoc}.`,
+        });
+    }
+    else {
+        const message = {
+            msg: `Git is not installed or is the incorrect version. Follow the URL below for a potential fix.`,
+        };
+        if (isMacOS) {
+            message.url =
+                'https://seirpublic.notion.site/Git-5ba7de6602ac4391b3573bbdb1431528';
+        }
+        else if (isWSLLin) {
+            message.url =
+                'https://seirpublic.notion.site/Git-e9ece7514d6146989b5676f93974ba3d';
+        }
+        messages.errors.push(message);
     }
     return messages;
 }

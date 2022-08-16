@@ -153,9 +153,8 @@ function renderInstallLocAndVer(data: Data, messages: Messages): Messages {
       }
       case 'gitVer': {
         if ((isMacOSValidBrew) || isWSLLin) {
-          // messages = render
+          messages = renderGitStatus(data, messages, version)
         }
-        // data.machineData = await getWSLLinuxMachineData(data.machineData)
         break
       }
     }
@@ -187,7 +186,7 @@ function renderNodemonStatus(
   data: Data,
   messages: Messages,
   ver: InstallVersion
-) {
+): Messages {
   const { installData: iD } = data
   if (ver.isValid) {
     messages.successes.push({
@@ -202,5 +201,30 @@ function renderNodemonStatus(
   return messages
 }
 
+function renderGitStatus(
+  data: Data,
+  messages: Messages,
+  ver: InstallVersion
+): Messages {
+  const { installData: iD } = data
+  if (ver.isValid) {
+    messages.successes.push({
+      msg: `Git version ${iD.gitVer} is installed and located at ${iD.gitLoc}.`,
+    })
+  } else {
+    const message: Message = {
+      msg: `Git is not installed or is the incorrect version. Follow the URL below for a potential fix.`,
+    }
+    if (isMacOS) {
+      message.url =
+        'https://seirpublic.notion.site/Git-5ba7de6602ac4391b3573bbdb1431528'
+    } else if (isWSLLin) {
+      message.url =
+        'https://seirpublic.notion.site/Git-e9ece7514d6146989b5676f93974ba3d'
+    }
+    messages.errors.push(message)
+  }
+  return messages
+}
 
 export { manager }
