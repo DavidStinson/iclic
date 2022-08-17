@@ -93,7 +93,7 @@ function renderVSCodeAlias(data: Data, messages: Messages): Messages {
     })
   } else {
     messages.errors.push({
-      msg: `The code command is currently ${iD.codeAlias}, and not configured properly. Follow the URL below for a potential fix.`,
+      msg: `The code command is not configured properly. Follow the URL below for a potential fix.`,
       url: 'https://www.notion.so/seirpublic/code-Command-63eb01fd35744b3189c742bc77e36da3',
     })
   }
