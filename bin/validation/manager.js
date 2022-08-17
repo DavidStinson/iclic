@@ -93,7 +93,7 @@ function checkGenConfigData(data) {
     cV.isValidGitMergeBehavior = sharedValid.checkGitMerge(cD.gitMergeBehavior);
     cV.isValidGitEditor = sharedValid.checkGitEditor(cD.gitEditor);
     cV.isValidGitIgnConLoc = sharedValid.checkGitIgnConLoc(cD.gitIgnConLoc, mD.homedir);
-    cV.gitIgnExists = sharedValid.checkGitIgnExists(cD.gitIgnConLoc);
+    cV.gitIgnExists = sharedValid.checkGitIgnExists(cD.gitIgnLoc);
     cV.gitIgnHasContent = sharedValid.checkGitIgnForContent(cD.gitIgn);
     cV.zshrcHasContent = sharedValid.checkZshrcForContent(cD.zshrc);
     return cV;

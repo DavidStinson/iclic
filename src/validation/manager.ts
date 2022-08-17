@@ -117,7 +117,7 @@ function checkGenConfigData(data: Data): ConfigValidation {
     cD.gitIgnConLoc,
     mD.homedir
   )
-  cV.gitIgnExists = sharedValid.checkGitIgnExists(cD.gitIgnConLoc)
+  cV.gitIgnExists = sharedValid.checkGitIgnExists(cD.gitIgnLoc)
   cV.gitIgnHasContent = sharedValid.checkGitIgnForContent(cD.gitIgn)
   cV.zshrcHasContent = sharedValid.checkZshrcForContent(cD.zshrc)
   return cV
