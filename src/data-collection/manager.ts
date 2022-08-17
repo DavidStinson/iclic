@@ -22,7 +22,6 @@ const commandsForConfigData: CommandsForConfigData[] = [
   { dataKey: 'gitMergeBehavior', command: 'git config --global pull.rebase' },
   { dataKey: 'gitEditor', command: 'git config --global core.editor' },
   { dataKey: 'gitIgnConLoc', command: 'git config --global core.excludesfile' },
-  { dataKey: 'gitIgnLoc', command: 'git config --global core.excludesfile' },
 ]
 
 async function collectUserData(userData: UserData): Promise<UserData> {
@@ -116,7 +115,7 @@ async function getGenConfigData(
   }
   cD.gitIgnLoc = sharedData.getGitIgnLoc(homedir)
   for await (const { dataKey, command } of commandsForConfigData) {
-    cD[dataKey] = await sharedData.executeCommand(command)
+    cD[dataKey] = await sharedData.executeConfigCommand(command)
   }
   cD.gitIgn = sharedData.getGitIgn(homedir)
   cD.zshrc = sharedData.getZshrc(homedir)

@@ -145,6 +145,20 @@ async function executeCommand(command: string): Promise<string> {
   }
 }
 
+async function executeConfigCommand(command: string): Promise<string> {
+  try {
+    const { stdout, stderr } = await execAsync(command)
+    if(stderr) throw new Error(stderr);
+    if(stdout) {
+      const stdoutTrim = stdout.trim()
+      if(stdoutTrim) return stdoutTrim
+    }
+    return ""
+  } catch (error) {
+    return ""
+  }
+}
+
 export {
   getCPUModel,
   getTotalRAMInGB,
@@ -159,4 +173,5 @@ export {
   getGitIgn,
   getZshrc,
   executeCommand,
+  executeConfigCommand,
 }
