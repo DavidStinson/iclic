@@ -2,8 +2,8 @@ import compare from 'compare-versions';
 const { satisfies } = compare;
 const machineValidators = {
     shell: 'zsh',
-    minRAM: 8,
-    recRAM: 16,
+    minRAM: 7.95,
+    recRAM: 15.95,
 };
 const installValidators = {
     nodeVer: '^16',
@@ -22,10 +22,10 @@ function checkCurrentShellZSH(currentShell, zshLoc) {
     return currentShellIsZSH;
 }
 function checkMinRAM(systemRAM) {
-    return systemRAM > machineValidators.minRAM;
+    return systemRAM >= machineValidators.minRAM;
 }
 function checkRecRAM(systemRAM) {
-    return systemRAM > machineValidators.recRAM;
+    return systemRAM >= machineValidators.recRAM;
 }
 function checkLoc(installData, iDKey) {
     return installData[iDKey] !== 'Unknown' ? true : false;

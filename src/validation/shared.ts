@@ -4,8 +4,8 @@ const { satisfies } = compare
 
 const machineValidators = {
   shell: 'zsh',
-  minRAM: 8,
-  recRAM: 16,
+  minRAM: 7.95,
+  recRAM: 15.95,
 }
 
 const installValidators: InstallValidators = {
@@ -29,11 +29,11 @@ function checkCurrentShellZSH(currentShell: string, zshLoc: string): boolean {
 }
 
 function checkMinRAM(systemRAM: number): boolean {
-  return systemRAM > machineValidators.minRAM
+  return systemRAM >= machineValidators.minRAM
 }
 
 function checkRecRAM(systemRAM: number): boolean {
-  return systemRAM > machineValidators.recRAM
+  return systemRAM >= machineValidators.recRAM
 }
 
 function checkLoc(installData: InstallData, iDKey: keyof InstallData): boolean {
