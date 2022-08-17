@@ -14,7 +14,9 @@ function manager(data, messages) {
         messages = renderMacOSVersion(data, messages);
         messages = renderMacCPUType(data, messages);
     }
-    messages = renderRAM(data, messages);
+    if (mD.osName !== 'WSL2') {
+        messages = renderRAM(data, messages);
+    }
     messages = renderHomedirUsername(data, messages);
     if (mD.osName === 'Linux') {
         messages = renderVTStatus(data, messages);
