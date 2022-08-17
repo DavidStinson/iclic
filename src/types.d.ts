@@ -1,4 +1,3 @@
-// ** THIS IS COMPLETE! THIS IS RENDERING!
 declare interface UserData {
   preferredName: string;
   gitHubUsername: string;
@@ -15,7 +14,6 @@ declare interface UserValidation {
   cohortName: string; // ! BLOCKED: NEED A BACK END
 }
 
-// ** THIS IS COMPLETE! THIS IS RENDERING!
 declare interface MachineData {
   osName: string;
   osVariant?: string; // WSL/Linux only
@@ -28,7 +26,6 @@ declare interface MachineData {
   ramInGB: number;
 }
 
-// ** THIS IS COMPLETE! THIS IS RENDERING!
 declare interface MachineValidation {
   isValidOSVariant?: boolean; // WSL/Linux only
   isValidOSVersion: boolean;
@@ -40,7 +37,6 @@ declare interface MachineValidation {
   isRecRAM: boolean; 
 }
 
-// ** THIS IS COMPLETE! THIS IS RENDERING!
 declare interface InstallData {
   zshLoc: string;
   shell: string;
@@ -58,7 +54,6 @@ declare interface InstallData {
   herokuLoc: string;
 }
 
-// ** THIS IS COMPLETE! THIS IS RENDERING!
 declare interface InstallValidation {
   isShellZSH: boolean;
   isVSCodeInstalled?: boolean; // macOS only
@@ -70,33 +65,31 @@ declare interface InstallValidation {
   isValidHerokuLoc: boolean;
 }
 
-// * THIS IS COMPLETE
 declare interface ConfigData {
-  gitEmail: string; // * all
-  gitCredMan?: string; // WSL only // * all
-  ghLoginStatus: string; // * all
-  gitDefBranch: string; // * all
-  gitMergeBehavior: string; // * all
-  gitEditor: string; // * all
-  gitIgnConLoc: string; // * all
-  gitIgnLoc: string; // * all
-  gitIgn: string; // * all
-  zshrc: string; // *all
+  gitEmail: string;
+  gitCredMan?: string; // WSL only
+  ghLoginStatus: string;
+  gitDefBranch: string;
+  gitMergeBehavior: string;
+  gitEditor: string;
+  gitIgnConLoc: string;
+  gitIgnLoc: string;
+  gitIgn: string;
+  zshrc: string;
 }
 
-// * THIS IS COMPLETE
 declare interface ConfigValidation {
-  gitEmailMatchesPrompt?: boolean; // Submit only // * all
-  isValidGitCredMan?: boolean; // WSL only // * all
-  isLoggedIntoGH: boolean; // * all
-  isValidGitEmail: boolean; // * all
-  isValidGitBranch: boolean; // * all
-  isValidGitMergeBehavior: boolean; // * all
-  isValidGitEditor: boolean; // * all
-  isValidGitIgnConLoc: boolean; // * all
-  gitIgnExists: boolean; // * all
-  gitIgnHasContent: boolean; // * all
-  zshrcHasContent: boolean; // * all
+  gitEmailMatchesPrompt?: boolean; // Submit only
+  isValidGitCredMan?: boolean; // WSL only
+  isLoggedIntoGH: boolean;
+  isValidGitEmail: boolean;
+  isValidGitBranch: boolean;
+  isValidGitMergeBehavior: boolean;
+  isValidGitEditor: boolean;
+  isValidGitIgnConLoc: boolean;
+  gitIgnExists: boolean;
+  gitIgnHasContent: boolean;
+  zshrcHasContent: boolean;
 }
 
 declare interface Data {

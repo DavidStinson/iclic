@@ -20,6 +20,9 @@
     "url": "https://github.com/DavidStinson/iclic/issues"
   },
   "type": "module",
+  "files": [
+    "bin"
+  ],
   "bin": {
     "iclic": "./bin/index.js"
   },
