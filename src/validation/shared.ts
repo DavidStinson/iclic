@@ -94,7 +94,7 @@ function checkGitIgnConLoc(gitIgnConLoc: string, homedir: string): boolean {
 }
 
 function checkGitIgnExists(gitIgnConLoc: string): boolean {
-  return gitIgnConLoc !== "Unknown" ? true : false
+  return gitIgnConLoc ? true : false
 }
 
 function checkGitIgnForContent(gitIgn: string): boolean {

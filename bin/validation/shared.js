@@ -74,7 +74,7 @@ function checkGitIgnConLoc(gitIgnConLoc, homedir) {
         : false;
 }
 function checkGitIgnExists(gitIgnConLoc) {
-    return gitIgnConLoc !== "Unknown" ? true : false;
+    return gitIgnConLoc ? true : false;
 }
 function checkGitIgnForContent(gitIgn) {
     return gitIgn.length ? true : false;

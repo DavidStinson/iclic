@@ -115,7 +115,7 @@ function getGitIgn(homedir) {
         return cleanedGitIgn;
     }
     catch (error) {
-        return "Unknown";
+        return "";
     }
 }
 function getZshrc(homedir) {

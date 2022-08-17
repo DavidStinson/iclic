@@ -115,7 +115,7 @@ function getGitIgn(homedir: string): string {
     )).filter(text => text !== "").join("\n")
     return cleanedGitIgn
   } catch (error) {
-    return "Unknown"
+    return ""
   }
 }
 
