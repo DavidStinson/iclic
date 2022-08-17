@@ -57,13 +57,13 @@ const installValidation = {
     ]
 };
 const configData = {
-    gitEmail: 'Unknown',
-    ghLoginStatus: 'Unknown',
-    gitDefBranch: 'Unknown',
-    gitMergeBehavior: 'Unknown',
-    gitEditor: 'Unknown',
-    gitIgnConLoc: 'Unknown',
-    gitIgnLoc: 'Unknown',
+    gitEmail: '',
+    ghLoginStatus: '',
+    gitDefBranch: '',
+    gitMergeBehavior: '',
+    gitEditor: '',
+    gitIgnConLoc: '',
+    gitIgnLoc: '',
     gitIgn: '',
     zshrc: '',
 };
