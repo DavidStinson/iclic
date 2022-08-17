@@ -1,7 +1,7 @@
-import chalk from "chalk";
-import * as machineRender from "./machine.js";
-import * as installRender from "./install.js";
-import * as configRender from "./config.js";
+import chalk from 'chalk';
+import * as machineRender from './machine.js';
+import * as installRender from './install.js';
+import * as configRender from './config.js';
 const log = console.log;
 const cInfo = chalk.cyan;
 const cSuccess = chalk.green;
@@ -43,7 +43,7 @@ async function displayMessages(messages) {
     }
 }
 async function infoMessage(message) {
-    log(cInfo("ℹ"), message.msg);
+    log(cInfo('ℹ'), message.msg);
     if (message.url)
         log(cLink(message.url));
 }

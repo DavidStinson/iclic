@@ -1,72 +1,71 @@
-import inquirer from "inquirer"
+import inquirer from 'inquirer'
 
-import * as schemas from "../validation/schemas.js"
-import { validateStringField } from "../validation/input.js"
+import * as schemas from '../validation/schemas.js'
+import { validateStringField } from '../validation/input.js'
 
 const userQuestions: Questions[] = [
   {
-    type: "input",
-    name: "preferredName",
-    message: "What is your full preferred name?",
-    filter(val){
+    type: 'input',
+    name: 'preferredName',
+    message: 'What is your full preferred name?',
+    filter(val) {
       return val.trim()
     },
     validate(val) {
-      return val ? true : "Please provide a preferred name"
+      return val ? true : 'Please provide a preferred name'
     },
   },
   {
-    type: "input",
-    name: "gitHubUsername",
-    message: "What is your GitHub Username?",
-    filter(val){
+    type: 'input',
+    name: 'gitHubUsername',
+    message: 'What is your GitHub Username?',
+    filter(val) {
       return val.trim()
     },
     validate(val) {
       const validVal = validateStringField(val, schemas.gitHubUsername)
-      return validVal ? true : "Please provide a valid GitHub Username."
-    }
+      return validVal ? true : 'Please provide a valid GitHub Username.'
+    },
   },
   {
-    type: "input",
-    name: "gitHubEmail",
+    type: 'input',
+    name: 'gitHubEmail',
     message: "What's the email address associated with your GitHub account?",
-    filter(val){
+    filter(val) {
       return val.trim()
     },
     validate(val) {
       const validVal = validateStringField(val, schemas.gitHubEmail)
-      return validVal ? true : "Please provide a valid email address."
+      return validVal ? true : 'Please provide a valid email address.'
     },
   },
   {
-    type: "input",
-    name: "cohortId",
-    message: "What is the cohort ID you were given?",
-    filter(val){
+    type: 'input',
+    name: 'cohortId',
+    message: 'What is the cohort ID you were given?',
+    filter(val) {
       return val.trim()
     },
     validate(val) {
       const validVal = validateStringField(val, schemas.cohortId)
       // TKTK CHECK THAT COHORT EXISTS
-      return validVal ? true : "Plase provide a valid cohort ID."
+      return validVal ? true : 'Plase provide a valid cohort ID.'
     },
-  }
+  },
 ]
 
 async function getUserData(userData: UserData): Promise<UserData> {
   const questions = buildUserQuestions(userData)
   try {
     const answers = await inquirer.prompt(questions)
-    userData = {...userData, ...answers}
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    userData = { ...userData, ...answers }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     if (error.isTtyError) {
       console.log("Prompt couldn't be rendered, use command options instead!")
     }
   }
   return userData
-  
 }
 
 function buildUserQuestions(userData: UserData) {
@@ -79,6 +78,4 @@ function buildUserQuestions(userData: UserData) {
   return questions
 }
 
-export {
-  getUserData
-}
+export { getUserData }

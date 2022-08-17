@@ -16,7 +16,10 @@ const commandsForInstallData = [
 ];
 const commandsForConfigData = [
     { dataKey: 'gitEmail', command: 'git config --global user.email' },
-    { dataKey: 'gitDefBranch', command: 'git config --global init.defaultBranch' },
+    {
+        dataKey: 'gitDefBranch',
+        command: 'git config --global init.defaultBranch',
+    },
     { dataKey: 'gitMergeBehavior', command: 'git config --global pull.rebase' },
     { dataKey: 'gitEditor', command: 'git config --global core.editor' },
     { dataKey: 'gitIgnConLoc', command: 'git config --global core.excludesfile' },
@@ -44,7 +47,7 @@ async function collectInstallData(data) {
     data.machineData = getGenMachineData(data.machineData);
     data.installData = await getGenInstallData(data);
     data.configData = await getGenConfigData(data.installData, data.configData, data.machineData.homedir);
-    if (data.machineData.osName === "WSL2") {
+    if (data.machineData.osName === 'WSL2') {
         data.configData = await getWSLConfigData(data.configData);
     }
     return data;
@@ -92,7 +95,7 @@ async function getGenInstallData(data) {
     return iD;
 }
 async function getGenConfigData(iD, cD, homedir) {
-    if (iD.ghLoc !== "Unknown") {
+    if (iD.ghLoc !== 'Unknown') {
         cD.ghLoginStatus = await sharedData.getGHLoginStatus();
     }
     cD.gitIgnLoc = sharedData.getGitIgnLoc(homedir);
@@ -104,7 +107,7 @@ async function getGenConfigData(iD, cD, homedir) {
     return cD;
 }
 async function getWSLConfigData(cD) {
-    cD.gitCredMan = await sharedData.executeConfigCommand("git config --global credential.helper");
+    cD.gitCredMan = await sharedData.executeConfigCommand('git config --global credential.helper');
     return cD;
 }
-export { collectUserData, collectInstallData, };
+export { collectUserData, collectInstallData };

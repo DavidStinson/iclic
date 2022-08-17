@@ -1,20 +1,20 @@
-import * as macOSValid from "./mac-os.js"
-import * as wslLinuxValid from "./wsl-linux.js"
-import * as sharedValid from "./shared.js"
+import * as macOSValid from './mac-os.js'
+import * as wslLinuxValid from './wsl-linux.js'
+import * as sharedValid from './shared.js'
 
 async function validationManager(data: Data): Promise<Data> {
   const { osName } = data.machineData
-  if (osName === "macOS") {
+  if (osName === 'macOS') {
     data.machineValidation = checkMacOSMachineData(data)
     data.installValidation = checkMacOSInstallData(data)
-  } else if (osName === "WSL2" || osName === "Linux") {
+  } else if (osName === 'WSL2' || osName === 'Linux') {
     data.machineValidation = checkWSLLinuxMachineData(data)
     data.installValidation = checkWSLLinuxInstallData(data)
   }
-  if (osName === "Linux") {
+  if (osName === 'Linux') {
     data.machineValidation = checkLinuxMachineData(data)
   }
-  if (osName === "WSL2") {
+  if (osName === 'WSL2') {
     data.configValidation = checkWSLConfigData(data)
   }
   data.machineValidation = checkGenMachineData(data)
@@ -54,58 +54,58 @@ function checkWSLLinuxMachineData(data: Data): MachineValidation {
 function checkWSLLinuxInstallData(data: Data): InstallValidation {
   const { installValidation: iV, installData: iD } = data
   iV.isValidCodeAlias = wslLinuxValid.vsCodeAlias(iD.codeAlias)
-  
+
   return iV
 }
 
 function checkLinuxMachineData(data: Data): MachineValidation {
   const { machineValidation: mV, machineData: mD } = data
   mV.isCPUCheckerInstalled = wslLinuxValid.checkCPUChecker(mD.vtStatus)
-  if(mV.isCPUCheckerInstalled) {
+  if (mV.isCPUCheckerInstalled) {
     mV.isVTEnabled = wslLinuxValid.checkVTEnabled(mD.vtStatus)
   }
   return mV
 }
 
 function checkWSLConfigData(data: Data): ConfigValidation {
-  const { configValidation: cV, configData: cD} = data
+  const { configValidation: cV, configData: cD } = data
   cV.isValidGitCredMan = wslLinuxValid.checkGitCredMan(cD.gitCredMan)
   return cV
 }
 
-function checkGenMachineData(data: Data): MachineValidation{
-  const { machineValidation: mV, machineData: mD } = data 
+function checkGenMachineData(data: Data): MachineValidation {
+  const { machineValidation: mV, machineData: mD } = data
   mV.isMinRAM = sharedValid.checkMinRAM(mD.ramInGB)
   mV.isRecRAM = sharedValid.checkRecRAM(mD.ramInGB)
   return mV
 }
 
-function checkGenInstallData(data: Data): InstallValidation{
+function checkGenInstallData(data: Data): InstallValidation {
   const { installValidation: iV, installData: iD } = data
   iV.isShellZSH = sharedValid.checkCurrentShellZSH(iD.shell, iD.zshLoc)
-  iV.isValidGHLoc = sharedValid.checkLoc(iD, "ghLoc")
+  iV.isValidGHLoc = sharedValid.checkLoc(iD, 'ghLoc')
   iV.isNVMInstalled = sharedValid.checkNVM(iD.nvmInstallStatus)
-  iV.isValidHerokuLoc = sharedValid.checkLoc(iD, "herokuLoc")
-  iV.versions = iV.versions.map(version => (
+  iV.isValidHerokuLoc = sharedValid.checkLoc(iD, 'herokuLoc')
+  iV.versions = iV.versions.map(version =>
     sharedValid.checkVersions(iD[version.name], version)
-  ))
+  )
   return iV
 }
 
 function checkGenConfigData(data: Data): ConfigValidation {
-  const { 
-    configValidation: cV, 
-    configData: cD, 
+  const {
+    configValidation: cV,
+    configData: cD,
     machineData: mD,
     userData: uD,
     installData: iD,
   } = data
-  if(iD.ghLoc !== "Unknown") {
+  if (iD.ghLoc !== 'Unknown') {
     cV.isLoggedIntoGH = sharedValid.checkGHAuth(cD.ghLoginStatus)
   }
-  if(uD.gitHubEmail) {
+  if (uD.gitHubEmail) {
     cV.gitEmailMatchesPrompt = sharedValid.checkGitEmailMatch(
-      uD.gitHubEmail, 
+      uD.gitHubEmail,
       cD.gitEmail
     )
   }
@@ -114,7 +114,7 @@ function checkGenConfigData(data: Data): ConfigValidation {
   cV.isValidGitMergeBehavior = sharedValid.checkGitMerge(cD.gitMergeBehavior)
   cV.isValidGitEditor = sharedValid.checkGitEditor(cD.gitEditor)
   cV.isValidGitIgnConLoc = sharedValid.checkGitIgnConLoc(
-    cD.gitIgnConLoc, 
+    cD.gitIgnConLoc,
     mD.homedir
   )
   cV.gitIgnExists = sharedValid.checkGitIgnExists(cD.gitIgnConLoc)
@@ -123,6 +123,4 @@ function checkGenConfigData(data: Data): ConfigValidation {
   return cV
 }
 
-export {
-  validationManager
-}
+export { validationManager }

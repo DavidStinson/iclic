@@ -1,6 +1,6 @@
 function manager(data: Data, messages: Messages): Messages {
   const { machineData: mD, installValidation: iV } = data
-  const gitVer = iV.versions.find(version => (version.name === 'gitVer'))
+  const gitVer = iV.versions.find(version => version.name === 'gitVer')
   if (data.userValidation.isUser) {
     messages = renderGitEmailMatch(data, messages)
   } else {
@@ -9,7 +9,7 @@ function manager(data: Data, messages: Messages): Messages {
   if (iV.isValidGHLoc) {
     messages = renderLoggedIntoGH(data, messages)
   }
-  if (mD.osName === "WSL2") {
+  if (mD.osName === 'WSL2') {
     messages = renderGitCredMan(data, messages)
   }
   if (gitVer?.isValid) {
@@ -19,7 +19,7 @@ function manager(data: Data, messages: Messages): Messages {
     messages = renderGitIgnConLoc(data, messages)
   }
   messages = renderGitIgnoreExists(data, messages)
-  if(data.configValidation.gitIgnExists) {
+  if (data.configValidation.gitIgnExists) {
     messages = renderGitIgnoreContents(data, messages)
   }
   messages = renderZshrcContents(data, messages)
@@ -42,7 +42,7 @@ function renderGitEmailMatch(data: Data, messages: Messages): Messages {
 }
 
 function renderGitEmail(data: Data, messages: Messages): Messages {
-  const { configData: cD, configValidation: cV, } = data
+  const { configData: cD, configValidation: cV } = data
   if (cV.isValidGitEmail) {
     messages.successes.push({
       msg: `There is an email address configured with Git (${cD.gitEmail}).`,
@@ -94,7 +94,9 @@ function renderGitBranch(data: Data, messages: Messages): Messages {
     })
   } else {
     messages.errors.push({
-      msg: `The Git default branch is incorrectly set${cD.gitDefBranch ? ` to ${cD.gitDefBranch}`: ""}. Follow the URL below for a potential fix.`,
+      msg: `The Git default branch is incorrectly set${
+        cD.gitDefBranch ? ` to ${cD.gitDefBranch}` : ''
+      }. Follow the URL below for a potential fix.`,
       url: 'https://seirpublic.notion.site/Git-Default-Branch-ea36f777b21a4948973f9a5a3ecc6834',
     })
   }
@@ -109,7 +111,9 @@ function renderGitMerge(data: Data, messages: Messages): Messages {
     })
   } else {
     messages.errors.push({
-      msg: `The Git default behavior of rebasing when making a pull is incorrectly set${cD.gitMergeBehavior ? ` to ${cD.gitMergeBehavior}`: ""}. Follow the URL below for a potential fix.`,
+      msg: `The Git default behavior of rebasing when making a pull is incorrectly set${
+        cD.gitMergeBehavior ? ` to ${cD.gitMergeBehavior}` : ''
+      }. Follow the URL below for a potential fix.`,
       url: 'https://seirpublic.notion.site/Git-Merge-Behavior-233c141836e045f9a6969d39ecaa271b',
     })
   }
@@ -124,7 +128,9 @@ function renderGitEditor(data: Data, messages: Messages): Messages {
     })
   } else {
     messages.errors.push({
-      msg: `The Git default editor is incorrectly set${cD.gitEditor ? ` to ${cD.gitEditor}`: ""}. Follow the URL below for a potential fix.`,
+      msg: `The Git default editor is incorrectly set${
+        cD.gitEditor ? ` to ${cD.gitEditor}` : ''
+      }. Follow the URL below for a potential fix.`,
       url: 'https://seirpublic.notion.site/Git-Editor-4d23ba4c2add4048b302ab50b7414953',
     })
   }
@@ -139,7 +145,9 @@ function renderGitIgnConLoc(data: Data, messages: Messages): Messages {
     })
   } else {
     messages.errors.push({
-      msg: `The Git Ignore Global file is incorrectly set${cD.gitIgnConLoc ? ` to ${cD.gitIgnConLoc}`: ""}. Follow the URL below for a potential fix.`,
+      msg: `The Git Ignore Global file is incorrectly set${
+        cD.gitIgnConLoc ? ` to ${cD.gitIgnConLoc}` : ''
+      }. Follow the URL below for a potential fix.`,
       url: 'https://seirpublic.notion.site/Git-Ignore-Global-File-Configuration-96825a99252c4070855ffa2de20c2682',
     })
   }
@@ -191,6 +199,4 @@ function renderZshrcContents(data: Data, messages: Messages): Messages {
   return messages
 }
 
-export {
-  manager
-}
+export { manager }

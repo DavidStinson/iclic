@@ -10,7 +10,7 @@ function manager(data: Data, messages: Messages): Messages {
   isASMac = mD.cpuType === 'Apple Silicon'
   const nodeVer = iV.versions.find(version => (version.name = 'nodeVer'))
   const isNodeVerValid = nodeVer?.isValid ? true : false
-  
+
   if (iV.isValidBrewLoc !== undefined) {
     isMacOSValidBrew = mD.osName === 'macOS' && iV.isValidBrewLoc
   }
@@ -25,10 +25,10 @@ function manager(data: Data, messages: Messages): Messages {
   }
   messages = renderNVMExists(data, messages)
   messages = renderInstallLocAndVer(data, messages)
-  if ((isMacOSValidBrew || (isASMac && isNodeVerValid) ) || isWSLLin) {
+  if (isMacOSValidBrew || (isASMac && isNodeVerValid) || isWSLLin) {
     messages = renderHerokuExists(data, messages)
   }
-  
+
   return messages
 }
 
@@ -161,14 +161,14 @@ function renderInstallLocAndVer(data: Data, messages: Messages): Messages {
         break
       }
       case 'gitVer': {
-        if ((isMacOSValidBrew) || isWSLLin) {
+        if (isMacOSValidBrew || isWSLLin) {
           messages = renderGitStatus(data, messages, version)
         }
         break
       }
     }
   })
-  
+
   return messages
 }
 
@@ -185,12 +185,11 @@ function renderNodeStatus(
   } else {
     messages.errors.push({
       msg: `Node is not installed or is the incorrect version. Follow the URL below for a potential fix.`,
-      url: "https://seirpublic.notion.site/Node-1-60f490ce07c248f79c6027ef6d3d5d2e"
+      url: 'https://seirpublic.notion.site/Node-1-60f490ce07c248f79c6027ef6d3d5d2e',
     })
   }
   return messages
 }
-
 
 function renderNodemonStatus(
   data: Data,
@@ -205,7 +204,7 @@ function renderNodemonStatus(
   } else {
     messages.errors.push({
       msg: `Nodemon is not installed, or is the incorrect version. Follow the URL below for a potential fix.`,
-      url: "https://seirpublic.notion.site/Nodemon-c8dd9ec1999949d6ab9ed9fd571f81f5"
+      url: 'https://seirpublic.notion.site/Nodemon-c8dd9ec1999949d6ab9ed9fd571f81f5',
     })
   }
   return messages
@@ -250,10 +249,10 @@ function renderHerokuExists(data: Data, messages: Messages): Messages {
     if (isMacOS) {
       if (isASMac) {
         message.url =
-        'https://seirpublic.notion.site/Heroku-Apple-Silicon-a61b6a46ca844bcba1d4e7a99b925f0c'
+          'https://seirpublic.notion.site/Heroku-Apple-Silicon-a61b6a46ca844bcba1d4e7a99b925f0c'
       } else {
         message.url =
-        'https://seirpublic.notion.site/Heroku-Intel-c6b72d0452d04892b4d524c8295f3308'
+          'https://seirpublic.notion.site/Heroku-Intel-c6b72d0452d04892b4d524c8295f3308'
       }
     } else if (isWSLLin) {
       message.url =
@@ -264,6 +263,4 @@ function renderHerokuExists(data: Data, messages: Messages): Messages {
   return messages
 }
 
-export {
-  manager
-}
+export { manager }

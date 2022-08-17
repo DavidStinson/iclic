@@ -1,20 +1,20 @@
-import * as macOSValid from "./mac-os.js";
-import * as wslLinuxValid from "./wsl-linux.js";
-import * as sharedValid from "./shared.js";
+import * as macOSValid from './mac-os.js';
+import * as wslLinuxValid from './wsl-linux.js';
+import * as sharedValid from './shared.js';
 async function validationManager(data) {
     const { osName } = data.machineData;
-    if (osName === "macOS") {
+    if (osName === 'macOS') {
         data.machineValidation = checkMacOSMachineData(data);
         data.installValidation = checkMacOSInstallData(data);
     }
-    else if (osName === "WSL2" || osName === "Linux") {
+    else if (osName === 'WSL2' || osName === 'Linux') {
         data.machineValidation = checkWSLLinuxMachineData(data);
         data.installValidation = checkWSLLinuxInstallData(data);
     }
-    if (osName === "Linux") {
+    if (osName === 'Linux') {
         data.machineValidation = checkLinuxMachineData(data);
     }
-    if (osName === "WSL2") {
+    if (osName === 'WSL2') {
         data.configValidation = checkWSLConfigData(data);
     }
     data.machineValidation = checkGenMachineData(data);
@@ -74,15 +74,15 @@ function checkGenMachineData(data) {
 function checkGenInstallData(data) {
     const { installValidation: iV, installData: iD } = data;
     iV.isShellZSH = sharedValid.checkCurrentShellZSH(iD.shell, iD.zshLoc);
-    iV.isValidGHLoc = sharedValid.checkLoc(iD, "ghLoc");
+    iV.isValidGHLoc = sharedValid.checkLoc(iD, 'ghLoc');
     iV.isNVMInstalled = sharedValid.checkNVM(iD.nvmInstallStatus);
-    iV.isValidHerokuLoc = sharedValid.checkLoc(iD, "herokuLoc");
-    iV.versions = iV.versions.map(version => (sharedValid.checkVersions(iD[version.name], version)));
+    iV.isValidHerokuLoc = sharedValid.checkLoc(iD, 'herokuLoc');
+    iV.versions = iV.versions.map(version => sharedValid.checkVersions(iD[version.name], version));
     return iV;
 }
 function checkGenConfigData(data) {
     const { configValidation: cV, configData: cD, machineData: mD, userData: uD, installData: iD, } = data;
-    if (iD.ghLoc !== "Unknown") {
+    if (iD.ghLoc !== 'Unknown') {
         cV.isLoggedIntoGH = sharedValid.checkGHAuth(cD.ghLoginStatus);
     }
     if (uD.gitHubEmail) {

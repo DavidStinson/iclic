@@ -1,7 +1,7 @@
-import isWsl from "is-wsl";
-import { readFile } from "fs/promises";
-import util from "util";
-import { exec } from "child_process";
+import isWsl from 'is-wsl';
+import { readFile } from 'fs/promises';
+import util from 'util';
+import { exec } from 'child_process';
 const execAsync = util.promisify(exec);
 function getWSL() {
     return isWsl ? true : false;
@@ -17,14 +17,14 @@ async function getDistro() {
             releaseDetails[words[0].trim().toLowerCase()] = words[1]?.trim();
         });
         if (releaseDetails.name) {
-            return releaseDetails.name.replace(/"/g, "");
+            return releaseDetails.name.replace(/"/g, '');
         }
         else {
-            return "Linux - Unknown Distro";
+            return 'Linux - Unknown Distro';
         }
     }
     catch (error) {
-        return "Linux - Unknown Distro";
+        return 'Linux - Unknown Distro';
     }
 }
 async function getOSVersion() {
@@ -38,34 +38,34 @@ async function getOSVersion() {
             releaseDetails[words[0].trim().toLowerCase()] = words[1]?.trim();
         });
         if (releaseDetails.version_id) {
-            return releaseDetails.version_id.replace(/"/g, "");
+            return releaseDetails.version_id.replace(/"/g, '');
         }
         else {
-            return "Unknown";
+            return 'Unknown';
         }
     }
     catch (error) {
-        return "Unknown";
+        return 'Unknown';
     }
 }
 async function getVTStatus() {
     try {
-        const { stdout, stderr } = await execAsync("kvm-ok");
+        const { stdout, stderr } = await execAsync('kvm-ok');
         if (stderr)
             throw new Error(stderr);
         if (stdout) {
-            return "Enabled";
+            return 'Enabled';
         }
-        return "Unknown";
+        return 'Unknown';
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }
     catch (error) {
         if (error.code === 1 || error.code === 2) {
-            return "Disabled";
+            return 'Disabled';
         }
         else {
-            return "Unknown";
+            return 'Unknown';
         }
     }
 }
-export { getWSL, getDistro, getOSVersion, getVTStatus, };
+export { getWSL, getDistro, getOSVersion, getVTStatus };

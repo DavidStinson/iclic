@@ -1,13 +1,13 @@
-import compare from "compare-versions";
+import compare from 'compare-versions';
 const { satisfies } = compare;
 const validators = {
-    macOSVer: "^12",
-    cpuTypes: ["Apple Silicon", "Intel"],
-    appleSiliconBrewLoc: "/opt/homebrew/bin/brew",
-    intelBrewLoc: "/usr/local/bin/brew",
+    macOSVer: '^12',
+    cpuTypes: ['Apple Silicon', 'Intel'],
+    appleSiliconBrewLoc: '/opt/homebrew/bin/brew',
+    intelBrewLoc: '/usr/local/bin/brew',
     codeLocations: [
-        "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code",
-        "/usr/local/bin/code"
+        '/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code',
+        '/usr/local/bin/code',
     ],
 };
 function checkOSVersion(version) {
@@ -26,20 +26,20 @@ function checkInvalidOSReason(osVersion) {
         return 2;
     }
 }
-function checkCPUType(type = "Unknown") {
+function checkCPUType(type = 'Unknown') {
     return validators.cpuTypes.includes(type);
 }
-function checkVSCodeLoc(codeLoc = "Unknown") {
-    return codeLoc === "/Applications/Visual Studio Code.app" ? true : false;
+function checkVSCodeLoc(codeLoc = 'Unknown') {
+    return codeLoc === '/Applications/Visual Studio Code.app' ? true : false;
 }
 function checkVSCodeAlias(codeAlias) {
     return validators.codeLocations.includes(codeAlias) ? true : false;
 }
-function checkBrewLoc(type = "Unknown", location = "Unknown") {
-    if (type === "Apple Silicon") {
+function checkBrewLoc(type = 'Unknown', location = 'Unknown') {
+    if (type === 'Apple Silicon') {
         return location === validators.appleSiliconBrewLoc ? true : false;
     }
-    else if (type === "Intel") {
+    else if (type === 'Intel') {
         return location === validators.intelBrewLoc ? true : false;
     }
     else {

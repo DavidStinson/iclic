@@ -1,8 +1,8 @@
-import chalk from "chalk"
+import chalk from 'chalk'
 
-import * as machineRender from "./machine.js"
-import * as installRender from "./install.js"
-import * as configRender from "./config.js"
+import * as machineRender from './machine.js'
+import * as installRender from './install.js'
+import * as configRender from './config.js'
 
 const log = console.log
 const cInfo = chalk.cyan
@@ -19,7 +19,7 @@ const messages: Messages = {
 }
 
 async function renderData(data: Data): Promise<void> {
-  if(data.userValidation.isUser){
+  if (data.userValidation.isUser) {
     log(cInfo(`Welcome ${data.userData.preferredName}, here's your report!`))
     // TKTK ADD cohort name here?
   }
@@ -48,26 +48,26 @@ async function displayMessages(messages: Messages) {
   }
 }
 async function infoMessage(message: Message) {
-  log(cInfo("ℹ"), message.msg)
-  if(message.url) log(cLink(message.url))
+  log(cInfo('ℹ'), message.msg)
+  if (message.url) log(cLink(message.url))
 }
 
 async function successMessage(message: Message) {
   await timer()
   log(cSuccess(`✔ ${message.msg}`))
-  if(message.url) log(cLink(message.url))
+  if (message.url) log(cLink(message.url))
 }
 
 async function warnMessage(message: Message) {
   await timer()
   log(cWarn(`⚠ ${message.msg}`))
-  if(message.url) log(cLink(message.url))
+  if (message.url) log(cLink(message.url))
 }
 
 async function errorMessage(message: Message) {
   await timer()
   log(cErr(`✖ ${message.msg}`))
-  if(message.url) log(cLink(message.url))
+  if (message.url) log(cLink(message.url))
 }
 
 function timer(): Promise<void> {
@@ -78,7 +78,4 @@ function error(msg: string): void {
   log(cErr(msg))
 }
 
-export {
-  renderData,
-  error
-}
+export { renderData, error }

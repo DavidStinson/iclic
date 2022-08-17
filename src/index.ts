@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander'
-import ora from "ora"
+import ora from 'ora'
 
 import { validateCLIInput } from './validation/input.js'
-import { 
-  collectInstallData, 
-  collectUserData 
+import {
+  collectInstallData,
+  collectUserData,
 } from './data-collection/manager.js'
 import { validationManager } from './validation/manager.js'
 import { renderData } from './render/manager.js'
@@ -22,7 +22,7 @@ const userValidation: UserValidation = {
   isUser: false,
   isValidCohortId: false,
   hasPreviousSubmission: false,
-  cohortName: "",
+  cohortName: '',
 }
 
 const machineData: MachineData = {
@@ -62,10 +62,10 @@ const installValidation: InstallValidation = {
   isNVMInstalled: false,
   isValidHerokuLoc: false,
   versions: [
-    { name: "nodeVer", vName: "nodeVer", isValid: false },
-    { name: "nodemonVer", vName: "nodemonVer", isValid: false },
-    { name: "gitVer", vName: "gitVer", isValid: false },
-  ]
+    { name: 'nodeVer', vName: 'nodeVer', isValid: false },
+    { name: 'nodemonVer', vName: 'nodemonVer', isValid: false },
+    { name: 'gitVer', vName: 'gitVer', isValid: false },
+  ],
 }
 
 const configData: ConfigData = {
@@ -110,48 +110,48 @@ async function main() {
   cL.name('iclic')
   cL.description('A command line application for validating an installfest.')
 
-  cL.command("test", { isDefault: true })
+  cL.command('test', { isDefault: true })
     .description(
-      "Test your installfest configuration before submitting it. This is the default behavior of the application when run from the base iclic command."
+      'Test your installfest configuration before submitting it. This is the default behavior of the application when run from the base iclic command.'
     )
     .action(async () => {
       const dataSpinner = ora({
-        text: "Collecting System Configuration", 
-        spinner: "triangle",
+        text: 'Collecting System Configuration',
+        spinner: 'triangle',
       })
       dataSpinner.start()
       const collectedData = await getInstallState(initialData)
-      dataSpinner.succeed("System Configuration Retrieved")
+      dataSpinner.succeed('System Configuration Retrieved')
       await renderData(collectedData)
     })
-  cL.command("submit")
+  cL.command('submit')
     .description(
       "Submit your installfest configuration. You'll be asked some basic information and then submit your installfest configuration to be reviewed. Don't worry, you can resubmit your configuration again if you make changes later."
     )
-    .option("-n, --preferredName <name>", "Your preferred name.")
-    .option("-u, --gitHubUsername <username>", "Your GitHub username.")
+    .option('-n, --preferredName <name>', 'Your preferred name.')
+    .option('-u, --gitHubUsername <username>', 'Your GitHub username.')
     .option(
-      "-g, --gitHubEmail <email-address>", 
-      "The email address associated with your GitHub account."
+      '-g, --gitHubEmail <email-address>',
+      'The email address associated with your GitHub account.'
     )
     .option(
-      "-c, --cohortId <cohort-id>", 
-      "The cohort ID provided to you by your instructor."
+      '-c, --cohortId <cohort-id>',
+      'The cohort ID provided to you by your instructor.'
     )
-    .action(async (cliOptions) => {
+    .action(async cliOptions => {
       const validatedCLIOptions = validateCLIInput(cliOptions)
-      initialData.userData = { ...userData, ...validatedCLIOptions}
+      initialData.userData = { ...userData, ...validatedCLIOptions }
       if (Object.values(initialData.userData).some(val => !val)) {
         initialData.userData = await collectUserData(initialData.userData)
       }
       initialData.userValidation.isUser = true
       const dataSpinner = ora({
-        text: "Collecting System Configuration", 
-        spinner: "triangle",
+        text: 'Collecting System Configuration',
+        spinner: 'triangle',
       })
       dataSpinner.start()
       const collectedData = await getInstallState(initialData)
-      dataSpinner.succeed("System Configuration Retrieved")
+      dataSpinner.succeed('System Configuration Retrieved')
       await renderData(collectedData)
     })
   cL.parse()

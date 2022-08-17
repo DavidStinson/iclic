@@ -1,7 +1,7 @@
-import isWsl from "is-wsl"
-import { readFile } from "fs/promises"
-import util from "util"
-import { exec } from "child_process"
+import isWsl from 'is-wsl'
+import { readFile } from 'fs/promises'
+import util from 'util'
+import { exec } from 'child_process'
 
 interface UnknownObject {
   [key: string]: string
@@ -22,14 +22,14 @@ async function getDistro(): Promise<string> {
       // Split the line into an array of words delimited by '='
       const words = line.split('=')
       releaseDetails[words[0].trim().toLowerCase()] = words[1]?.trim()
-    })    
-    if (releaseDetails.name){
-      return releaseDetails.name.replace(/"/g, "")
+    })
+    if (releaseDetails.name) {
+      return releaseDetails.name.replace(/"/g, '')
     } else {
-      return "Linux - Unknown Distro"
+      return 'Linux - Unknown Distro'
     }
   } catch (error) {
-    return "Linux - Unknown Distro"
+    return 'Linux - Unknown Distro'
   }
 }
 
@@ -42,40 +42,33 @@ async function getOSVersion(): Promise<string> {
       // Split the line into an array of words delimited by '='
       const words = line.split('=')
       releaseDetails[words[0].trim().toLowerCase()] = words[1]?.trim()
-    })    
-    if (releaseDetails.version_id){
-      return releaseDetails.version_id.replace(/"/g, "")
+    })
+    if (releaseDetails.version_id) {
+      return releaseDetails.version_id.replace(/"/g, '')
     } else {
-      return "Unknown"
+      return 'Unknown'
     }
   } catch (error) {
-    return "Unknown"
+    return 'Unknown'
   }
 }
 
 async function getVTStatus(): Promise<string> {
   try {
-    const { stdout, stderr } = await execAsync("kvm-ok")
-    if(stderr) throw new Error(stderr);
-    if(stdout) {
-      return "Enabled"
+    const { stdout, stderr } = await execAsync('kvm-ok')
+    if (stderr) throw new Error(stderr)
+    if (stdout) {
+      return 'Enabled'
     }
-    return "Unknown"
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return 'Unknown'
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     if (error.code === 1 || error.code === 2) {
-      return "Disabled"
+      return 'Disabled'
     } else {
-      return "Unknown"
+      return 'Unknown'
     }
   }
 }
 
-
-
-export {
-  getWSL,
-  getDistro,
-  getOSVersion,
-  getVTStatus,
-}
+export { getWSL, getDistro, getOSVersion, getVTStatus }

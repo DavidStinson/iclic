@@ -1,17 +1,18 @@
-import compare from "compare-versions"
+import compare from 'compare-versions'
 const { satisfies } = compare
 
 const validators = {
-  distro: "ubuntu",
-  osVersion: "^22",
-  gitCredMan: "/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager-core.exe",
+  distro: 'ubuntu',
+  osVersion: '^22',
+  gitCredMan:
+    '/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager-core.exe',
 }
 
-function osVariant(distro = "Linux - Unknown Distro"):boolean {
+function osVariant(distro = 'Linux - Unknown Distro'): boolean {
   return distro.toLowerCase() === validators.distro
 }
 
-function osVersion(version: string):boolean {
+function osVersion(version: string): boolean {
   try {
     return satisfies(version, validators.osVersion)
   } catch (error) {
@@ -28,18 +29,18 @@ function checkInvalidOSReason(osVersion: string) {
 }
 
 function vsCodeAlias(codeAlias: string): boolean {
-  return codeAlias !== "Unknown" ? true : false
+  return codeAlias !== 'Unknown' ? true : false
 }
 
-function checkCPUChecker(vtStatus = "Unknown"): boolean {
-  return vtStatus !== "Unknown" ? true : false
+function checkCPUChecker(vtStatus = 'Unknown'): boolean {
+  return vtStatus !== 'Unknown' ? true : false
 }
 
-function checkVTEnabled(vtStatus = "Unknown"): boolean {
-  return vtStatus === "Enabled" ? true : false
+function checkVTEnabled(vtStatus = 'Unknown'): boolean {
+  return vtStatus === 'Enabled' ? true : false
 }
 
-function checkGitCredMan(gitCredMan = "Unknown"): boolean {
+function checkGitCredMan(gitCredMan = 'Unknown'): boolean {
   return gitCredMan === validators.gitCredMan ? true : false
 }
 
@@ -50,5 +51,5 @@ export {
   vsCodeAlias,
   checkCPUChecker,
   checkVTEnabled,
-  checkGitCredMan
+  checkGitCredMan,
 }

@@ -1,29 +1,29 @@
-import compare from "compare-versions"
+import compare from 'compare-versions'
 
 const { satisfies } = compare
 
 const machineValidators = {
-  shell: "zsh",
+  shell: 'zsh',
   minRAM: 8,
   recRAM: 16,
 }
 
 const installValidators: InstallValidators = {
-  nodeVer: "^16",
-  nodemonVer: "^2.0.15",
-  gitVer: "^2.35.0",
+  nodeVer: '^16',
+  nodemonVer: '^2.0.15',
+  gitVer: '^2.35.0',
 }
 
 const configValidators = {
-  gitBanch: "main",
-  gitMergeBehavior: "false",
-  gitEditor: "code --wait",
-  gitIgnConLoc: "/.gitignore_global",
+  gitBanch: 'main',
+  gitMergeBehavior: 'false',
+  gitEditor: 'code --wait',
+  gitIgnConLoc: '/.gitignore_global',
 }
 
 function checkCurrentShellZSH(currentShell: string, zshLoc: string): boolean {
-  const currentShellIsZSH = 
-    zshLoc === currentShell && 
+  const currentShellIsZSH =
+    zshLoc === currentShell &&
     currentShell.toLowerCase().includes(machineValidators.shell)
   return currentShellIsZSH
 }
@@ -36,21 +36,19 @@ function checkRecRAM(systemRAM: number): boolean {
   return systemRAM > machineValidators.recRAM
 }
 
-function checkLoc(
-  installData: InstallData,
-  iDKey: keyof InstallData
-): boolean {
-  return installData[iDKey] !== "Unknown" ? true : false
+function checkLoc(installData: InstallData, iDKey: keyof InstallData): boolean {
+  return installData[iDKey] !== 'Unknown' ? true : false
 }
 
-function checkNVM(nvmInstallStatus = "Unknown"): boolean {
-  return nvmInstallStatus === "installed" ? true : false
+function checkNVM(nvmInstallStatus = 'Unknown'): boolean {
+  return nvmInstallStatus === 'installed' ? true : false
 }
 
-function checkVersions(ver = "null", version: InstallVersion): InstallVersion {
+function checkVersions(ver = 'null', version: InstallVersion): InstallVersion {
   try {
     // This is hacky and bad, should go back to data and adjust later
-    if (ver === "null") return {name: "gitVer", vName: "gitVer", isValid: false}
+    if (ver === 'null')
+      return { name: 'gitVer', vName: 'gitVer', isValid: false }
     version.isValid = satisfies(ver, installValidators[version.vName])
     if (!version.isValid) {
       version.invalidReason = compare(ver, installValidators[version.vName])
@@ -64,7 +62,7 @@ function checkVersions(ver = "null", version: InstallVersion): InstallVersion {
 }
 
 function checkGHAuth(ghAuthStatus: string): boolean {
-  return ghAuthStatus === "authenticated" ? true : false
+  return ghAuthStatus === 'authenticated' ? true : false
 }
 
 function checkGitEmail(configMail: string): boolean {
@@ -88,8 +86,8 @@ function checkGitEditor(gitEditor: string): boolean {
 }
 
 function checkGitIgnConLoc(gitIgnConLoc: string, homedir: string): boolean {
-  return gitIgnConLoc === `${homedir}${configValidators.gitIgnConLoc}` 
-    ? true 
+  return gitIgnConLoc === `${homedir}${configValidators.gitIgnConLoc}`
+    ? true
     : false
 }
 

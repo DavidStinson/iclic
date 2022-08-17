@@ -1,20 +1,20 @@
-import compare from "compare-versions";
+import compare from 'compare-versions';
 const { satisfies } = compare;
 const machineValidators = {
-    shell: "zsh",
+    shell: 'zsh',
     minRAM: 8,
     recRAM: 16,
 };
 const installValidators = {
-    nodeVer: "^16",
-    nodemonVer: "^2.0.15",
-    gitVer: "^2.35.0",
+    nodeVer: '^16',
+    nodemonVer: '^2.0.15',
+    gitVer: '^2.35.0',
 };
 const configValidators = {
-    gitBanch: "main",
-    gitMergeBehavior: "false",
-    gitEditor: "code --wait",
-    gitIgnConLoc: "/.gitignore_global",
+    gitBanch: 'main',
+    gitMergeBehavior: 'false',
+    gitEditor: 'code --wait',
+    gitIgnConLoc: '/.gitignore_global',
 };
 function checkCurrentShellZSH(currentShell, zshLoc) {
     const currentShellIsZSH = zshLoc === currentShell &&
@@ -28,16 +28,16 @@ function checkRecRAM(systemRAM) {
     return systemRAM > machineValidators.recRAM;
 }
 function checkLoc(installData, iDKey) {
-    return installData[iDKey] !== "Unknown" ? true : false;
+    return installData[iDKey] !== 'Unknown' ? true : false;
 }
-function checkNVM(nvmInstallStatus = "Unknown") {
-    return nvmInstallStatus === "installed" ? true : false;
+function checkNVM(nvmInstallStatus = 'Unknown') {
+    return nvmInstallStatus === 'installed' ? true : false;
 }
-function checkVersions(ver = "null", version) {
+function checkVersions(ver = 'null', version) {
     try {
         // This is hacky and bad, should go back to data and adjust later
-        if (ver === "null")
-            return { name: "gitVer", vName: "gitVer", isValid: false };
+        if (ver === 'null')
+            return { name: 'gitVer', vName: 'gitVer', isValid: false };
         version.isValid = satisfies(ver, installValidators[version.vName]);
         if (!version.isValid) {
             version.invalidReason = compare(ver, installValidators[version.vName]);
@@ -51,7 +51,7 @@ function checkVersions(ver = "null", version) {
     }
 }
 function checkGHAuth(ghAuthStatus) {
-    return ghAuthStatus === "authenticated" ? true : false;
+    return ghAuthStatus === 'authenticated' ? true : false;
 }
 function checkGitEmail(configMail) {
     return configMail ? true : false;

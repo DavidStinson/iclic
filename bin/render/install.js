@@ -23,7 +23,7 @@ function manager(data, messages) {
     }
     messages = renderNVMExists(data, messages);
     messages = renderInstallLocAndVer(data, messages);
-    if ((isMacOSValidBrew || (isASMac && isNodeVerValid)) || isWSLLin) {
+    if (isMacOSValidBrew || (isASMac && isNodeVerValid) || isWSLLin) {
         messages = renderHerokuExists(data, messages);
     }
     return messages;
@@ -158,7 +158,7 @@ function renderInstallLocAndVer(data, messages) {
                 break;
             }
             case 'gitVer': {
-                if ((isMacOSValidBrew) || isWSLLin) {
+                if (isMacOSValidBrew || isWSLLin) {
                     messages = renderGitStatus(data, messages, version);
                 }
                 break;
@@ -177,7 +177,7 @@ function renderNodeStatus(data, messages, ver) {
     else {
         messages.errors.push({
             msg: `Node is not installed or is the incorrect version. Follow the URL below for a potential fix.`,
-            url: "https://seirpublic.notion.site/Node-1-60f490ce07c248f79c6027ef6d3d5d2e"
+            url: 'https://seirpublic.notion.site/Node-1-60f490ce07c248f79c6027ef6d3d5d2e',
         });
     }
     return messages;
@@ -192,7 +192,7 @@ function renderNodemonStatus(data, messages, ver) {
     else {
         messages.errors.push({
             msg: `Nodemon is not installed, or is the incorrect version. Follow the URL below for a potential fix.`,
-            url: "https://seirpublic.notion.site/Nodemon-c8dd9ec1999949d6ab9ed9fd571f81f5"
+            url: 'https://seirpublic.notion.site/Nodemon-c8dd9ec1999949d6ab9ed9fd571f81f5',
         });
     }
     return messages;
