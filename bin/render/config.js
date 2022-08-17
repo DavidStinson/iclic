@@ -50,7 +50,7 @@ function renderGitEmail(data, messages) {
     }
     else {
         messages.errors.push({
-            msg: `There is no email address configured with Git. Change the Git configuration to the correct email address. Follow the URL below for a potential fix.`,
+            msg: `There is no email address configured with Git. Follow the URL below for a potential fix.`,
             url: 'https://seirpublic.notion.site/Git-Email-Configuration-1bffa41650a84b79b6941977f8176c8b',
         });
     }
