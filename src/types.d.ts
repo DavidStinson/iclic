@@ -79,9 +79,9 @@ declare interface ConfigData {
   gitMergeBehavior: string; // * all
   gitEditor: string; // * all
   gitIgnConLoc: string; // * all
-  gitIgnLoc: string; 
-  gitIgn: string; 
-  zshrc: string; 
+  gitIgnLoc: string; // * all
+  gitIgn: string; // * all
+  zshrc: string; // *all
 }
 
 // * THIS IS COMPLETE
@@ -94,9 +94,9 @@ declare interface ConfigValidation {
   isValidGitMergeBehavior: boolean; // * all
   isValidGitEditor: boolean; // * all
   isValidGitIgnConLoc: boolean; // * all
-  gitIgnExists: boolean;
-  gitIgnHasContent: boolean;
-  zshrcHasContent: boolean;
+  gitIgnExists: boolean; // * all
+  gitIgnHasContent: boolean; // * all
+  zshrcHasContent: boolean; // * all
 }
 
 declare interface Data {

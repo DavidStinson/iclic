@@ -20,6 +20,11 @@ function manager(data, messages) {
         messages = renderGitEditor(data, messages);
         messages = renderGitIgnConLoc(data, messages);
     }
+    messages = renderGitIgnoreExists(data, messages);
+    if (data.configValidation.gitIgnExists) {
+        messages = renderGitIgnoreContents(data, messages);
+    }
+    messages = renderZshrcContents(data, messages);
     return messages;
 }
 function renderGitEmailMatch(data, messages) {
@@ -137,7 +142,52 @@ function renderGitIgnConLoc(data, messages) {
     else {
         messages.errors.push({
             msg: `The Git Ignore Global file is incorrectly set to ${cD.gitIgnConLoc}. Follow the URL below for a potential fix.`,
-            url: 'https://seirpublic.notion.site/Git-Ignore-Global-File-96825a99252c4070855ffa2de20c2682',
+            url: 'https://seirpublic.notion.site/Git-Ignore-Global-File-Configuration-96825a99252c4070855ffa2de20c2682',
+        });
+    }
+    return messages;
+}
+function renderGitIgnoreExists(data, messages) {
+    const { configData: cD, configValidation: cV } = data;
+    if (cV.gitIgnExists) {
+        messages.successes.push({
+            msg: `The Git Ignore Global file exists at ${cD.gitIgnLoc}.`,
+        });
+    }
+    else {
+        messages.errors.push({
+            msg: `A Git Ignore Global file does not exist at the correct location. Follow the URL below for a potential fix.`,
+            url: 'https://seirpublic.notion.site/Git-Ignore-Global-File-Creation-3ebaf1789c6342b692785cf279aa71ba',
+        });
+    }
+    return messages;
+}
+function renderGitIgnoreContents(data, messages) {
+    const { configValidation: cV } = data;
+    if (cV.gitIgnHasContent) {
+        messages.successes.push({
+            msg: `The Git Ignore Global file has content.`,
+        });
+    }
+    else {
+        messages.errors.push({
+            msg: `The Git Ignore Global file does not have any content. Follow the URL below for a potential fix.`,
+            url: 'https://www.notion.so/seirpublic/Git-Ignore-Global-File-Contents-b346aa7403c2494085e4ccdafe5f22ad',
+        });
+    }
+    return messages;
+}
+function renderZshrcContents(data, messages) {
+    const { configValidation: cV } = data;
+    if (cV.zshrcHasContent) {
+        messages.successes.push({
+            msg: `The ~/.zshrc file has content.`,
+        });
+    }
+    else {
+        messages.errors.push({
+            msg: `The ~/.zshrc file does not have any content. Follow the URL below for a potential fix.`,
+            url: 'https://www.notion.so/seirpublic/Reach-Out-to-an-Instructor-dfd2a7539ad54b6e9e815d132ff6c99c',
         });
     }
     return messages;
