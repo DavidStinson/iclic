@@ -127,7 +127,7 @@ function getZshrc(homedir: string): string {
     )).filter(text => text !== "").join("\n")
     return cleanedZshrcText
   } catch (error) {
-    return "Unknown"
+    return ""
   }
 }
 

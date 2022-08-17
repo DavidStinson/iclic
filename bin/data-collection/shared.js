@@ -125,7 +125,7 @@ function getZshrc(homedir) {
         return cleanedZshrcText;
     }
     catch (error) {
-        return "Unknown";
+        return "";
     }
 }
 async function executeCommand(command) {
