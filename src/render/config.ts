@@ -1,8 +1,6 @@
 function manager(data: Data, messages: Messages): Messages {
   const { machineData: mD, installValidation: iV } = data
-  const gitVer = iV.versions.find(version => (version.name = 'gitVer'))
-  console.log(gitVer);
-  
+  const gitVer = iV.versions.find(version => (version.vName = 'gitVer'))
   if (data.userValidation.isUser) {
     messages = renderGitEmailMatch(data, messages)
   } else {

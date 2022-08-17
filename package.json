@@ -1,6 +1,6 @@
 {
   "name": "iclic",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "A CLI tool for checking system configuration after Installfest.",
   "main": "/bin",
   "scripts": {

@@ -10,6 +10,7 @@ function manager(data: Data, messages: Messages): Messages {
   isASMac = mD.cpuType === 'Apple Silicon'
   const nodeVer = iV.versions.find(version => (version.name = 'nodeVer'))
   const isNodeVerValid = nodeVer?.isValid ? true : false
+  
   if (iV.isValidBrewLoc !== undefined) {
     isMacOSValidBrew = mD.osName === 'macOS' && iV.isValidBrewLoc
   }
@@ -26,7 +27,8 @@ function manager(data: Data, messages: Messages): Messages {
   messages = renderInstallLocAndVer(data, messages)
   if ((isMacOSValidBrew || (isASMac && isNodeVerValid) ) || isWSLLin) {
     messages = renderHerokuExists(data, messages)
-  } 
+  }
+  
   return messages
 }
 
@@ -166,6 +168,7 @@ function renderInstallLocAndVer(data: Data, messages: Messages): Messages {
       }
     }
   })
+  
   return messages
 }
 
