@@ -27,6 +27,13 @@ async function renderData(data: Data): Promise<void> {
   const installMessages = installRender.manager(data, machineMessages)
   const configMessages = configRender.manager(data, installMessages)
   await displayMessages(configMessages)
+  if (!messages.errors.length) {
+    log(cSuccess.bold('🚀 Massive success! Your Installfest is error free!'))
+  } else {
+    log(cErr('💥 Your installfest has errors above, which you should resolve.'))
+    log(cErr('   Reach out to your installfest point of contact if you need assistance.'))
+
+  }
 }
 
 async function displayMessages(messages: Messages) {
@@ -47,26 +54,24 @@ async function displayMessages(messages: Messages) {
     errorMessage(msg)
   }
 }
+
 async function infoMessage(message: Message) {
   log(cInfo('ℹ'), message.msg)
   if (message.url) log(cLink(message.url))
 }
 
 async function successMessage(message: Message) {
-  await timer()
   log(cSuccess(`✔ ${message.msg}`))
   if (message.url) log(cLink(message.url))
 }
 
 async function warnMessage(message: Message) {
-  await timer()
   log(cWarn(`⚠ ${message.msg}`))
   if (message.url) log(cLink(message.url))
 }
 
 async function errorMessage(message: Message) {
-  await timer()
-  log(cErr(`✖ ${message.msg}`))
+  log(cErr(`x ${message.msg}`))
   if (message.url) log(cLink(message.url))
 }
 
