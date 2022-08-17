@@ -54,7 +54,7 @@ function checkGHAuth(ghAuthStatus) {
     return ghAuthStatus === "authenticated" ? true : false;
 }
 function checkGitEmail(configMail) {
-    return configMail !== "Unknown" ? true : false;
+    return configMail ? true : false;
 }
 function checkGitEmailMatch(cliMail, configEmail) {
     return cliMail === configEmail ? true : false;
