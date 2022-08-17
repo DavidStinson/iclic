@@ -144,4 +144,20 @@ async function executeCommand(command) {
         return "Unknown";
     }
 }
-export { getCPUModel, getTotalRAMInGB, getHomedir, getUsername, getCurrentShell, getGHLoginStatus, getGitIgnLoc, getNVMInstallStatus, getNodeVer, getGitVer, getGitIgn, getZshrc, executeCommand, };
+async function executeConfigCommand(command) {
+    try {
+        const { stdout, stderr } = await execAsync(command);
+        if (stderr)
+            throw new Error(stderr);
+        if (stdout) {
+            const stdoutTrim = stdout.trim();
+            if (stdoutTrim)
+                return stdoutTrim;
+        }
+        return "";
+    }
+    catch (error) {
+        return "";
+    }
+}
+export { getCPUModel, getTotalRAMInGB, getHomedir, getUsername, getCurrentShell, getGHLoginStatus, getGitIgnLoc, getNVMInstallStatus, getNodeVer, getGitVer, getGitIgn, getZshrc, executeCommand, executeConfigCommand, };

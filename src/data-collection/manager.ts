@@ -123,7 +123,7 @@ async function getGenConfigData(
 }
 
 async function getWSLConfigData(cD: ConfigData): Promise<ConfigData> {
-  cD.gitCredMan = await sharedData.executeCommand(
+  cD.gitCredMan = await sharedData.executeConfigCommand(
     "git config --global credential.helper"
   )
   return cD

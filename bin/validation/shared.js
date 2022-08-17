@@ -53,8 +53,8 @@ function checkVersions(ver = "null", version) {
 function checkGHAuth(ghAuthStatus) {
     return ghAuthStatus === "authenticated" ? true : false;
 }
-function checkGitEmail(cliMail) {
-    return cliMail ? true : false;
+function checkGitEmail(configMail) {
+    return configMail !== "Unknown" ? true : false;
 }
 function checkGitEmailMatch(cliMail, configEmail) {
     return cliMail === configEmail ? true : false;
