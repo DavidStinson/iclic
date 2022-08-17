@@ -106,7 +106,7 @@ const initialData: Data = {
 async function main() {
   const cL = new Command()
 
-  cL.version('0.1.9', '-v, --version', 'Outputs the current version.')
+  cL.version('0.1.10', '-v, --version', 'Outputs the current version.')
   cL.name('iclic')
   cL.description('A command line application for validating an installfest.')
 
