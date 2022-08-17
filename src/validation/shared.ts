@@ -67,8 +67,8 @@ function checkGHAuth(ghAuthStatus: string): boolean {
   return ghAuthStatus === "authenticated" ? true : false
 }
 
-function checkGitEmail(cliMail: string): boolean {
-  return cliMail ? true : false
+function checkGitEmail(configMail: string): boolean {
+  return configMail !== "Unknown" ? true : false
 }
 
 function checkGitEmailMatch(cliMail: string, configEmail: string): boolean {
