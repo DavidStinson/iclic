@@ -6,7 +6,7 @@ const machineValidators = {
     recRAM: 15.95,
 };
 const installValidators = {
-    nodeVer: '^16',
+    nodeVer: '^18',
     nodemonVer: '^2.0.15',
     gitVer: '^2.35.0',
 };
