@@ -3,7 +3,7 @@ import compare from 'compare-versions'
 const { satisfies } = compare
 
 const validators = {
-  macOSVer: '^12',
+  macOSVer: '^13',
   cpuTypes: ['Apple Silicon', 'Intel'],
   appleSiliconBrewLoc: '/opt/homebrew/bin/brew',
   intelBrewLoc: '/usr/local/bin/brew',

@@ -17,7 +17,7 @@ function getOSVersion() {
     try {
         const jsonobj = plist.parse(fs.readFileSync('/System/Library/CoreServices/SystemVersion.plist', 'utf8'));
         if (jsonobj.ProductUserVisibleVersion === '10.16') {
-            jsonobj.ProductUserVisibleVersion = '12.5';
+            jsonobj.ProductUserVisibleVersion = '13.0';
         }
         return jsonobj.ProductUserVisibleVersion
             ? jsonobj.ProductUserVisibleVersion

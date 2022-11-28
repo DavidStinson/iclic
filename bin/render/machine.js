@@ -80,17 +80,17 @@ function renderMacOSVersion(data, messages) {
     else {
         if (mV.isInvaidOSReason === 1) {
             messages.warns.push({
-                msg: `We do not offer official support for macOS ${mD.osVersion}. Note that we very strongly recommend against running pre-release or beta versions of macOS and recommend running macOS 12 Monterey.`,
+                msg: `We do not offer official support for macOS ${mD.osVersion}. Note that we very strongly recommend against running pre-release or beta versions of macOS and recommend running macOS 13 Ventura.`,
             });
         }
         else if (mV.isInvaidOSReason === -1) {
             messages.warns.push({
-                msg: `We do not offer official support for macOS ${mD.osVersion}. We strongly recommend updating to macOS 12 Monterey.`,
+                msg: `We do not offer official support for macOS ${mD.osVersion}. We strongly recommend updating to macOS 13 Ventura.`,
             });
         }
         else {
             messages.warns.push({
-                msg: `We do not offer official support for macOS ${mD.osVersion} and recommend running macOS 12 Monterey.`,
+                msg: `We do not offer official support for macOS ${mD.osVersion} and recommend running macOS 13 Ventura.`,
             });
         }
     }
