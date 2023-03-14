@@ -85,7 +85,6 @@ function checkGenInstallData(data: Data): InstallValidation {
   iV.isShellZSH = sharedValid.checkCurrentShellZSH(iD.shell, iD.zshLoc)
   iV.isValidGHLoc = sharedValid.checkLoc(iD, 'ghLoc')
   iV.isNVMInstalled = sharedValid.checkNVM(iD.nvmInstallStatus)
-  iV.isValidHerokuLoc = sharedValid.checkLoc(iD, 'herokuLoc')
   iV.versions = iV.versions.map(version =>
     sharedValid.checkVersions(iD[version.name], version)
   )

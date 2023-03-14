@@ -80,7 +80,7 @@ function renderGitCredMan(data, messages) {
     }
     else {
         messages.errors.push({
-            msg: `The Git Credntial Manager is not being used. Follow the URL below for a potential fix.`,
+            msg: `The Git Credential Manager is not being used. Follow the URL below for a potential fix.`,
             url: 'https://seirpublic.notion.site/Git-Credential-Manager-8c5dd63221a5446ba2b858653089fdb0',
         });
     }

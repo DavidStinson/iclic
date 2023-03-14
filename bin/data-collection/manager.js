@@ -11,7 +11,6 @@ const commandsForInstallData = [
     { dataKey: 'nodeLoc', command: 'which node' },
     { dataKey: 'nodemonLoc', command: 'which nodemon' },
     { dataKey: 'nodemonVer', command: 'nodemon --version' },
-    { dataKey: 'herokuLoc', command: 'which heroku' },
     { dataKey: 'gitLoc', command: 'which git' },
 ];
 const commandsForConfigData = [

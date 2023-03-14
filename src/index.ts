@@ -50,7 +50,6 @@ const installData: InstallData = {
   nodeVer: '-1',
   nodemonLoc: 'Unknown',
   nodemonVer: '-1',
-  herokuLoc: 'Unknown',
   gitLoc: 'Unknown',
   gitVer: '-1',
 }
@@ -60,7 +59,6 @@ const installValidation: InstallValidation = {
   isValidCodeAlias: false,
   isValidGHLoc: false,
   isNVMInstalled: false,
-  isValidHerokuLoc: false,
   versions: [
     { name: 'nodeVer', vName: 'nodeVer', isValid: false },
     { name: 'nodemonVer', vName: 'nodemonVer', isValid: false },

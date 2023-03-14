@@ -51,7 +51,6 @@ declare interface InstallData {
   nodemonVer: string
   gitLoc: string
   gitVer: string
-  herokuLoc: string
 }
 
 declare interface InstallValidation {
@@ -62,7 +61,6 @@ declare interface InstallValidation {
   isValidGHLoc: boolean
   isNVMInstalled: boolean
   versions: InstallVersion[]
-  isValidHerokuLoc: boolean
 }
 
 declare interface ConfigData {
