@@ -2,6 +2,8 @@ import compare from 'compare-versions'
 
 const { satisfies } = compare
 
+// RAM amounts behave weirdly on some devices
+// solved by allowing for slightly lower than target values
 const machineValidators = {
   shell: 'zsh',
   minRAM: 7.95,
@@ -10,8 +12,8 @@ const machineValidators = {
 
 const installValidators: InstallValidators = {
   nodeVer: '^18',
-  nodemonVer: '^2.0.15',
-  gitVer: '^2.35.0',
+  nodemonVer: '^2.0.20',
+  gitVer: '^2.38.0',
 }
 
 const configValidators = {
