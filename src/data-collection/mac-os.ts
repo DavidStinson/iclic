@@ -22,7 +22,7 @@ function getOSVersion(): string {
       )
     )
     if (jsonobj.ProductUserVisibleVersion === '10.16') {
-      jsonobj.ProductUserVisibleVersion = '13.0'
+      jsonobj.ProductUserVisibleVersion = '14.0'
     }
     return jsonobj.ProductUserVisibleVersion
       ? jsonobj.ProductUserVisibleVersion

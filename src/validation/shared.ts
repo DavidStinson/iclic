@@ -11,8 +11,8 @@ const machineValidators = {
 }
 
 const installValidators: InstallValidators = {
-  nodeVer: '^18',
-  nodemonVer: '^2.0.20',
+  nodeVer: '^20',
+  nodemonVer: '^3.1.0',
   gitVer: '^2.38.0',
 }
 
