@@ -3,7 +3,7 @@ const { satisfies } = compare;
 const validators = {
     distro: 'ubuntu',
     osVersion: '^22',
-    gitCredMan: '/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager-core.exe',
+    gitCredMan: '/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe',
 };
 function osVariant(distro = 'Linux - Unknown Distro') {
     return distro.toLowerCase() === validators.distro;

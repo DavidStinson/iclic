@@ -5,7 +5,7 @@ const validators = {
   distro: 'ubuntu',
   osVersion: '^22',
   gitCredMan:
-    '/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager-core.exe',
+    '/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe',
 }
 
 function osVariant(distro = 'Linux - Unknown Distro'): boolean {
