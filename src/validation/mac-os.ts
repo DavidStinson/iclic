@@ -15,6 +15,11 @@ const validators = {
 
 function checkOSVersion(version: string): boolean {
   try {
+    console.log(version)
+    console.log(validators.macOSVer);
+    console.log(satisfies(version, validators.macOSVer));
+    
+    
     return satisfies(version, validators.macOSVer)
   } catch (error) {
     return false
@@ -23,6 +28,10 @@ function checkOSVersion(version: string): boolean {
 
 function checkInvalidOSReason(osVersion: string) {
   try {
+    console.log(osVersion);
+    console.log(validators.macOSVer);
+    console.log(compare(osVersion, validators.macOSVer));
+    
     return compare(osVersion, validators.macOSVer)
   } catch (error) {
     return 2
